@@ -1,5 +1,8 @@
 #include "s21_smartcalc.h"
 
+#include <stdio.h>
+      //printf("ili tuta string = %c \n", string[i]);
+
 int input_validation(char *string) {
   int result = 0;
   int braces = 0;
@@ -11,7 +14,7 @@ int input_validation(char *string) {
       braces++;
     } else if (string[i] == ')') {
       braces--;
-    } else if (!isNumber(string[i])) {
+    } else if (!isNumber(string[i]) && !isOperation(string[i])) {
       result = -1;
       break;
     }
