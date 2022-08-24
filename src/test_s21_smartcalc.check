@@ -1,0 +1,29 @@
+#include "s21_smartcalc.h"
+#include <stdio.h>
+#include <math.h>
+
+
+#test input_validation_test
+
+  char *string = "2*1";
+
+  ck_assert_int_eq(input_validation(string), 0);
+
+  string = "(2*1";
+
+  ck_assert_int_eq(input_validation(string), -1);
+
+
+#test helpers_test
+
+  char symbol = '1';
+  ck_assert_int_eq(isNumber(symbol), 1);
+
+  symbol = 'b';
+  ck_assert_int_eq(isNumber(symbol), 0);
+
+  symbol = '+';
+  ck_assert_int_eq(isOperation(symbol), 1);
+
+  symbol = 'b';
+  ck_assert_int_eq(isOperation(symbol), 0);
