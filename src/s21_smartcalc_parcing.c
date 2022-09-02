@@ -1,7 +1,7 @@
-#include "s21_smartcalc.h"
-
 #include <stdio.h>
-      //printf("ili tuta string = %c \n", string[i]);
+
+#include "s21_smartcalc.h"
+// printf("ili tuta string = %c \n", string[i]);
 
 int input_validation(char *string) {
   int result = 0;
@@ -25,7 +25,8 @@ int input_validation(char *string) {
 
 int isOperation(char element) {
   int result = 0;
-  if (element == '+' || element == '-' || element == '*' || element == '/') result = 1;
+  if (element == '+' || element == '-' || element == '*' || element == '/')
+    result = 1;
   return result;
 }
 

@@ -1,14 +1,13 @@
-FLAGS=-std=c11 -Wall -Werror -Wextra
-NAME=s21_smartcalc
-TEST_NAME=test_$(NAME)
+FLAGS = -std=c11 -Wall -Werror -Wextra 
+NAME = s21_smartcalc 
+TEST_NAME = test_$(NAME)
+COVERAGE_FILES = ./*.gcno
+COVERAGE_RESULTS = ./*.gcda
+GCOV_FILES = ./*.gcov
+LCOV_FILES = ./*.info
 
-COVERAGE_FILES=./*.gcno
-COVERAGE_RESULTS=./*.gcda
-GCOV_FILES=./*.gcov
-LCOV_FILES=./*.info
-
-SOURCE_FILES=s21*.c
-OBJECT_FILES=s21*.o
+SOURCE_FILES = s21*.c
+OBJECT_FILES = s21*.o
 
 # different libs for MAC and LINUX
 UNAME_S := $(shell uname -s)
@@ -67,8 +66,8 @@ compile_test_with_asan:
 	checkmk $(TEST_NAME).check | gcc $(FLAGS) $(SOURCE_FILES) -xc - $(LIBS) -o $(TEST_NAME) --coverage -g -fsanitize=address
 
 lint:
-	@cp ../materials/linters/CPPLINT.cfg CPPLINT.cfg
-	python3 ../materials/linters/cpplint.py --extensions=c *.c *.h
+	@cp ../materials/linters/.clang-format .clang-format
+	clang-format -n *.c *.h
 
 cppcheck:
 	cppcheck --enable=all --suppress=missingIncludeSystem *.c
