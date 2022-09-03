@@ -31,12 +31,10 @@ char *infix_to_postfix(char const infix[], char postfix[]) {
       push(&s, token);
     }
   }
-
   while (!empty(&s)) {
     x = pop(&s);
     postfix[j++] = x;
   }
-
   postfix[j] = '\0';
   return postfix;
 }
