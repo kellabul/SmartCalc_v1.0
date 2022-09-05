@@ -40,5 +40,6 @@ int isSqrt(char *str);
 int isAcos(char *str);
 int isAsin(char *str);
 int isAtan(char *str);
+int isWrongFirstElement(char *str);
 
 #endif  // SRC_S21_SMARTCALC_H_

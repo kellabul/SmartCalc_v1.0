@@ -8,7 +8,29 @@
     char *string = "2*1";
     ck_assert_int_eq(input_validation(string), 0);
 
-    string = "(2*1";
+    string = "cos(2*1)";
+    ck_assert_int_eq(input_validation(string), 0);
+
+    string = "2*1*sin(cos(25*x))";
+    ck_assert_int_eq(input_validation(string), 0);
+
+    string = "002*1*sin(cos(25*x))";
+    ck_assert_int_eq(input_validation(string), 0);
+
+    string = "ln(2x*1)";
+    ck_assert_int_eq(input_validation(string), 0);
+
+
+    string = "2*co(2*1)";
+    ck_assert_int_eq(input_validation(string), -1);
+
+    string = "2*con(2*1)";
+    ck_assert_int_eq(input_validation(string), -1);
+
+    string = " 2*1";
+    ck_assert_int_eq(input_validation(string), -1);
+
+    string = "(2*(1+)";
     ck_assert_int_eq(input_validation(string), -1);
 
 
