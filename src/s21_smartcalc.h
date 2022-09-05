@@ -27,7 +27,18 @@ char stk_top(stack *p);
 
 
 // santa's little helpers
-int isNumber(char element);
 int isOperation(char element);
+int isDot(char element);
+int isNumber(char element);
+int isTrigFunc(char *str);
+int isLn(char *str);
+int isLog(char *str);
+int isCos(char *str);
+int isSin(char *str);
+int isTan(char *str);
+int isSqrt(char *str);
+int isAcos(char *str);
+int isAsin(char *str);
+int isAtan(char *str);
 
 #endif  // SRC_S21_SMARTCALC_H_

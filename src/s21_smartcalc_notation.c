@@ -2,7 +2,7 @@
 
 // Operator supported: +,-,*,/,%,^,(,)
 // Operands supported: all single character operands
-
+/*
 char *infix_to_postfix(char const infix[], char postfix[]) {
   stack s;
   char x;
@@ -61,3 +61,4 @@ int isalnum_21(char symb) {
   if ((symb >= '0' && symb <= '9') || (symb == 'x') || (symb == '.')) m = 1;
   return m;
 }
+*/

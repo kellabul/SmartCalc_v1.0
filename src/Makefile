@@ -1,5 +1,5 @@
 FLAGS = -std=c11 -Wall -Werror -Wextra 
-NAME = s21_smartcalc 
+NAME = s21_smartcalc
 TEST_NAME = test_$(NAME)
 COVERAGE_FILES = ./*.gcno
 COVERAGE_RESULTS = ./*.gcda

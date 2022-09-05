@@ -1,5 +1,7 @@
 #include "s21_smartcalc.h"
 
+#include <stdio.h>
+
 void q_init(queue *q) {
   q->front = 1;
   q->rear = 0;
@@ -31,7 +33,7 @@ void q_print(queue *q) {
 
 int q_remove(queue *q) {
   int x, h;
-  if (isempty(q) == 1) {
+  if (q_isempty(q) == 1) {
     printf("Очередь пуста!\n");
     return 0;
   }
