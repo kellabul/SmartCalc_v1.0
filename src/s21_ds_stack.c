@@ -5,11 +5,11 @@ void stk_initialization(stack *s) {  //
 }
 
 int stk_empty(stack *s) {  //
-  return (s->top == 0 ? 1 : 0);
+  return (s->top == 0);
 }
 
 int stk_full(stack *s) {  //
-  return (s->top == (MAX - 1) ? 1 : 0);
+  return (s->top == MAX - 1);
 }
 
 int stk_push(stack *s, char value) {
