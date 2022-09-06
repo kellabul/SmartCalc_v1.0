@@ -1,8 +1,6 @@
 #include <stdio.h>
 #include <string.h>
 
-int isNotElement(char *str);
-
 #include "s21_smartcalc.h"
 // printf("ili tuta str = %c \n", str[i]);
 
@@ -10,46 +8,61 @@ int input_validation(char *str) {
   int result = 0;
   int left_paren = 0;
   int right_paren = 0;
+  int i = 0;
   if (isWrongFirstElement(str)) {
     result = -1;
-    printf("isWrongFirstElement = %c \n", str[0]);
   } else {
-    for (int i = 0; str[i]; i++) {
-      int step = isTrigFunc(&str[i]);
-      if (step) {
-        i += step;
+    for (; str[i]; i++) {
+      int i_step = isTrigFunc(&str[i]);
+      if (i_step) {
+        i += i_step;
+        if (str[i + 1] != '(') {
+          result = -1;
+          break;
+        }
       } else if (str[i] == '(') {
-        left_paren++;
+        if (isWrongFirstElement(&str[i + 1])) {
+          result = -1;
+          break;
+        } else {
+          left_paren++;
+        }
       } else if (str[i] == ')') {
         if (right_paren + 1 > left_paren) {
           result = -1;
-          printf("left par = %d right par = %d \n", left_paren, right_paren);
           break;
         } else {
           right_paren++;
         }
-      } else if (isOperation(str[i]) && isNotElement(&str[i + 1])) {
+      } else if (isOperation(str[i]) && isWrongMiddleElement(&str[i + 1])) {
         result = -1;
-        printf("isWrongElement = %c \n", str[i]);
         break;
-      } else if (!isNumber(str[i]) && !isOperation(str[i])) {
-        printf("2 ili tuta str = %c \n", str[i]);
+      } else if (str[i] == '.' && !isNumber(str[i+1]) && !isOperation(str[i-1])) {
+        result = -1;
+        break;
+      } else if (!isNumber(str[i]) && !isOperation(str[i]) && str[i] != '.') {
         result = -1;
         break;
       }
     }
   }
-  if (left_paren != right_paren) result = -1;
+  if (isWrongLastElement(str[i - 1]))
+    result = -1;
+  else if (left_paren != right_paren)
+    result = -1;
   return result;
 }
 
-int isNotElement(char *str) {
+int isWrongMiddleElement(char *str) {
   return str[0] != '(' && !isTrigFunc(&str[0]) && !isNumber(str[0]);
 }
 
 int isWrongFirstElement(char *str) {
-  return str[0] != '-' && str[0] != '+' && str[0] != '(' &&
-         !isTrigFunc(&str[0]) && !isNumber(str[0]);
+  return str[0] != '-' && str[0] != '+' && isWrongMiddleElement(str);
+}
+
+int isWrongLastElement(char element) {
+  return element != ')' && !isNumber(element);
 }
 
 int isOperation(char element) {
@@ -58,6 +71,7 @@ int isOperation(char element) {
 }
 
 int isTrigFunc(char *str) {
+  // result depends on the function name length
   int result = 0;
   if (isLn(str)) {
     result = 1;
@@ -68,8 +82,6 @@ int isTrigFunc(char *str) {
   }
   return result;
 }
-
-int isDot(char element) { return element == '.'; }
 
 int isNumber(char element) {
   return (element >= '0' && element <= '9') || element == 'x';

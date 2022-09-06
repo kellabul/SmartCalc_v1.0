@@ -28,7 +28,6 @@ char stk_top(stack *p);
 
 // santa's little helpers
 int isOperation(char element);
-int isDot(char element);
 int isNumber(char element);
 int isTrigFunc(char *str);
 int isLn(char *str);
@@ -41,5 +40,7 @@ int isAcos(char *str);
 int isAsin(char *str);
 int isAtan(char *str);
 int isWrongFirstElement(char *str);
+int isWrongMiddleElement(char *str);
+int isWrongLastElement(char element);
 
 #endif  // SRC_S21_SMARTCALC_H_

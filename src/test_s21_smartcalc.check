@@ -3,7 +3,7 @@
 
 #include "s21_smartcalc.h"
 
-#test input_validation_test
+#test input_correct_validation
 
     char *string = "2*1";
     ck_assert_int_eq(input_validation(string), 0);
@@ -20,17 +20,57 @@
     string = "ln(2x*1)";
     ck_assert_int_eq(input_validation(string), 0);
 
+    string = "sqrt(-2.2x*(-1))";
+    ck_assert_int_eq(input_validation(string), 0);
 
-    string = "2*co(2*1)";
-    ck_assert_int_eq(input_validation(string), -1);
+    string = "0.5+ln(-2x*(-1.9))";
+    ck_assert_int_eq(input_validation(string), 0);
 
-    string = "2*con(2*1)";
+#test input_incorrect_validation
+    
+    char *string = "2*cot(2*1)";
     ck_assert_int_eq(input_validation(string), -1);
 
     string = " 2*1";
     ck_assert_int_eq(input_validation(string), -1);
 
-    string = "(2*(1+)";
+    string = "(2*(1+))";
+    ck_assert_int_eq(input_validation(string), -1);
+
+    string = "(/2*(1+1))";
+    ck_assert_int_eq(input_validation(string), -1);
+
+    string = "ln(2x-(*1))";
+    ck_assert_int_eq(input_validation(string), -1);
+
+    string = "ln(2x*-1)";
+    ck_assert_int_eq(input_validation(string), -1);
+
+    string = "2*1-";
+    ck_assert_int_eq(input_validation(string), -1);
+    
+    string = "2*1*cos";
+    ck_assert_int_eq(input_validation(string), -1);
+
+    string = "2.*1";
+    ck_assert_int_eq(input_validation(string), -1);
+
+    string = "2.*1";
+    ck_assert_int_eq(input_validation(string), -1);
+
+    string = "2*.1";
+    ck_assert_int_eq(input_validation(string), -1);
+
+    string = ".2*.1";
+    ck_assert_int_eq(input_validation(string), -1);
+
+    string = "2*1.";
+    ck_assert_int_eq(input_validation(string), -1);
+
+    string = "2*1-2t3+123";
+    ck_assert_int_eq(input_validation(string), -1);
+
+    string = "2*(1+2))-2";
     ck_assert_int_eq(input_validation(string), -1);
 
 
