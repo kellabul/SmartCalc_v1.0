@@ -39,6 +39,7 @@ int isSqrt(char *str);
 int isAcos(char *str);
 int isAsin(char *str);
 int isAtan(char *str);
+int isMod(char *str);
 int isWrongFirstElement(char *str);
 int isWrongMiddleElement(char *str);
 int isWrongLastElement(char element);

@@ -13,10 +13,17 @@ int input_validation(char *str) {
     result = -1;
   } else {
     for (; str[i]; i++) {
-      int i_step = isTrigFunc(&str[i]);
-      if (i_step) {
-        i += i_step;
+      int trigFuncLength = isTrigFunc(&str[i]);
+      int modLength = isMod(&str[i]);
+      if (trigFuncLength) {
+        i += trigFuncLength;
         if (str[i + 1] != '(') {
+          result = -1;
+          break;
+        }
+      } else if (modLength) {
+        i += modLength;
+        if (isWrongMiddleElement(&str[i + 1])) {
           result = -1;
           break;
         }
@@ -40,6 +47,9 @@ int input_validation(char *str) {
       } else if (str[i] == '.' && !isNumber(str[i+1]) && !isOperation(str[i-1])) {
         result = -1;
         break;
+      } else if (str[i] == 'x' && !isOperation(str[i+1]) && str[i+1] != ')') {
+          result = -1;
+          break;
       } else if (!isNumber(str[i]) && !isOperation(str[i]) && str[i] != '.') {
         result = -1;
         break;
@@ -86,6 +96,8 @@ int isTrigFunc(char *str) {
 int isNumber(char element) {
   return (element >= '0' && element <= '9') || element == 'x';
 }
+
+int isMod(char *str) {return 2*!strncmp(str, "mod", 3); }
 
 int isLn(char *str) { return !strncmp(str, "ln", 2); }
 

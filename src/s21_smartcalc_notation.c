@@ -6,10 +6,9 @@
 char *infix_to_postfix(char const infix[], char postfix[]) {
   stack s;
   char x;
-  int i = 0, j;  // i-index of infix,j-index of postfix
+  int i = 0, j = 0;  // i-index of infix, j-index of postfix
   init(&s);
-  j = 0;
-  for (i = 0; infix[i] != '\0'; i++) {
+  for (i = 0; infix[i]; i++) {
     char token;
     token = infix[i];
     if (isalnum_21(token)) {
@@ -57,8 +56,6 @@ int precedence(char x) {
 }
 
 int isalnum_21(char symb) {
-  int m = 0;
-  if ((symb >= '0' && symb <= '9') || (symb == 'x') || (symb == '.')) m = 1;
-  return m;
+  return (symb >= '0' && symb <= '9') || (symb == 'x') || (symb == '.');
 }
 */

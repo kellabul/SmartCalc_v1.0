@@ -26,6 +26,11 @@
     string = "0.5+ln(-2x*(-1.9))";
     ck_assert_int_eq(input_validation(string), 0);
 
+    string = "2mod3";
+    ck_assert_int_eq(input_validation(string), 0);
+
+
+
 #test input_incorrect_validation
     
     char *string = "2*cot(2*1)";
@@ -73,6 +78,8 @@
     string = "2*(1+2))-2";
     ck_assert_int_eq(input_validation(string), -1);
 
+    string = "2*((1+2x5))-2";
+    ck_assert_int_eq(input_validation(string), -1);
 
 #test helpers_test
 
