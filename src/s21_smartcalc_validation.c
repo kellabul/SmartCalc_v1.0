@@ -44,12 +44,14 @@ int input_validation(char *str) {
       } else if (isOperation(str[i]) && isWrongMiddleElement(&str[i + 1])) {
         result = -1;
         break;
-      } else if (str[i] == '.' && !isNumber(str[i+1]) && !isOperation(str[i-1])) {
+      } else if (str[i] == '.' && !isNumber(str[i + 1]) &&
+                 !isOperation(str[i - 1])) {
         result = -1;
         break;
-      } else if (str[i] == 'x' && !isOperation(str[i+1]) && str[i+1] != ')') {
-          result = -1;
-          break;
+      } else if (str[i] == 'x' && !isOperation(str[i + 1]) &&
+                 str[i + 1] != ')') {
+        result = -1;
+        break;
       } else if (!isNumber(str[i]) && !isOperation(str[i]) && str[i] != '.') {
         result = -1;
         break;
@@ -83,12 +85,15 @@ int isOperation(char element) {
 int isTrigFunc(char *str) {
   // result depends on the function name length
   int result = 0;
-  if (isLn(str)) {
-    result = 1;
-  } else if (isLog(str) || isCos(str) || isSin(str) || isTan(str)) {
-    result = 2;
-  } else if (isSqrt(str) || isAcos(str) || isAsin(str) || isAtan(str)) {
-    result = 3;
+  if ((result = isLn(str))) {
+  } else if ((result = isLog(str))) {
+  } else if ((result = isCos(str))) {
+  } else if ((result = isSin(str))) {
+  } else if ((result = isTan(str))) {
+  } else if ((result = isSqrt(str))) {
+  } else if ((result = isAcos(str))) {
+  } else if ((result = isAsin(str))) {
+  } else if ((result = isAtan(str))) {
   }
   return result;
 }
@@ -97,22 +102,22 @@ int isNumber(char element) {
   return (element >= '0' && element <= '9') || element == 'x';
 }
 
-int isMod(char *str) {return 2*!strncmp(str, "mod", 3); }
+int isMod(char *str) { return 2 * !strncmp(str, "mod", 3); }
 
 int isLn(char *str) { return !strncmp(str, "ln", 2); }
 
-int isLog(char *str) { return !strncmp(str, "log", 3); }
+int isLog(char *str) { return 2 * !strncmp(str, "log", 3); }
 
-int isCos(char *str) { return !strncmp(str, "cos", 3); }
+int isCos(char *str) { return 2 * !strncmp(str, "cos", 3); }
 
-int isSin(char *str) { return !strncmp(str, "sin", 3); }
+int isSin(char *str) { return 2 * !strncmp(str, "sin", 3); }
 
-int isTan(char *str) { return !strncmp(str, "tan", 3); }
+int isTan(char *str) { return 2 * !strncmp(str, "tan", 3); }
 
-int isSqrt(char *str) { return !strncmp(str, "sqrt", 4); }
+int isSqrt(char *str) { return 3 * !strncmp(str, "sqrt", 4); }
 
-int isAcos(char *str) { return !strncmp(str, "acos", 4); }
+int isAcos(char *str) { return 3 * !strncmp(str, "acos", 4); }
 
-int isAsin(char *str) { return !strncmp(str, "asin", 4); }
+int isAsin(char *str) { return 3 * !strncmp(str, "asin", 4); }
 
-int isAtan(char *str) { return !strncmp(str, "atan", 4); }
+int isAtan(char *str) { return 3 * !strncmp(str, "atan", 4); }

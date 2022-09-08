@@ -29,6 +29,9 @@
     string = "2mod3";
     ck_assert_int_eq(input_validation(string), 0);
 
+    string = "2+cos(sin(25)modsin(cos(3x)))";
+    ck_assert_int_eq(input_validation(string), 0);
+
 
 
 #test input_incorrect_validation
@@ -80,6 +83,14 @@
 
     string = "2*((1+2x5))-2";
     ck_assert_int_eq(input_validation(string), -1);
+
+
+#test input_processing_test
+    char *string = "2+cos(sin(25)modsin(cos(3x)))";
+    char string2[MAX] = {};
+    input_processing(string, string2);
+    printf("%s", string2);
+
 
 #test helpers_test
 
