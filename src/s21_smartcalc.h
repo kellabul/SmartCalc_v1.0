@@ -27,9 +27,8 @@ enum funcs_and_mod {
 };
 
 // main functions
-int input_validation(char *string);
-
-void input_processing(char *input, char *ouput);
+int input_validation(char *str);
+void input_conversion(char* input, char* ouput);
 
 // stack data structure
 void stk_initialization(stack *s);
@@ -56,7 +55,8 @@ int isAsin(char *str);
 int isAtan(char *str);
 int isMod(char *str);
 int isWrongFirstElement(char *str);
-int isWrongMiddleElement(char *str);
 int isWrongLastElement(char element);
+int areWrongMiddleElements(char *str);
+int isWrongMiddleElement(char *str);
 
 #endif  // SRC_S21_SMARTCALC_H_

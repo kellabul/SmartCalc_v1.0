@@ -1,5 +1,6 @@
 #include <math.h>
 #include <stdio.h>
+#include <string.h>
 
 #include "s21_smartcalc.h"
 
@@ -57,7 +58,7 @@
     string = "2*1-";
     ck_assert_int_eq(input_validation(string), -1);
     
-    string = "2*1*cos";
+    string = "2*1*cos6";
     ck_assert_int_eq(input_validation(string), -1);
 
     string = "2.*1";
@@ -84,12 +85,24 @@
     string = "2*((1+2x5))-2";
     ck_assert_int_eq(input_validation(string), -1);
 
+    string = "2*1-(3mod)-2";
+    ck_assert_int_eq(input_validation(string), -1);
 
-#test input_processing_test
-    char *string = "2+cos(sin(25)modsin(cos(3x)))";
-    char string2[MAX] = {};
-    input_processing(string, string2);
-    printf("%s", string2);
+
+#test input_conversion_test
+    char *string_input = "2+cos(sin(25)modsin(cos(3x)))";
+    char string_correct_output[MAX] = {};
+    sprintf(string_correct_output, "2+%c(%c(25)%c%c(%c(3x)))", COS, SIN, MOD, SIN, COS);
+    char string_output[MAX] = {};
+    input_conversion(string_input, string_output);
+    ck_assert_int_eq(strcmp(string_output, string_correct_output), 0);
+
+    string_input = "sqrt(2*ln(10)+tan(atan(25)acos(asin(3x)))-log(123))";
+    sprintf(string_correct_output, "%c(2*%c(10)+%c(%c(25)%c(%c(3x)))-%c(123))", SQRT, LN, TAN, ATAN, ACOS, ASIN, LOG);
+    input_conversion(string_input, string_output);
+    ck_assert_int_eq(strcmp(string_output, string_correct_output), 0);
+
+    // printf("%s\n", string_correct_output);
 
 
 #test helpers_test
