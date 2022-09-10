@@ -1,6 +1,6 @@
 #include "s21_smartcalc.h"
 
-void stk_initialization(stack *s) {  //
+void stk_init(stack *s) {  //
   s->top = 0;
 }
 

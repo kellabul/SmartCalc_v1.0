@@ -4,7 +4,7 @@
 void input_conversion(char* input, char* ouput) {
   for (int i = 0, j = 0; input[i]; i++, j++) {
     int step = 0;
-    if ((step = isLn(&input[i]))) {
+    if ((step = isLn(&input[i]))){
       i += step;
       ouput[j] = LN;
     } else if ((step = isLog(&input[i]))) {

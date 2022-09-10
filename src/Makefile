@@ -26,6 +26,8 @@ tests: compile_test
 	@rm -f $(COVERAGE_RESULTS)
 	./$(TEST_NAME)
 
+install_gtk_mac:
+	brew install gtk+3
 
 install:
 

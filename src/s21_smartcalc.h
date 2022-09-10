@@ -29,9 +29,10 @@ enum funcs_and_mod {
 // main functions
 int input_validation(char *str);
 void input_conversion(char* input, char* ouput);
+void infix_to_postfix(char *infix, char *postfix);
 
 // stack data structure
-void stk_initialization(stack *s);
+void stk_init(stack *s);
 int stk_empty(stack *s);
 int stk_full(stack *s);
 int stk_push(stack *s, char value);

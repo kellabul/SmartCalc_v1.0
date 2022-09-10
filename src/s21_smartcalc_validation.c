@@ -105,9 +105,9 @@ int isNumber(char element) {
   return (element >= '0' && element <= '9') || element == 'x';
 }
 
-int isMod(char *str) { return 2 * !strncmp(str, "mod", 3); }
-
 int isLn(char *str) { return !strncmp(str, "ln", 2); }
+
+int isMod(char *str) { return 2 * !strncmp(str, "mod", 3); }
 
 int isLog(char *str) { return 2 * !strncmp(str, "log", 3); }
 

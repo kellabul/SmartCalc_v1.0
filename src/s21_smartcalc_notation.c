@@ -2,6 +2,7 @@
 
 // Operator supported: +,-,*,/,%,^,(,)
 // Operands supported: all single character operands
+
 /*
 char *infix_to_postfix(char const infix[], char postfix[]) {
   stack s;
@@ -57,5 +58,11 @@ int precedence(char x) {
 
 int isalnum_21(char symb) {
   return (symb >= '0' && symb <= '9') || (symb == 'x') || (symb == '.');
+}
+*/
+
+/*
+void infix_to_postfix(char *infix, char *postfix) {
+
 }
 */

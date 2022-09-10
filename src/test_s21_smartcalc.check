@@ -5,8 +5,11 @@
 #include "s21_smartcalc.h"
 
 #test input_correct_validation
-
+/* ------------------------------------------------input_correct_validation---*/
     char *string = "2*1";
+    ck_assert_int_eq(input_validation(string), 0);
+
+    string = "0";
     ck_assert_int_eq(input_validation(string), 0);
 
     string = "cos(2*1)";
@@ -33,11 +36,12 @@
     string = "2+cos(sin(25)modsin(cos(3x)))";
     ck_assert_int_eq(input_validation(string), 0);
 
-
-
 #test input_incorrect_validation
-    
+/* ------------------------------------------------input_incorrect_validation---*/
     char *string = "2*cot(2*1)";
+    ck_assert_int_eq(input_validation(string), -1);
+
+    string = "";
     ck_assert_int_eq(input_validation(string), -1);
 
     string = " 2*1";
@@ -67,7 +71,7 @@
     string = "2.*1";
     ck_assert_int_eq(input_validation(string), -1);
 
-    string = "2*.1";
+    string = "2*(.1)";
     ck_assert_int_eq(input_validation(string), -1);
 
     string = ".2*.1";
@@ -90,6 +94,7 @@
 
 
 #test input_conversion_test
+/* ------------------------------------------------input_conversion_test---*/
     char *string_input = "2+cos(sin(25)modsin(cos(3x)))";
     char string_correct_output[MAX] = {};
     sprintf(string_correct_output, "2+%c(%c(25)%c%c(%c(3x)))", COS, SIN, MOD, SIN, COS);
@@ -103,6 +108,17 @@
     ck_assert_int_eq(strcmp(string_output, string_correct_output), 0);
 
     // printf("%s\n", string_correct_output);
+
+#test infix_to_postfix_conversion
+/* ------------------------------------------------infix_to_postfix_conversion---*/
+    char string_input[MAX] = {};
+    char string_output[MAX] = {};
+    char string_correct_output[MAX] = {};
+
+    sprintf(string_input, "2/(3+2)*5");
+    sprintf(string_correct_output, "232+/5*");
+
+    sprintf(string_output, "232+/5*");
 
 
 #test helpers_test
