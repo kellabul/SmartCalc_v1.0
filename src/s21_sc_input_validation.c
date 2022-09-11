@@ -20,6 +20,10 @@ int isWrongFirstElement(char *str) {
   return str[0] != '-' && str[0] != '+' && isWrongMiddleElement(str);
 }
 
+int isWrongMiddleElement(char *str) {
+  return str[0] != '(' && !isTrigFunc(&str[0]) && !isNumber(str[0]);
+}
+
 int isWrongLastElement(char element) {
   return element != ')' && !isNumber(element);
 }
@@ -74,10 +78,6 @@ int areWrongMiddleElements(char *str) {
   }
   if (left_paren != right_paren) result = -1;
   return result;
-}
-
-int isWrongMiddleElement(char *str) {
-  return str[0] != '(' && !isTrigFunc(&str[0]) && !isNumber(str[0]);
 }
 
 int isOperation(char element) {
