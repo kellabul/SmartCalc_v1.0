@@ -96,6 +96,32 @@
     ck_assert_int_eq(input_validation(string), -1);
 
 
+#test input_conversion_test
+/* ------------------------------------------------input_conversion_test---*/
+    char *string_input = "2+cos(sin(25)modsin(cos(3x)))";
+    char string_correct_output[MAX] = {};
+    sprintf(string_correct_output, "2+%c(%c(25)%c%c(%c(3x)))", COS, SIN, MOD, SIN, COS);
+    char string_output[MAX] = {};
+    input_conversion(string_input, string_output);
+    ck_assert_int_eq(strcmp(string_output, string_correct_output), 0);
+
+    string_input = "sqrt(2*ln(10)+tan(atan(25)acos(asin(3x)))-log(123))";
+    sprintf(string_correct_output, "%c(2*%c(10)+%c(%c(25)%c(%c(3x)))-%c(123))", SQRT, LN, TAN, ATAN, ACOS, ASIN, LOG);
+    input_conversion(string_input, string_output);
+    ck_assert_int_eq(strcmp(string_output, string_correct_output), 0);
+
+    // printf("%s\n", string_correct_output);
+
+#test infix_to_postfix_conversion
+/* ------------------------------------------------infix_to_postfix_conversion---*/
+    char string_input[MAX] = {};
+    char string_output[MAX] = {};
+    char string_correct_output[MAX] = {};
+
+    sprintf(string_input, "2/(3+2)*5");
+    sprintf(string_correct_output, "232+/5*");
+
+    sprintf(string_output, "232+/5*");
 
 
 #test helpers_test
