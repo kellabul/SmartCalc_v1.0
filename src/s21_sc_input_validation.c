@@ -21,59 +21,50 @@ int isWrongFirstElement(char *str) {
 }
 
 int isWrongMiddleElement(char *str) {
-  return str[0] != '(' && !isTrigFunc(&str[0]) && !isNumber(str[0]);
+  return str[0] != '(' && !isTrigFunc(&str[0]) && !isNumberOrX(str[0]);
 }
 
 int isWrongLastElement(char element) {
-  return element != ')' && !isNumber(element);
+  return element != ')' && !isNumberOrX(element);
 }
 
 int areWrongMiddleElements(char *str) {
-  int result = 0;
-  int left_paren = 0;
-  int right_paren = 0;
-  for (int i = 0; str[i]; i++) {
+  int result = 0, left_paren = 0, right_paren = 0;
+
+  for (int i = 0; str[i] && result == 0; i++) {
     int trigFuncLength = isTrigFunc(&str[i]);
     int modLength = isMod(&str[i]);
     if (trigFuncLength) {
       i += trigFuncLength;
       if (str[i + 1] != '(') {
         result = -1;
-        break;
       }
     } else if (modLength) {
       i += modLength;
       if (isWrongMiddleElement(&str[i + 1])) {
         result = -1;
-        break;
       }
     } else if (str[i] == '(') {
       if (isWrongFirstElement(&str[i + 1])) {
         result = -1;
-        break;
       } else {
         left_paren++;
       }
     } else if (str[i] == ')') {
       if (right_paren + 1 > left_paren) {
         result = -1;
-        break;
       } else {
         right_paren++;
       }
     } else if (isOperation(str[i]) && isWrongMiddleElement(&str[i + 1])) {
       result = -1;
-      break;
-    } else if (str[i] == '.' && !isNumber(str[i + 1]) &&
+    } else if (str[i] == '.' && !isNumberOrX(str[i + 1]) &&
                !isOperation(str[i - 1])) {
       result = -1;
-      break;
     } else if (str[i] == 'x' && !isOperation(str[i + 1]) && str[i + 1] != ')') {
       result = -1;
-      break;
-    } else if (!isNumber(str[i]) && !isOperation(str[i]) && str[i] != '.') {
+    } else if (!isNumberOrX(str[i]) && !isOperation(str[i]) && str[i] != '.') {
       result = -1;
-      break;
     }
   }
   if (left_paren != right_paren) result = -1;
@@ -101,9 +92,14 @@ int isTrigFunc(char *str) {
   return result;
 }
 
-int isNumber(char element) {
-  return (element >= '0' && element <= '9') || element == 'x';
+int isNumberOrX(char element) {
+  return isNumber (element) || element == 'x';
 }
+
+int isNumber (char element) {
+  return element >= '0' && element <= '9';
+}
+
 
 int isLn(char *str) { return !strncmp(str, "ln", 2); }
 

@@ -9,9 +9,15 @@ typedef struct stack {
 } stack;
 
 typedef struct queue {
-  char qu[MAX];
+  double qu[MAX];
   int rear, front;
 } queue;
+
+typedef struct tokens {
+  double value;
+  char type;
+} s_tokens;
+
 
 enum funcs_and_mod {
   LN = 100,
@@ -28,7 +34,7 @@ enum funcs_and_mod {
 
 // main functions
 int input_validation(char *str);
-void input_conversion(char* input, char* ouput);
+void input_conversion(char* input, s_tokens* ouput);
 void infix_to_postfix(char *infix, char *postfix);
 
 // stack data structure
@@ -39,10 +45,9 @@ int stk_push(stack *s, char value);
 char stk_pop(stack *s);
 char stk_top(stack *p);
 
-// queue data structure
-
 // santa's little helpers
 int isOperation(char element);
+int isNumberOrX(char element);
 int isNumber(char element);
 int isTrigFunc(char *str);
 int isLn(char *str);
@@ -59,5 +64,8 @@ int isWrongFirstElement(char *str);
 int isWrongLastElement(char element);
 int areWrongMiddleElements(char *str);
 int isWrongMiddleElement(char *str);
+
+int doubleValueLength (double value);
+double getNumberFromString(char *string, int *i);
 
 #endif  // SRC_S21_SMARTCALC_H_
