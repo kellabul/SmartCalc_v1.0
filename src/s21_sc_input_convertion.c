@@ -25,12 +25,13 @@ void input_conversion(char *input, s_tokens *output) {
         output[j].value = '(';
         checkUnarySign(&input[i + 1], &output[j + 1], &i, &j);
       } else if (input[i] == 'x') {
-          if (!isOperation(input[i-1]) && input[i-1] != '(' && output[j-1].value != MOD) {
-            output[j].type = 2;
-            output[j++].value = '*';
-          }
-            output[j].type = 2;
-            output[j].value = 'x';
+        if (!isOperation(input[i - 1]) && input[i - 1] != '(' &&
+            output[j - 1].value != MOD) {
+          output[j].type = 2;
+          output[j++].value = '*';
+        }
+        output[j].type = 2;
+        output[j].value = 'x';
       } else {
         output[j].type = 2;
         output[j].value = input[i];

@@ -1,7 +1,8 @@
 #ifndef SRC_S21_SMARTCALC_H_
 #define SRC_S21_SMARTCALC_H_
 
-#define MAX 256
+#define MAX_INPUT 256
+#define MAX_TKN 2*256
 
 typedef struct tokens {
   double value;
@@ -9,7 +10,7 @@ typedef struct tokens {
 } s_tokens;
 
 typedef struct stack {
-  s_tokens token[2*MAX];
+  s_tokens token[MAX_TKN];
   int top;
 } stack;
 
@@ -35,9 +36,9 @@ void infix_to_postfix(char *infix, char *postfix);
 void stk_init(stack *s);
 int stk_empty(stack *s);
 int stk_full(stack *s);
-int stk_push(stack *stk, double value, int type)
-char stk_pop(stack *s);
-char stk_top(stack *p);
+int stk_push(stack *stk, double value, int type);
+s_tokens stk_pop(stack *stk)
+s_tokens stk_top(stack *stk);
 
 // santa's little helpers
 int isOperation(char element);

@@ -59,10 +59,10 @@ int precedence(char x) {
 int isalnum_21(char symb) {
   return (symb >= '0' && symb <= '9') || (symb == 'x') || (symb == '.');
 }
-*/
 
-/*
-void infix_to_postfix(char *infix, char *postfix) {
+
+
+void infix_to_postfix(s_tokens *infix, s_tokens *postfix) {
 
 }
 */

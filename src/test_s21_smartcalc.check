@@ -108,10 +108,10 @@
     char *string_input = "-2+cos(sin(-25)modsin(+cos(66x)))";
     char *correct_output = "-1*2+c(s(-1*25)ms(1*c(66*x)))";
 
-    char output_string_1[2*MAX] = {};
+    char output_string_1[MAX_TKN] = {};
     s_tokens *output = NULL;
 
-    output = calloc(2*MAX, sizeof(s_tokens));
+    output = calloc(MAX_TKN, sizeof(s_tokens));
     if (output) {
         input_conversion(string_input, output);
 
@@ -135,8 +135,8 @@
     string_input = "x*sqrt(2*ln(-10)+tan(atan(25)acos(asin(3x)))-log(123))";
     correct_output = "x*V(2*l(-1*10)+t(T(25)C(S(3*x)))-L(123))";
 
-    char output_string_2[2*MAX] = {};
-    output = calloc(2*MAX, sizeof(s_tokens));
+    char output_string_2[MAX_TKN] = {};
+    output = calloc(MAX_TKN, sizeof(s_tokens));
     if (output) {
         input_conversion(string_input, output);
         for (int i = 0; output[i].type; i ++) {
@@ -157,9 +157,9 @@
 
 #test infix_to_postfix_conversion
 /* ------------------------------------------------infix_to_postfix_conversion---*/
-    char string_input[MAX] = {};
-    char string_output[MAX] = {};
-    char string_correct_output[MAX] = {};
+    char string_input[MAX_INPUT] = {};
+    char string_output[MAX_INPUT] = {};
+    char string_correct_output[MAX_INPUT] = {};
 
     sprintf(string_input, "2/(3+2)*5");
     sprintf(string_correct_output, "232+/5*");
@@ -180,9 +180,3 @@
 
     symbol = 'b';
     ck_assert_int_eq(isOperation(symbol), 0);
-
-    int i = 0;
-    char *string = "25)modsin(cos(3x)))";
-    double output;
-    i = getNumberFromString(string, &output);
-    printf("%lf, %d\n", output, i);

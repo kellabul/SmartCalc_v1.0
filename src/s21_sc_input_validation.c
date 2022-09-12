@@ -67,7 +67,8 @@ int areWrongMiddleElements(char *str) {
       result = -1;
     }
   }
-  if (left_paren != right_paren) result = -1;
+  if (left_paren != right_paren)
+    result = -1;
   return result;
 }
 
@@ -92,14 +93,9 @@ int isTrigFunc(char *str) {
   return result;
 }
 
-int isNumberOrX(char element) {
-  return isNumber (element) || element == 'x';
-}
+int isNumberOrX(char element) { return isNumber(element) || element == 'x'; }
 
-int isNumber (char element) {
-  return element >= '0' && element <= '9';
-}
-
+int isNumber(char element) { return element >= '0' && element <= '9'; }
 
 int isLn(char *str) { return !strncmp(str, "ln", 2); }
 
