@@ -1,5 +1,6 @@
 #include <math.h>
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 
 #include "s21_smartcalc.h"
@@ -101,24 +102,53 @@
 
 #test input_conversion_test
 /* ------------------------------------------------input_conversion_test---*/
+
+    // case 1
+
     char *string_input = "-2+cos(sin(-25)modsin(+cos(66x)))";
-    s_tokens output[2*MAX] = {};
+    char *correct_output = "-1*2+c(s(-1*25)ms(1*c(66*x)))";
+
+    char output_string_1[2*MAX] = {};
+    s_tokens *output = NULL;
+
+    output = calloc(2*MAX, sizeof(s_tokens));
     input_conversion(string_input, output);
+
     for (int i = 0; output[i].type; i ++) {
+        char buffer_string[100] = {};
         if (output[i].type == 1) {
-            printf("%g ", output[i].value);
+            sprintf(buffer_string, "%g", output[i].value);
         } else {
-            printf("%c ", (char)output[i].value);
+            sprintf(buffer_string, "%c", (char)output[i].value);
         }
+        strcat(output_string_1, buffer_string);
     }
-    putchar('\n');
 
+    ck_assert_str_eq(output_string_1, correct_output);
+    free(output);
+   
+    //case 2
 
+    string_input = "x*sqrt(2*ln(-10)+tan(atan(25)acos(asin(3x)))-log(123))";
+    correct_output = "x*V(2*l(-1*10)+t(T(25)C(S(3*x)))-L(123))";
 
-    //string_input = "sqrt(2*ln(10)+tan(atan(25)acos(asin(3x)))-log(123))";
-    //sprintf(string_correct_output, "%c(2*%c(10)+%c(%c(25)%c(%c(3x)))-%c(123))", SQRT, LN, TAN, ATAN, ACOS, ASIN, LOG);
+    char output_string_2[2*MAX] = {};
+    output = calloc(2*MAX, sizeof(s_tokens));
+    input_conversion(string_input, output);
 
-    // printf("%s\n", string_correct_output);
+    for (int i = 0; output[i].type; i ++) {
+        char buffer_string[100] = {};
+        if (output[i].type == 1) {
+            sprintf(buffer_string, "%g", output[i].value);
+        } else {
+            sprintf(buffer_string, "%c", (char)output[i].value);
+        }
+        strcat(output_string_2, buffer_string);
+    }
+
+    ck_assert_str_eq(output_string_2, correct_output);
+    free(output);
+   
 
 
 
