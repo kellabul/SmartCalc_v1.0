@@ -3,21 +3,15 @@
 
 #define MAX 256
 
-typedef struct stack {
-  char data[MAX];
-  int top;
-} stack;
-
-typedef struct queue {
-  double qu[MAX];
-  int rear, front;
-} queue;
-
 typedef struct tokens {
   double value;
   char type;
 } s_tokens;
 
+typedef struct stack {
+  s_tokens token[2*MAX];
+  int top;
+} stack;
 
 enum funcs_and_mod {
   LN = 'l',
@@ -41,7 +35,7 @@ void infix_to_postfix(char *infix, char *postfix);
 void stk_init(stack *s);
 int stk_empty(stack *s);
 int stk_full(stack *s);
-int stk_push(stack *s, char value);
+int stk_push(stack *stk, double value, int type)
 char stk_pop(stack *s);
 char stk_top(stack *p);
 

@@ -112,18 +112,21 @@
     s_tokens *output = NULL;
 
     output = calloc(2*MAX, sizeof(s_tokens));
-    input_conversion(string_input, output);
+    if (output) {
+        input_conversion(string_input, output);
 
-    for (int i = 0; output[i].type; i ++) {
-        char buffer_string[100] = {};
-        if (output[i].type == 1) {
-            sprintf(buffer_string, "%g", output[i].value);
-        } else {
-            sprintf(buffer_string, "%c", (char)output[i].value);
+        for (int i = 0; output[i].type; i ++) {
+            char buffer_string[100] = {};
+            if (output[i].type == 1) {
+                sprintf(buffer_string, "%g", output[i].value);
+            } else {
+                sprintf(buffer_string, "%c", (char)output[i].value);
+            }
+            strcat(output_string_1, buffer_string);
         }
-        strcat(output_string_1, buffer_string);
+    } else {
+        printf("out of memory\n");
     }
-
     ck_assert_str_eq(output_string_1, correct_output);
     free(output);
    
@@ -134,22 +137,22 @@
 
     char output_string_2[2*MAX] = {};
     output = calloc(2*MAX, sizeof(s_tokens));
-    input_conversion(string_input, output);
-
-    for (int i = 0; output[i].type; i ++) {
-        char buffer_string[100] = {};
-        if (output[i].type == 1) {
-            sprintf(buffer_string, "%g", output[i].value);
-        } else {
-            sprintf(buffer_string, "%c", (char)output[i].value);
+    if (output) {
+        input_conversion(string_input, output);
+        for (int i = 0; output[i].type; i ++) {
+            char buffer_string[100] = {};
+            if (output[i].type == 1) {
+                sprintf(buffer_string, "%g", output[i].value);
+            } else {
+                sprintf(buffer_string, "%c", (char)output[i].value);
+            }
+            strcat(output_string_2, buffer_string);
         }
-        strcat(output_string_2, buffer_string);
+    } else {
+        printf("out of memory\n");
     }
-
     ck_assert_str_eq(output_string_2, correct_output);
     free(output);
-   
-
 
 
 #test infix_to_postfix_conversion
