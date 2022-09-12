@@ -15,7 +15,7 @@
     string = "cos(2*1)";
     ck_assert_int_eq(input_validation(string), 0);
 
-    string = "2*1*sin(cos(25*x))";
+    string = "+2*1*sin(cos(25*x))";
     ck_assert_int_eq(input_validation(string), 0);
 
     string = "002*1*sin(cos(25*x))";
@@ -30,7 +30,7 @@
     string = "0.5+ln(-2x*(-1.9))";
     ck_assert_int_eq(input_validation(string), 0);
 
-    string = "2mod3";
+    string = "-2mod3";
     ck_assert_int_eq(input_validation(string), 0);
 
     string = "2+cos(sin(25)modsin(cos(3x)))";
@@ -95,22 +95,32 @@
     string = "2*m*1";
     ck_assert_int_eq(input_validation(string), -1);
 
+    string = "2+(1-mod)+123";
+    ck_assert_int_eq(input_validation(string), -1);
+
 
 #test input_conversion_test
 /* ------------------------------------------------input_conversion_test---*/
-    char *string_input = "2+cos(sin(25)modsin(cos(3x)))";
-    char string_correct_output[MAX] = {};
-    sprintf(string_correct_output, "2+%c(%c(25)%c%c(%c(3x)))", COS, SIN, MOD, SIN, COS);
-    char string_output[MAX] = {};
-    input_conversion(string_input, string_output);
-    ck_assert_int_eq(strcmp(string_output, string_correct_output), 0);
+    char *string_input = "-2+cos(sin(-25)modsin(+cos(66x)))";
+    s_tokens output[2*MAX] = {};
+    input_conversion(string_input, output);
+    for (int i = 0; output[i].type; i ++) {
+        if (output[i].type == 1) {
+            printf("%g ", output[i].value);
+        } else {
+            printf("%c ", (char)output[i].value);
+        }
+    }
+    putchar('\n');
 
-    string_input = "sqrt(2*ln(10)+tan(atan(25)acos(asin(3x)))-log(123))";
-    sprintf(string_correct_output, "%c(2*%c(10)+%c(%c(25)%c(%c(3x)))-%c(123))", SQRT, LN, TAN, ATAN, ACOS, ASIN, LOG);
-    input_conversion(string_input, string_output);
-    ck_assert_int_eq(strcmp(string_output, string_correct_output), 0);
+
+
+    //string_input = "sqrt(2*ln(10)+tan(atan(25)acos(asin(3x)))-log(123))";
+    //sprintf(string_correct_output, "%c(2*%c(10)+%c(%c(25)%c(%c(3x)))-%c(123))", SQRT, LN, TAN, ATAN, ACOS, ASIN, LOG);
 
     // printf("%s\n", string_correct_output);
+
+
 
 #test infix_to_postfix_conversion
 /* ------------------------------------------------infix_to_postfix_conversion---*/
@@ -139,7 +149,7 @@
     ck_assert_int_eq(isOperation(symbol), 0);
 
     int i = 0;
-    char *string = "12345.123+123";
+    char *string = "25)modsin(cos(3x)))";
     double output;
-    output = getNumberFromString(string, &i);
+    i = getNumberFromString(string, &output);
     printf("%lf, %d\n", output, i);

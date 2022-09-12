@@ -20,16 +20,16 @@ typedef struct tokens {
 
 
 enum funcs_and_mod {
-  LN = 100,
-  LOG,
-  COS,
-  SIN,
-  TAN,
-  SQRT,
-  ACOS,
-  ASIN,
-  ATAN,
-  MOD
+  LN = 'l',
+  LOG = 'L',
+  COS = 'c',
+  ACOS = 'C',
+  SIN = 's',
+  ASIN = 'S',
+  TAN = 't',
+  ATAN = 'T',
+  SQRT = 'V',
+  MOD = 'm'
 };
 
 // main functions
@@ -65,7 +65,10 @@ int isWrongLastElement(char element);
 int areWrongMiddleElements(char *str);
 int isWrongMiddleElement(char *str);
 
-int doubleValueLength (double value);
-double getNumberFromString(char *string, int *i);
+//input conversion helpers
+void checkUnarySign(char *input, s_tokens *output, int *i, int *j);
+void convertUnarySign (char sign, s_tokens *token);
+int getNumberFromString(char *string, double *value);
+int convertFunction(char *str, double *value);
 
 #endif  // SRC_S21_SMARTCALC_H_
