@@ -148,8 +148,8 @@
 /* ------------------------------------------------infix_to_postfix_conversion---*/
 
 // case 1
-    char string_input[MAX_INPUT] = "2/(3+2)*5";
-    char correct_output[MAX_INPUT] = "232+/5*";
+    char *string_input = "2/(3+2)*5";
+    char *correct_output = "232+/5*";
 
     char output_string_1[MAX_TKN] = {};
     s_tokens *infix = NULL;
@@ -171,6 +171,26 @@
     free(postfix);
 
 // case 2
+
+    string_input = "x*sqrt(cos(27)+tan(25))";
+    correct_output = "232+/5*";
+
+    char output_string_2[MAX_TKN] = {};
+
+    infix = calloc(MAX_TKN, sizeof(s_tokens));
+    postfix = calloc(MAX_TKN, sizeof(s_tokens));
+
+    if (infix && postfix) {
+        input_conversion(string_input, infix);
+        infix_to_postfix(infix, postfix);
+        convertTokensToString(postfix, output_string_2);
+    } else {
+        printf("out of memory\n");
+    }
+    ck_assert_str_eq(output_string_2, correct_output);
+
+    free(infix);
+    free(postfix);
 
 
 #test helpers_test

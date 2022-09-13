@@ -37,5 +37,6 @@ s_tokens stk_top(token_stack *stk) { //
 }
 
 int stk_top_type(token_stack *stk) { //
-  return stk->token[stk->top].type;
+  int index_of_top_token = stk->top-1;
+  return stk->token[index_of_top_token].type;
 }

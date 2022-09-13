@@ -66,22 +66,33 @@ void infix_to_postfix(s_tokens *infix, s_tokens *postfix) {
   stk_init(&stack);
   int j = 0;
   for (int i = 0; infix[i].type != 0; i++) {
-    int top_token_type = stk_top_type(&stack);
     if (infix[i].type == NUMBER || infix[i].type == VARIABLE) {
       postfix[j++] = infix[i];
-    } else if (stk_empty(&stack)) {
+    } else if (stk_empty(&stack) || infix[i].value == '(') {
       stk_push(&stack, infix[i]);
     } else if (infix[i].value == ')') {
       j += pullContentOfParents(&stack, &postfix[j]);
-    } else if (top_token_type < infix[i].type) {
+    } else if (stk_top_type(&stack) < infix[i].type) {
       stk_push(&stack, infix[i]);
-    } else if (top_token_type >= infix[i].type) {
-      j += pullTokensWithHigherPriority(top_token_type, &stack, &postfix[j]);
+    } else if (stk_top_type(&stack) >= infix[i].type) {
+      j += pullTokensWithHigherPriority(infix[i].type, &stack, &postfix[j]);
       stk_push(&stack, infix[i]);
     }
   }
   addTokensFromStackToPostfixLine(&stack, &postfix[j]);
 }
+
+int pullTokensWithHigherPriority(int priority, token_stack *stack,
+                                 s_tokens *postfix) {
+  int counter = 0;
+  for (int j = 0; stk_top_type(stack) <= priority; j++) {
+    postfix[j] = stk_pop(stack);
+    counter++;
+    if (stk_empty(stack)) break;
+  }
+  return counter;
+}
+
 
 int pullContentOfParents(token_stack *stack, s_tokens *postfix) {
   int counter = 0;
@@ -90,16 +101,6 @@ int pullContentOfParents(token_stack *stack, s_tokens *postfix) {
     postfix[j] = token;
     counter++;
     token = stk_pop(stack);
-  }
-  return counter;
-}
-
-int pullTokensWithHigherPriority(int priority, token_stack *stack,
-                                 s_tokens *postfix) {
-  int counter = 0;
-  for (int j = 0; stk_top_type(stack) >= priority; j++) {
-    postfix[j] = stk_pop(stack);
-    counter++;
   }
   return counter;
 }

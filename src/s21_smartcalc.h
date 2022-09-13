@@ -10,7 +10,7 @@
 
 typedef struct tokens {
   double value;
-  char type;
+  int type;
 } s_tokens;
 
 typedef struct s_stack {
