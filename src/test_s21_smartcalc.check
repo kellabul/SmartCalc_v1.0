@@ -105,7 +105,6 @@
     string = "-3^-2";
     ck_assert_int_eq(input_validation(string), -1);
 
-
 #test input_conversion_test
 /* ------------------------------------------------input_conversion_test---*/
 
@@ -173,7 +172,7 @@
 // case 2
 
     string_input = "x*sqrt(cos(2+7)+tan(2+5))";
-    correct_output = "232+/5*";
+    correct_output = "x27+c25+t+V*";
 
     char output_string_2[MAX_TKN] = {};
 
@@ -188,6 +187,50 @@
         printf("out of memory\n");
     }
     ck_assert_str_eq(output_string_2, correct_output);
+
+    free(infix);
+    free(postfix);
+
+// case 3
+
+    string_input = "-2+cos(sin(-25)modsin(+cos(66x)))";
+    correct_output = "-12*-125*s166x*c*smc+";
+
+    char output_string_3[MAX_TKN] = {};
+
+    infix = calloc(MAX_TKN, sizeof(s_tokens));
+    postfix = calloc(MAX_TKN, sizeof(s_tokens));
+
+    if (infix && postfix) {
+        input_conversion(string_input, infix);
+        infix_to_postfix(infix, postfix);
+        convertTokensToString(postfix, output_string_3);
+    } else {
+        printf("out of memory\n");
+    }
+    ck_assert_str_eq(output_string_3, correct_output);
+
+    free(infix);
+    free(postfix);
+
+// case 4
+
+    string_input = "2^(2^3)";
+    correct_output = "223^^";
+
+    char output_string_4[MAX_TKN] = {};
+
+    infix = calloc(MAX_TKN, sizeof(s_tokens));
+    postfix = calloc(MAX_TKN, sizeof(s_tokens));
+
+    if (infix && postfix) {
+        input_conversion(string_input, infix);
+        infix_to_postfix(infix, postfix);
+        convertTokensToString(postfix, output_string_4);
+    } else {
+        printf("out of memory\n");
+    }
+    ck_assert_str_eq(output_string_4, correct_output);
 
     free(infix);
     free(postfix);

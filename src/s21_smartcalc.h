@@ -42,7 +42,6 @@ int stk_empty(token_stack *s);
 int stk_full(token_stack *s);
 int stk_push(token_stack *stk, s_tokens element);
 s_tokens stk_pop(token_stack *stk);
-s_tokens stk_top(token_stack *stk);
 int stk_top_type(token_stack *stk);
 
 // santa's little helpers

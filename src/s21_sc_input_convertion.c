@@ -92,7 +92,7 @@ void setTokenType(char *string, s_tokens *token) {
   else if (isTrigFunc(string))
     token->type = 4;
   else if (*string == '(' || *string == ')')
-    token->type = 5;
+    token->type = -5;
 }
 
 int convertFunction(char *str, double *value) {
