@@ -1,22 +1,21 @@
 #include "s21_smartcalc.h"
 
-void stk_init(stack *stk) { //
+void stk_init(token_stack *stk) { //
   stk->top = 0;
 }
 
-int stk_empty(stack *stk) { //
+int stk_empty(token_stack *stk) { //
   return (stk->top == 0);
 }
 
-int stk_full(stack *stk) { //
+int stk_full(token_stack *stk) { //
   return (stk->top == MAX_TKN - 1);
 }
 
-int stk_push(stack *stk, double value, int type) {
+int stk_push(token_stack *stk, s_tokens element) {
   char error = 0;
   if (!stk_full(stk) && stk) {
-    stk->token[stk->top].value = value;
-    stk->token[stk->top].type = type;
+    stk->token[stk->top] = element;
     stk->top++;
   } else {
     error = -1;
@@ -24,7 +23,7 @@ int stk_push(stack *stk, double value, int type) {
   return error;
 }
 
-s_tokens stk_pop(stack *stk) {
+s_tokens stk_pop(token_stack *stk) {
   s_tokens result = {};
   if (!stk_empty(stk)) {
     stk->top--;
@@ -33,6 +32,10 @@ s_tokens stk_pop(stack *stk) {
   return result;
 }
 
-s_tokens stk_top(stack *stk) { //
+s_tokens stk_top(token_stack *stk) { //
   return stk->token[stk->top];
+}
+
+int stk_top_type(token_stack *stk) { //
+  return stk->token[stk->top].type;
 }

@@ -5,13 +5,13 @@
 // printf("ili tuta str = %c \n", str[i]);
 
 int input_validation(char *str) {
-  int result = 0;
+  int result = CORRECT_INPUT;
   if (isWrongFirstElement(str)) {
-    result = -1;
+    result = INCORRECT_INPUT;
   } else if (isWrongLastElement(str[strlen(str) - 1])) {
-    result = -1;
+    result = INCORRECT_INPUT;
   } else if (areWrongMiddleElements(str)) {
-    result = -1;
+    result = INCORRECT_INPUT;
   }
   return result;
 }

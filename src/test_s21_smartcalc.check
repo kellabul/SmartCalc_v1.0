@@ -37,6 +37,9 @@
     string = "2+cos(sin(25)modsin(cos(3x)))";
     ck_assert_int_eq(input_validation(string), 0);
 
+    string = "-3^(-2)";
+    ck_assert_int_eq(input_validation(string), 0);
+
 #test input_incorrect_validation
 /* ------------------------------------------------input_incorrect_validation---*/
     char *string = "2*cot(2*1)";
@@ -99,6 +102,9 @@
     string = "2+(1-mod)+123";
     ck_assert_int_eq(input_validation(string), -1);
 
+    string = "-3^-2";
+    ck_assert_int_eq(input_validation(string), -1);
+
 
 #test input_conversion_test
 /* ------------------------------------------------input_conversion_test---*/
@@ -140,14 +146,31 @@
 
 #test infix_to_postfix_conversion
 /* ------------------------------------------------infix_to_postfix_conversion---*/
-    char string_input[MAX_INPUT] = {};
-    char string_output[MAX_INPUT] = {};
-    char string_correct_output[MAX_INPUT] = {};
 
-    sprintf(string_input, "2/(3+2)*5");
-    sprintf(string_correct_output, "232+/5*");
+// case 1
+    char string_input[MAX_INPUT] = "2/(3+2)*5";
+    char correct_output[MAX_INPUT] = "232+/5*";
 
-    sprintf(string_output, "232+/5*");
+    char output_string_1[MAX_TKN] = {};
+    s_tokens *infix = NULL;
+    s_tokens *postfix = NULL;
+
+    infix = calloc(MAX_TKN, sizeof(s_tokens));
+    postfix = calloc(MAX_TKN, sizeof(s_tokens));
+
+    if (infix && postfix) {
+        input_conversion(string_input, infix);
+        infix_to_postfix(infix, postfix);
+        convertTokensToString(postfix, output_string_1);
+    } else {
+        printf("out of memory\n");
+    }
+    ck_assert_str_eq(output_string_1, correct_output);
+
+    free(infix);
+    free(postfix);
+
+// case 2
 
 
 #test helpers_test

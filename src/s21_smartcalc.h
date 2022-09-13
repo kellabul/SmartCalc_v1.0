@@ -3,16 +3,20 @@
 
 #define MAX_INPUT 256
 #define MAX_TKN 2*256
+#define INCORRECT_INPUT -1
+#define CORRECT_INPUT 0
+#define NUMBER -1
+#define VARIABLE -2
 
 typedef struct tokens {
   double value;
   char type;
 } s_tokens;
 
-typedef struct stack {
+typedef struct s_stack {
   s_tokens token[MAX_TKN];
   int top;
-} stack;
+} token_stack;
 
 enum funcs_and_mod {
   LN = 'l',
@@ -30,15 +34,16 @@ enum funcs_and_mod {
 // main functions
 int input_validation(char *str);
 void input_conversion(char* input, s_tokens* ouput);
-void infix_to_postfix(char *infix, char *postfix);
+void infix_to_postfix(s_tokens *infix, s_tokens *postfix);
 
 // stack data structure
-void stk_init(stack *s);
-int stk_empty(stack *s);
-int stk_full(stack *s);
-int stk_push(stack *stk, double value, int type);
-s_tokens stk_pop(stack *stk);
-s_tokens stk_top(stack *stk);
+void stk_init(token_stack *s);
+int stk_empty(token_stack *s);
+int stk_full(token_stack *s);
+int stk_push(token_stack *stk, s_tokens element);
+s_tokens stk_pop(token_stack *stk);
+s_tokens stk_top(token_stack *stk);
+int stk_top_type(token_stack *stk);
 
 // santa's little helpers
 int isOperation(char element);
@@ -68,4 +73,14 @@ void convertUnarySign (char sign, s_tokens *token);
 int getNumberFromString(char *string, double *value);
 int convertFunction(char *str, double *value);
 
+//helpers to work with s_tokens
+void setTokenType(char *string, s_tokens *token);
+void convertStringToTokens (char *string, s_tokens *token);
+
+//resverse notation helpers
+int pullTokensWithHigherPriority(int priority, token_stack *stack,
+                                 s_tokens *postfix);
+int pullContentOfParents(token_stack *stack, s_tokens *postfix);
+void addTokensFromStackToPostfixLine(token_stack *stack, s_tokens *postfix);
+                                
 #endif  // SRC_S21_SMARTCALC_H_
