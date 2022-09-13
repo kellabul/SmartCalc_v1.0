@@ -114,16 +114,7 @@
     output = calloc(MAX_TKN, sizeof(s_tokens));
     if (output) {
         input_conversion(string_input, output);
-
-        for (int i = 0; output[i].type; i ++) {
-            char buffer_string[100] = {};
-            if (output[i].type == 1) {
-                sprintf(buffer_string, "%g", output[i].value);
-            } else {
-                sprintf(buffer_string, "%c", (char)output[i].value);
-            }
-            strcat(output_string_1, buffer_string);
-        }
+        convertTokensToString(output, output_string_1);
     } else {
         printf("out of memory\n");
     }
@@ -139,15 +130,7 @@
     output = calloc(MAX_TKN, sizeof(s_tokens));
     if (output) {
         input_conversion(string_input, output);
-        for (int i = 0; output[i].type; i ++) {
-            char buffer_string[100] = {};
-            if (output[i].type == 1) {
-                sprintf(buffer_string, "%g", output[i].value);
-            } else {
-                sprintf(buffer_string, "%c", (char)output[i].value);
-            }
-            strcat(output_string_2, buffer_string);
-        }
+        convertTokensToString(output, output_string_2);
     } else {
         printf("out of memory\n");
     }

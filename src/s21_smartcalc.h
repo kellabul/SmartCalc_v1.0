@@ -37,7 +37,7 @@ void stk_init(stack *s);
 int stk_empty(stack *s);
 int stk_full(stack *s);
 int stk_push(stack *stk, double value, int type);
-s_tokens stk_pop(stack *stk)
+s_tokens stk_pop(stack *stk);
 s_tokens stk_top(stack *stk);
 
 // santa's little helpers
@@ -59,6 +59,8 @@ int isWrongFirstElement(char *str);
 int isWrongLastElement(char element);
 int areWrongMiddleElements(char *str);
 int isWrongMiddleElement(char *str);
+
+void convertTokensToString(s_tokens *tokens, char *string);
 
 //input conversion helpers
 void checkUnarySign(char *input, s_tokens *output, int *i, int *j);
