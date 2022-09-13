@@ -172,7 +172,7 @@
 
 // case 2
 
-    string_input = "x*sqrt(cos(27)+tan(25))";
+    string_input = "x*sqrt(cos(2+7)+tan(2+5))";
     correct_output = "232+/5*";
 
     char output_string_2[MAX_TKN] = {};

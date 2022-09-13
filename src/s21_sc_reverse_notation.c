@@ -85,20 +85,19 @@ void infix_to_postfix(s_tokens *infix, s_tokens *postfix) {
 int pullTokensWithHigherPriority(int priority, token_stack *stack,
                                  s_tokens *postfix) {
   int counter = 0;
-  for (int j = 0; stk_top_type(stack) <= priority; j++) {
-    postfix[j] = stk_pop(stack);
+  while(stk_top_type(stack) >= priority) {
+    postfix[counter] = stk_pop(stack);
     counter++;
     if (stk_empty(stack)) break;
   }
   return counter;
 }
 
-
 int pullContentOfParents(token_stack *stack, s_tokens *postfix) {
   int counter = 0;
   s_tokens token = stk_pop(stack);
-  for (int j = 0; token.value != '('; j++) {
-    postfix[j] = token;
+  while (token.value != '(') {
+    postfix[counter] = token;
     counter++;
     token = stk_pop(stack);
   }
