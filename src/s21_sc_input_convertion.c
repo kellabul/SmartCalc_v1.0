@@ -6,13 +6,13 @@
 
 /**
  *  token types:
+ * -10 == parentesis
  *  -2 == x (VARIABLE)
  *  -1 == numbers (NUMBER)
  *   1 == '+', '-' (min. priority)
  *   2 == '*', '\', '%'
  *   3 == '^'
- *   4 == trigonometric functions (max. pririty)
- *   5 == parentesis
+ *   4 == functions (max. pririty)
  *   0 == end of expression
  **/
 

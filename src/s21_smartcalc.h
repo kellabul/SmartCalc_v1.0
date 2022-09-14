@@ -2,7 +2,7 @@
 #define SRC_S21_SMARTCALC_H_
 
 #define MAX_INPUT 256
-#define MAX_TKN 2*256
+#define MAX_TKN 2 * 256
 #define INCORRECT_INPUT -1
 #define CORRECT_INPUT 0
 #define NUMBER -1
@@ -33,8 +33,9 @@ enum funcs_and_mod {
 
 // main functions
 int input_validation(char *str);
-void input_conversion(char* input, s_tokens* ouput);
+void input_conversion(char *input, s_tokens *ouput);
 void infix_to_postfix(s_tokens *infix, s_tokens *postfix);
+int calculation(s_tokens *tokens, char *string);
 
 // stack data structure
 void stk_init(token_stack *s);
@@ -64,22 +65,28 @@ int isWrongLastElement(char element);
 int areWrongMiddleElements(char *str);
 int isWrongMiddleElement(char *str);
 
-void convertTokensToString(s_tokens *tokens, char *string);
-
-//input conversion helpers
+// input conversion helpers
 void checkUnarySign(char *input, s_tokens *output, int *i, int *j);
-void convertUnarySign (char sign, s_tokens *token);
+void convertUnarySign(char sign, s_tokens *token);
 int getNumberFromString(char *string, double *value);
 int convertFunction(char *str, double *value);
 
-//helpers to work with s_tokens
+// helpers to work with s_tokens
 void setTokenType(char *string, s_tokens *token);
-void convertStringToTokens (char *string, s_tokens *token);
+void convertTokensToString(s_tokens *tokens, char *string);
+void convertStringToTokens(char *string, s_tokens *token);
 
-//resverse notation helpers
+// resverse notation helpers
 int pullTokensWithHigherPriority(int priority, token_stack *stack,
                                  s_tokens *postfix);
 int pullContentOfParents(token_stack *stack, s_tokens *postfix);
 void addTokensFromStackToPostfixLine(token_stack *stack, s_tokens *postfix);
-                                
+
+// calculation helpers
+
+s_tokens token_substraction(token_stack *stack);
+s_tokens token_addition(token_stack *stack);
+s_tokens token_division(token_stack *stack);
+s_tokens token_multiplication(token_stack *stack);
+
 #endif  // SRC_S21_SMARTCALC_H_

@@ -67,8 +67,7 @@ int areWrongMiddleElements(char *str) {
       result = -1;
     }
   }
-  if (left_paren != right_paren)
-    result = -1;
+  if (left_paren != right_paren) result = -1;
   return result;
 }
 

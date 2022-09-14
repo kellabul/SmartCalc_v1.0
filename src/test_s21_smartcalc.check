@@ -6,7 +6,8 @@
 #include "s21_smartcalc.h"
 
 #test input_correct_validation
-/* ------------------------------------------------input_correct_validation---*/
+/* --------------------------------------input_correct_validation---*/
+    
     char *string = "2*1";
     ck_assert_int_eq(input_validation(string), 0);
 
@@ -41,7 +42,8 @@
     ck_assert_int_eq(input_validation(string), 0);
 
 #test input_incorrect_validation
-/* ------------------------------------------------input_incorrect_validation---*/
+/* --------------------------------------input_incorrect_validation---*/
+    
     char *string = "2*cot(2*1)";
     ck_assert_int_eq(input_validation(string), -1);
 
@@ -106,7 +108,7 @@
     ck_assert_int_eq(input_validation(string), -1);
 
 #test input_conversion_test
-/* ------------------------------------------------input_conversion_test---*/
+/* --------------------------------------input_conversion_test---*/
 
     // case 1
 
@@ -144,7 +146,7 @@
 
 
 #test infix_to_postfix_conversion
-/* ------------------------------------------------infix_to_postfix_conversion---*/
+/* --------------------------------------infix_to_postfix_conversion---*/
 
 // case 1
     char *string_input = "2/(3+2)*5";
@@ -235,6 +237,57 @@
     free(infix);
     free(postfix);
 
+// case 5
+
+    string_input = "2^(2^3))";
+    correct_output = "";
+
+    char output_string_5[MAX_TKN] = {};
+
+    infix = calloc(MAX_TKN, sizeof(s_tokens));
+    postfix = calloc(MAX_TKN, sizeof(s_tokens));
+
+    if (infix && postfix) {
+        input_conversion(string_input, infix);
+        infix_to_postfix(infix, postfix);
+        convertTokensToString(postfix, output_string_5);
+    } else {
+        printf("out of memory\n");
+    }
+    ck_assert_str_eq(output_string_5, correct_output);
+
+    free(infix);
+    free(postfix);
+
+#test calculation_test
+
+/* --------------------------------------calculation---*/
+
+// case 1
+
+    char *string_input = "2/(3+2)*5";
+    char *correct_output = "2";
+
+    char output_string_1[MAX_TKN] = {};
+    s_tokens *infix = NULL;
+    s_tokens *postfix = NULL;
+
+    infix = calloc(MAX_TKN, sizeof(s_tokens));
+    postfix = calloc(MAX_TKN, sizeof(s_tokens));
+    
+    if (infix && postfix) {
+        input_conversion(string_input, infix);
+        infix_to_postfix(infix, postfix);
+        calculation(postfix, output_string_1);
+    } else {
+        printf("out of memory\n");
+    }
+    ck_assert_str_eq(output_string_1, correct_output);
+
+    free(infix);
+    free(postfix);
+
+// case 2
 
 #test helpers_test
 
