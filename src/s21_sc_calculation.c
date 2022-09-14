@@ -23,18 +23,18 @@ int calculation(s_tokens *tokens, char *string) {
   } else if (isnan(final_result.value)) {
     sprintf(string, "Nan");
   } else {
-    sprintf(string, "%Lg", final_result.value);
+    sprintf(string, "%g", final_result.value);
   }
   return 0;
 }
 
-int operationRequaresOneNum(long double value) {
+int operationRequaresOneNum(double value) {
   return (value == LN || value == LOG || value == COS || value == ACOS ||
           value == SIN || value == ASIN || value == TAN || value == ATAN ||
           value == SQRT);
 }
 
-s_tokens calculateTwoNumbers(token_stack *stack, long double operation) {
+s_tokens calculateTwoNumbers(token_stack *stack, double operation) {
   s_tokens first = stk_pop(stack);
   s_tokens second = stk_pop(stack);
   s_tokens result = {.type = NUMBER};
@@ -56,7 +56,7 @@ s_tokens calculateTwoNumbers(token_stack *stack, long double operation) {
   return result;
 }
 
-s_tokens calculateOneNumber(token_stack *stack, long double operation) {
+s_tokens calculateOneNumber(token_stack *stack, double operation) {
   s_tokens result = {.type = NUMBER};
   s_tokens first = stk_pop(stack);
 

@@ -9,7 +9,7 @@
 #define VARIABLE -2
 
 typedef struct tokens {
-  long double value;
+  double value;
   int type;
 } s_tokens;
 
@@ -68,8 +68,8 @@ int isWrongMiddleElement(char *str);
 // input conversion helpers
 void checkUnarySign(char *input, s_tokens *output, int *i, int *j);
 void convertUnarySign(char sign, s_tokens *token);
-int getNumberFromString(char *string, long double *value);
-int convertFunction(char *str, long double *value);
+int getNumberFromString(char *string, double *value);
+int convertFunction(char *str, double *value);
 
 // helpers to work with s_tokens
 void setTokenType(char *string, s_tokens *token);
@@ -84,9 +84,9 @@ void addTokensFromStackToPostfixLine(token_stack *stack, s_tokens *postfix);
 
 // calculation helpers
 
-int operationRequaresOneNum(long double value);
-s_tokens calculateOneNumber(token_stack *stack, long double operation);
-s_tokens calculateTwoNumbers(token_stack *stack, long double operation);
+int operationRequaresOneNum(double value);
+s_tokens calculateOneNumber(token_stack *stack, double operation);
+s_tokens calculateTwoNumbers(token_stack *stack, double operation);
 
 
 #endif  // SRC_S21_SMARTCALC_H_
