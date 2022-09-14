@@ -260,7 +260,6 @@
     free(postfix);
 
 #test calculation_test
-
 /* --------------------------------------calculation---*/
 
 // case 1
@@ -268,29 +267,52 @@
     char *string_input = "2/(3+2)*5";
     char *correct_output = "2";
 
-    char output_string_1[MAX_TKN] = {};
+    char *output_string = NULL;
     s_tokens *infix = NULL;
     s_tokens *postfix = NULL;
 
     infix = calloc(MAX_TKN, sizeof(s_tokens));
     postfix = calloc(MAX_TKN, sizeof(s_tokens));
-    
-    if (infix && postfix) {
+    output_string = calloc(MAX_TKN, sizeof(char));
+
+    if (infix && postfix && output_string) {
         input_conversion(string_input, infix);
         infix_to_postfix(infix, postfix);
-        calculation(postfix, output_string_1);
+        calculation(postfix, output_string);
     } else {
         printf("out of memory\n");
     }
-    ck_assert_str_eq(output_string_1, correct_output);
+    ck_assert_str_eq(output_string, correct_output);
 
     free(infix);
     free(postfix);
+    free(output_string);
 
 // case 2
 
-#test helpers_test
+    string_input = "-cos(0.785)";
+    correct_output = "2";
 
+    infix = calloc(MAX_TKN, sizeof(s_tokens));
+    postfix = calloc(MAX_TKN, sizeof(s_tokens));
+    output_string = calloc(MAX_TKN, sizeof(char));
+
+    if (infix && postfix && output_string) {
+        input_conversion(string_input, infix);
+        infix_to_postfix(infix, postfix);
+        calculation(postfix, output_string);
+    } else {
+        printf("out of memory\n");
+    }
+    ck_assert_str_eq(output_string, correct_output);
+
+    free(infix);
+    free(postfix);
+    free(output_string);
+
+
+#test helpers_test
+////////////////////////////////////////////////////////
     char symbol = '1';
     ck_assert_int_eq(isNumber(symbol), 1);
 
