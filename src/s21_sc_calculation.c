@@ -23,7 +23,7 @@ int calculation(s_tokens *tokens, char *string) {
   } else if (isnan(final_result.value)) {
     sprintf(string, "Nan");
   } else {
-    sprintf(string, "%g", final_result.value);
+    sprintf(string, "%lf", final_result.value);
   }
   return 0;
 }

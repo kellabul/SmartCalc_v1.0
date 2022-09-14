@@ -265,7 +265,7 @@
 // case 1
 
     char *string_input = "2/(3+2)*5";
-    char *correct_output = "2";
+    char *correct_output = "2.000000";
 
     char *output_string = NULL;
     s_tokens *infix = NULL;
@@ -290,8 +290,31 @@
 
 // case 2
 
-    string_input = "-cos(0.785)";
-    correct_output = "2";
+    string_input = "cos(0.785)+sin(0.785)+tan(0.785)+acos(0.785)+asin(0.785)+atan(0.785)+ln(0.785)+log(0.785)+sqrt(0.785)";
+    correct_output = "5.188542";
+
+    infix = calloc(MAX_TKN, sizeof(s_tokens));
+    postfix = calloc(MAX_TKN, sizeof(s_tokens));
+    output_string = calloc(MAX_TKN, sizeof(char));
+
+    if (infix && postfix && output_string) {
+        input_conversion(string_input, infix);
+        infix_to_postfix(infix, postfix);
+        calculation(postfix, output_string);
+    } else {
+        printf("out of memory\n");
+    }
+    // printf("%s\n", output_string);
+    ck_assert_str_eq(output_string, correct_output);
+
+    free(infix);
+    free(postfix);
+    free(output_string);
+
+// case 3
+
+    string_input = "-2*(25-465+98*4654-sin(-123+490)/8)";
+    correct_output = "-911212.250000";
 
     infix = calloc(MAX_TKN, sizeof(s_tokens));
     postfix = calloc(MAX_TKN, sizeof(s_tokens));
