@@ -41,7 +41,7 @@ int calculation(s_tokens *tokens, char *string);
 void stk_init(token_stack *s);
 int stk_empty(token_stack *s);
 int stk_full(token_stack *s);
-int stk_push(token_stack *stk, s_tokens element);
+void stk_push(token_stack *stk, s_tokens element);
 s_tokens stk_pop(token_stack *stk);
 int stk_top_type(token_stack *stk);
 
@@ -87,6 +87,6 @@ void addTokensFromStackToPostfixLine(token_stack *stack, s_tokens *postfix);
 int operationRequaresOneNum(double value);
 s_tokens calculateOneNumber(token_stack *stack, double operation);
 s_tokens calculateTwoNumbers(token_stack *stack, double operation);
-
+double calculateMod(double second, double first);
 
 #endif  // SRC_S21_SMARTCALC_H_

@@ -18,10 +18,12 @@ int calculation(s_tokens *tokens, char *string) {
   }
   final_result = stk_pop(&stack);
   if (isinf(final_result.value)) {
-    if (final_result.value < 0) sprintf(string, "-infinity");
-    else sprintf(string, "infinity");
+    if (final_result.value < 0)
+      sprintf(string, "- INFINITY");
+    else
+      sprintf(string, "INFINITY");
   } else if (isnan(final_result.value)) {
-    sprintf(string, "Nan");
+    sprintf(string, "NaN");
   } else {
     sprintf(string, "%lf", final_result.value);
   }
@@ -49,34 +51,41 @@ s_tokens calculateTwoNumbers(token_stack *stack, double operation) {
     result.value = second.value * first.value;
   else if (operation == '^')
     result.value = pow(second.value, first.value);
-  else if (operation == '^')
-    result.value = pow(second.value, first.value);
   else if (operation == MOD)
-    result.value = fmod(second.value, first.value);
+    result.value = calculateMod(second.value, first.value);
+  return result;
+}
+
+double calculateMod(double left, double right) {
+  double result;
+  if ((left < 0 && right < 0) || (left > 0 && right > 0))
+    result = fmod(left, right);
+  else
+    result = right + fmod(left, right);
   return result;
 }
 
 s_tokens calculateOneNumber(token_stack *stack, double operation) {
   s_tokens result = {.type = NUMBER};
-  s_tokens first = stk_pop(stack);
+  s_tokens number = stk_pop(stack);
 
   if (operation == LN)
-    result.value = log(first.value);
+    result.value = log(number.value);
   else if (operation == LOG)
-    result.value = log10(first.value);
+    result.value = log10(number.value);
   else if (operation == COS)
-    result.value = cos(first.value);
+    result.value = cos(number.value);
   else if (operation == SIN)
-    result.value = sin(first.value);
+    result.value = sin(number.value);
   else if (operation == TAN)
-    result.value = tan(first.value);
+    result.value = tan(number.value);
   else if (operation == ACOS)
-    result.value = acos(first.value);
+    result.value = acos(number.value);
   else if (operation == ASIN)
-    result.value = asin(first.value);
+    result.value = asin(number.value);
   else if (operation == ATAN)
-    result.value = atan(first.value);
+    result.value = atan(number.value);
   else if (operation == SQRT)
-    result.value = sqrt(first.value);
+    result.value = sqrt(number.value);
   return result;
 }

@@ -110,7 +110,7 @@
 #test input_conversion_test
 /* --------------------------------------input_conversion_test---*/
 
-    // case 1
+// input_conversion case 1
 
     char *string_input = "-2+cos(sin(-25)modsin(+cos(66x)))";
     char *correct_output = "-1*2+c(s(-1*25)ms(1*c(66*x)))";
@@ -128,7 +128,7 @@
     ck_assert_str_eq(output_string_1, correct_output);
     free(output);
    
-    //case 2
+// input_conversion case 2
 
     string_input = "x*sqrt(2*ln(-10)+tan(atan(25)acos(asin(3x)))-log(123))";
     correct_output = "x*V(2*l(-1*10)+t(T(25)C(S(3*x)))-L(123))";
@@ -148,52 +148,56 @@
 #test infix_to_postfix_conversion
 /* --------------------------------------infix_to_postfix_conversion---*/
 
-// case 1
+// infix_to_postfix case 1
+
     char *string_input = "2/(3+2)*5";
     char *correct_output = "232+/5*";
 
-    char output_string_1[MAX_TKN] = {};
+    char *output_string = NULL;
     s_tokens *infix = NULL;
     s_tokens *postfix = NULL;
 
     infix = calloc(MAX_TKN, sizeof(s_tokens));
     postfix = calloc(MAX_TKN, sizeof(s_tokens));
+    output_string = calloc(MAX_TKN, sizeof(char));
 
     if (infix && postfix) {
         input_conversion(string_input, infix);
         infix_to_postfix(infix, postfix);
-        convertTokensToString(postfix, output_string_1);
+        convertTokensToString(postfix, output_string);
     } else {
         printf("out of memory\n");
     }
-    ck_assert_str_eq(output_string_1, correct_output);
+    ck_assert_str_eq(output_string, correct_output);
 
+    free(output_string);
     free(infix);
     free(postfix);
 
-// case 2
+// infix_to_postfix case 2
 
     string_input = "x*sqrt(cos(2+7)+tan(2+5))";
     correct_output = "x27+c25+t+V*";
-
-    char output_string_2[MAX_TKN] = {};
+    
 
     infix = calloc(MAX_TKN, sizeof(s_tokens));
     postfix = calloc(MAX_TKN, sizeof(s_tokens));
+    output_string = calloc(MAX_TKN, sizeof(char));
 
     if (infix && postfix) {
         input_conversion(string_input, infix);
         infix_to_postfix(infix, postfix);
-        convertTokensToString(postfix, output_string_2);
+        convertTokensToString(postfix, output_string);
     } else {
         printf("out of memory\n");
     }
-    ck_assert_str_eq(output_string_2, correct_output);
+    ck_assert_str_eq(output_string, correct_output);
 
     free(infix);
     free(postfix);
+    free(output_string);
 
-// case 3
+// infix_to_postfix case 3
 
     string_input = "-2+cos(sin(-25)modsin(+cos(66x)))";
     correct_output = "-12*-125*s166x*c*smc+";
@@ -215,7 +219,7 @@
     free(infix);
     free(postfix);
 
-// case 4
+// infix_to_postfix case 4
 
     string_input = "2^(2^3)";
     correct_output = "223^^";
@@ -237,7 +241,7 @@
     free(infix);
     free(postfix);
 
-// case 5
+// infix_to_postfix case 5
 
     string_input = "2^(2^3))";
     correct_output = "";
@@ -262,7 +266,7 @@
 #test calculation_test
 /* --------------------------------------calculation---*/
 
-// case 1
+// calculation case 1
 
     char *string_input = "2/(3+2)*5";
     char *correct_output = "2.000000";
@@ -288,7 +292,7 @@
     free(postfix);
     free(output_string);
 
-// case 2
+// calculation case 2
 
     string_input = "cos(0.785)+sin(0.785)+tan(0.785)+acos(0.785)+asin(0.785)+atan(0.785)+ln(0.785)+log(0.785)+sqrt(0.785)";
     correct_output = "5.188542";
@@ -311,10 +315,10 @@
     free(postfix);
     free(output_string);
 
-// case 3
+// calculation case 3
 
-    string_input = "-2*(25-465+98*4654-sin(-123+490)/8)";
-    correct_output = "-911212.250000";
+    string_input = "-2+cos(sin(-25)modsin(+cos(66)))-(19mod12)^2";
+    correct_output = "-50.240940";
 
     infix = calloc(MAX_TKN, sizeof(s_tokens));
     postfix = calloc(MAX_TKN, sizeof(s_tokens));
@@ -333,17 +337,68 @@
     free(postfix);
     free(output_string);
 
+// calculation case 4
 
-#test helpers_test
-////////////////////////////////////////////////////////
-    char symbol = '1';
-    ck_assert_int_eq(isNumber(symbol), 1);
+    string_input = "-2/0+123";
+    correct_output = "- INFINITY";
 
-    symbol = 'b';
-    ck_assert_int_eq(isNumber(symbol), 0);
+    infix = calloc(MAX_TKN, sizeof(s_tokens));
+    postfix = calloc(MAX_TKN, sizeof(s_tokens));
+    output_string = calloc(MAX_TKN, sizeof(char));
 
-    symbol = '+';
-    ck_assert_int_eq(isOperation(symbol), 1);
+    if (infix && postfix && output_string) {
+        input_conversion(string_input, infix);
+        infix_to_postfix(infix, postfix);
+        calculation(postfix, output_string);
+    } else {
+        printf("out of memory\n");
+    }
+    ck_assert_str_eq(output_string, correct_output);
 
-    symbol = 'b';
-    ck_assert_int_eq(isOperation(symbol), 0);
+    free(infix);
+    free(postfix);
+    free(output_string);
+
+// calculation case 5
+
+    string_input = "2/0";
+    correct_output = "INFINITY";
+
+    infix = calloc(MAX_TKN, sizeof(s_tokens));
+    postfix = calloc(MAX_TKN, sizeof(s_tokens));
+    output_string = calloc(MAX_TKN, sizeof(char));
+
+    if (infix && postfix && output_string) {
+        input_conversion(string_input, infix);
+        infix_to_postfix(infix, postfix);
+        calculation(postfix, output_string);
+    } else {
+        printf("out of memory\n");
+    }
+    ck_assert_str_eq(output_string, correct_output);
+
+    free(infix);
+    free(postfix);
+    free(output_string);
+
+// calculation case 6
+
+    string_input = "sqrt(cos(2+7)+tan(2+5))";
+    correct_output = "NaN";
+
+    infix = calloc(MAX_TKN, sizeof(s_tokens));
+    postfix = calloc(MAX_TKN, sizeof(s_tokens));
+    output_string = calloc(MAX_TKN, sizeof(char));
+
+    if (infix && postfix && output_string) {
+        input_conversion(string_input, infix);
+        infix_to_postfix(infix, postfix);
+        calculation(postfix, output_string);
+    } else {
+        printf("out of memory\n");
+    }
+    ck_assert_str_eq(output_string, correct_output);
+
+    free(infix);
+    free(postfix);
+    free(output_string);
