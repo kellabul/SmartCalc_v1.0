@@ -21,7 +21,7 @@ int isWrongFirstElement(char *str) {
 }
 
 int isWrongMiddleElement(char *str) {
-  return str[0] != '(' && !isTrigFunc(&str[0]) && !isNumberOrX(str[0]);
+  return str[0] != '(' && !isFunction(&str[0]) && !isNumberOrX(str[0]);
 }
 
 int isWrongLastElement(char element) {
@@ -32,14 +32,15 @@ int areWrongMiddleElements(char *str) {
   int result = 0, left_paren = 0, right_paren = 0;
 
   for (int i = 0; str[i] && result == 0; i++) {
-    int trigFuncLength = isTrigFunc(&str[i]);
-    int modLength = isMod(&str[i]);
-    if (trigFuncLength) {
-      i += trigFuncLength;
+    int functionLength = 0;
+    int modLength = 0;
+
+    if ((functionLength = isFunction(&str[i]))) {
+      i += functionLength;
       if (str[i + 1] != '(') {
         result = -1;
       }
-    } else if (modLength) {
+    } else if ((modLength = isMod(&str[i]))) {
       i += modLength;
       if (isWrongMiddleElement(&str[i + 1])) {
         result = -1;
@@ -76,7 +77,7 @@ int isOperation(char element) {
          element == '^';
 }
 
-int isTrigFunc(char *str) {
+int isFunction(char *str) {
   // result depends on the function name length
   int result = 0;
   if ((result = isLn(str))) {

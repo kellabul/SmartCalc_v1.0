@@ -49,7 +49,7 @@ int stk_top_type(token_stack *stk);
 int isOperation(char element);
 int isNumberOrX(char element);
 int isNumber(char element);
-int isTrigFunc(char *str);
+int isFunction(char *str);
 int isLn(char *str);
 int isLog(char *str);
 int isCos(char *str);

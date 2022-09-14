@@ -35,7 +35,7 @@ int input_conversion(char *input, s_tokens *output) {
       if (isNumber(input[i])) {
         setTokenType(&input[i], &output[j]);
         i += getNumberFromString(&input[i], &output[j].value);
-      } else if (isTrigFunc(&input[i]) || isMod(&input[i])) {
+      } else if (isFunction(&input[i]) || isMod(&input[i])) {
         setTokenType(&input[i], &output[j]);
         i += convertFunction(&input[i], &output[j].value);
       } else if (input[i] == '(') {
@@ -95,7 +95,7 @@ void setTokenType(char *string, s_tokens *token) {
     token->type = 2;
   else if (*string == '^')
     token->type = 3;
-  else if (isTrigFunc(string))
+  else if (isFunction(string))
     token->type = 4;
   else if (*string == '(' || *string == ')')
     token->type = -5;
