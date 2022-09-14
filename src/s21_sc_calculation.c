@@ -1,5 +1,6 @@
 #include <math.h>
 #include <stdio.h>
+#include <string.h>
 
 #include "s21_smartcalc.h"
 
@@ -27,7 +28,18 @@ int calculation(s_tokens *tokens, char *string) {
   } else {
     sprintf(string, "%lf", final_result.value);
   }
+  deleteZeroesFromString(string);
   return 0;
+}
+
+void deleteZeroesFromString(char *str) {
+  for (size_t i = strlen(str) - 1; i != 0; i--) {
+    if (str[i] == '.') str[i] = '\0';
+    if (str[i] != '0') {
+      str[i + 1] = '\0';
+      break;
+    }
+  }
 }
 
 int operationRequaresOneNum(double value) {

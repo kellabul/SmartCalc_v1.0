@@ -33,7 +33,7 @@ enum funcs_and_mod {
 
 // main functions
 int input_validation(char *str);
-void input_conversion(char *input, s_tokens *ouput);
+int input_conversion(char *input, s_tokens *output);
 void infix_to_postfix(s_tokens *infix, s_tokens *postfix);
 int calculation(s_tokens *tokens, char *string);
 
@@ -88,5 +88,6 @@ int operationRequaresOneNum(double value);
 s_tokens calculateOneNumber(token_stack *stack, double operation);
 s_tokens calculateTwoNumbers(token_stack *stack, double operation);
 double calculateMod(double second, double first);
+void deleteZeroesFromString(char *str);
 
 #endif  // SRC_S21_SMARTCALC_H_

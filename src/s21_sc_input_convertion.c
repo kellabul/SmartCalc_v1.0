@@ -16,8 +16,13 @@
  *   0 == end of expression
  **/
 
-void input_conversion(char *input, s_tokens *output) {
-  if (input_validation(input) != INCORRECT_INPUT) {
+int input_conversion(char *input, s_tokens *output) {
+  int error = 0;
+  if (strlen(input) > 255) {
+    error = 1;
+  } else if (input_validation(input) == INCORRECT_INPUT) {
+    error = 2;
+  } else {
     int i = 0, j = 0;
     // check if first token is '+' or '-'
     checkUnarySign(&input[i], &output[j], &i, &j);
@@ -50,6 +55,7 @@ void input_conversion(char *input, s_tokens *output) {
     // .type == 0 means the end of token line
     output[j].type = 0;
   }
+  return error;
 }
 
 void convertStringToTokens(char *string, s_tokens *token) {

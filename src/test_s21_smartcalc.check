@@ -144,6 +144,18 @@
     ck_assert_str_eq(output_string_2, correct_output);
     free(output);
 
+// input_conversion case 4
+
+    string_input = "1123456789+123456789+123456789+123456789+123456789+123456789+123456789+123456789+123456789+123456789+123456789+123456789+123456789+123456789+123456789+123456789+123456789+123456789+123456789+123456789+123456789+123456789+123456789+123456789+123456789+12345";
+    output = calloc(MAX_TKN, sizeof(s_tokens));
+    ck_assert_int_eq(input_conversion(string_input, output), 1);
+
+// input_conversion case 5
+
+    string_input = "(1-1+)";
+    ck_assert_int_eq(input_conversion(string_input, output), 2);
+    free(output);
+
 
 #test infix_to_postfix_conversion
 /* --------------------------------------infix_to_postfix_conversion---*/
@@ -159,7 +171,7 @@
 
     infix = calloc(MAX_TKN, sizeof(s_tokens));
     postfix = calloc(MAX_TKN, sizeof(s_tokens));
-    output_string = calloc(MAX_TKN, sizeof(char));
+    output_string = calloc(MAX_INPUT, sizeof(char));
 
     if (infix && postfix) {
         input_conversion(string_input, infix);
@@ -182,7 +194,7 @@
 
     infix = calloc(MAX_TKN, sizeof(s_tokens));
     postfix = calloc(MAX_TKN, sizeof(s_tokens));
-    output_string = calloc(MAX_TKN, sizeof(char));
+    output_string = calloc(MAX_INPUT, sizeof(char));
 
     if (infix && postfix) {
         input_conversion(string_input, infix);
@@ -269,7 +281,7 @@
 // calculation case 1
 
     char *string_input = "2/(3+2)*5";
-    char *correct_output = "2.000000";
+    char *correct_output = "2";
 
     char *output_string = NULL;
     s_tokens *infix = NULL;
@@ -277,7 +289,7 @@
 
     infix = calloc(MAX_TKN, sizeof(s_tokens));
     postfix = calloc(MAX_TKN, sizeof(s_tokens));
-    output_string = calloc(MAX_TKN, sizeof(char));
+    output_string = calloc(MAX_INPUT, sizeof(char));
 
     if (infix && postfix && output_string) {
         input_conversion(string_input, infix);
@@ -299,7 +311,7 @@
 
     infix = calloc(MAX_TKN, sizeof(s_tokens));
     postfix = calloc(MAX_TKN, sizeof(s_tokens));
-    output_string = calloc(MAX_TKN, sizeof(char));
+    output_string = calloc(MAX_INPUT, sizeof(char));
 
     if (infix && postfix && output_string) {
         input_conversion(string_input, infix);
@@ -318,11 +330,11 @@
 // calculation case 3
 
     string_input = "-2+cos(sin(-25)modsin(+cos(66)))-(19mod12)^2";
-    correct_output = "-50.240940";
+    correct_output = "-50.24094";
 
     infix = calloc(MAX_TKN, sizeof(s_tokens));
     postfix = calloc(MAX_TKN, sizeof(s_tokens));
-    output_string = calloc(MAX_TKN, sizeof(char));
+    output_string = calloc(MAX_INPUT, sizeof(char));
 
     if (infix && postfix && output_string) {
         input_conversion(string_input, infix);
@@ -344,7 +356,7 @@
 
     infix = calloc(MAX_TKN, sizeof(s_tokens));
     postfix = calloc(MAX_TKN, sizeof(s_tokens));
-    output_string = calloc(MAX_TKN, sizeof(char));
+    output_string = calloc(MAX_INPUT, sizeof(char));
 
     if (infix && postfix && output_string) {
         input_conversion(string_input, infix);
@@ -366,7 +378,7 @@
 
     infix = calloc(MAX_TKN, sizeof(s_tokens));
     postfix = calloc(MAX_TKN, sizeof(s_tokens));
-    output_string = calloc(MAX_TKN, sizeof(char));
+    output_string = calloc(MAX_INPUT, sizeof(char));
 
     if (infix && postfix && output_string) {
         input_conversion(string_input, infix);
@@ -388,7 +400,25 @@
 
     infix = calloc(MAX_TKN, sizeof(s_tokens));
     postfix = calloc(MAX_TKN, sizeof(s_tokens));
-    output_string = calloc(MAX_TKN, sizeof(char));
+    output_string = calloc(MAX_INPUT, sizeof(char));
+
+    if (infix && postfix && output_string) {
+        input_conversion(string_input, infix);
+        infix_to_postfix(infix, postfix);
+        calculation(postfix, output_string);
+    } else {
+        printf("out of memory\n");
+    }
+    ck_assert_str_eq(output_string, correct_output);
+
+// calculation case 7
+
+    string_input = "123456789+123456789+123456789+123456789+123456789+123456789+123456789+123456789+123456789+123456789+123456789+123456789+123456789+123456789+123456789+123456789+123456789+123456789+123456789+123456789+123456789+123456789+123456789+123456789+123456789+12345";
+    correct_output = "3086432070";
+
+    infix = calloc(MAX_TKN, sizeof(s_tokens));
+    postfix = calloc(MAX_TKN, sizeof(s_tokens));
+    output_string = calloc(MAX_INPUT, sizeof(char));
 
     if (infix && postfix && output_string) {
         input_conversion(string_input, infix);
