@@ -94,6 +94,6 @@ void deleteZeroesFromString(char *str);
 
 // credit calculator
 double total_payment(double loan, double interestRate, int creditPeriod,
-                       int type, double *firstPayment, double *lastPayment);
+                     int type, double *firstPayment, double *lastPayment);
 
 #endif  // SRC_S21_SMARTCALC_H_
