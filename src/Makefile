@@ -53,7 +53,7 @@ gcov_report: gcov
 
 compile_test:
 	checkmk $(TEST_NAME).check | gcc $(FLAGS) $(SOURCE_FILES) -xc - $(LIBS) -o $(TEST_NAME) --coverage
-
+	
 gcov: compile_test
 	@rm -f $(COVERAGE_RESULTS)
 	./$(TEST_NAME)

@@ -432,3 +432,15 @@
     free(infix);
     free(postfix);
     free(output_string);
+
+
+/* --------------------------------------BONUS PART--------------------------------------*/
+
+#test credit_test
+/* --------------------------------------credit---*/
+
+double loan = 50000;
+double interestRate = 22.0;
+int creditPeriod = 12;
+
+ck_assert_double_eq_tol(monthly_payment(loan, interestRate, creditPeriod, ANNUITANTS), 4679.72, 10e-2);

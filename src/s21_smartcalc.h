@@ -8,6 +8,9 @@
 #define NUMBER -1
 #define VARIABLE -2
 
+#define ANNUITANTS 1
+#define DIFFERENTIATED 2
+
 typedef struct tokens {
   double value;
   int type;
@@ -83,11 +86,14 @@ int pullContentOfParents(token_stack *stack, s_tokens *postfix);
 void addTokensFromStackToPostfixLine(token_stack *stack, s_tokens *postfix);
 
 // calculation helpers
-
 int operationRequaresOneNum(double value);
 s_tokens calculateOneNumber(token_stack *stack, double operation);
 s_tokens calculateTwoNumbers(token_stack *stack, double operation);
 double calculateMod(double second, double first);
 void deleteZeroesFromString(char *str);
+
+// credit calculator
+double monthly_payment(double loan, double interestRate, int creditPeriod,
+                      int type);
 
 #endif  // SRC_S21_SMARTCALC_H_
