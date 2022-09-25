@@ -29,7 +29,12 @@ tests: compile_test
 install_gtk_mac:
 	brew install gtk+3
 
+install_gtk_linux:
+	sudo apt-get install libgtk-3-dev
+
 install:
+	gcc s21_sc_main.c -o $(NAME) `pkg-config --libs --cflags gtk+-3.0` -export-dynamic
+
 
 uninstall:
 
