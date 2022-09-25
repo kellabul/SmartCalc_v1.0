@@ -115,10 +115,10 @@
     char *string_input = "-2+cos(sin(-25)modsin(+cos(66x)))";
     char *correct_output = "-1*2+c(s(-1*25)ms(1*c(66*x)))";
 
-    char output_string_1[MAX_TKN] = {};
+    char output_string_1[S21_MAX_TKN] = {};
     s_tokens *output = NULL;
 
-    output = calloc(MAX_TKN, sizeof(s_tokens));
+    output = calloc(S21_MAX_TKN, sizeof(s_tokens));
     if (output) {
         input_conversion(string_input, output);
         convertTokensToString(output, output_string_1);
@@ -133,8 +133,8 @@
     string_input = "x*sqrt(2*ln(-10)+tan(atan(25)acos(asin(3x)))-log(123))";
     correct_output = "x*V(2*l(-1*10)+t(T(25)C(S(3*x)))-L(123))";
 
-    char output_string_2[MAX_TKN] = {};
-    output = calloc(MAX_TKN, sizeof(s_tokens));
+    char output_string_2[S21_MAX_TKN] = {};
+    output = calloc(S21_MAX_TKN, sizeof(s_tokens));
     if (output) {
         input_conversion(string_input, output);
         convertTokensToString(output, output_string_2);
@@ -147,13 +147,13 @@
 // input_conversion case 4
 
     string_input = "1123456789+123456789+123456789+123456789+123456789+123456789+123456789+123456789+123456789+123456789+123456789+123456789+123456789+123456789+123456789+123456789+123456789+123456789+123456789+123456789+123456789+123456789+123456789+123456789+123456789+12345";
-    output = calloc(MAX_TKN, sizeof(s_tokens));
-    ck_assert_int_eq(input_conversion(string_input, output), TOO_MUCH_ARGS);
+    output = calloc(S21_MAX_TKN, sizeof(s_tokens));
+    ck_assert_int_eq(input_conversion(string_input, output), S21_TOO_MUCH_ARGS);
 
 // input_conversion case 5
 
     string_input = "(1-1+)";
-    ck_assert_int_eq(input_conversion(string_input, output), INCORRECT_INPUT);
+    ck_assert_int_eq(input_conversion(string_input, output), S21_INS21_CORRECT_INPUT);
     free(output);
 
 
@@ -169,9 +169,9 @@
     s_tokens *infix = NULL;
     s_tokens *postfix = NULL;
 
-    infix = calloc(MAX_TKN, sizeof(s_tokens));
-    postfix = calloc(MAX_TKN, sizeof(s_tokens));
-    output_string = calloc(MAX_INPUT, sizeof(char));
+    infix = calloc(S21_MAX_TKN, sizeof(s_tokens));
+    postfix = calloc(S21_MAX_TKN, sizeof(s_tokens));
+    output_string = calloc(S21_MAX_INPUT, sizeof(char));
 
     if (infix && postfix) {
         input_conversion(string_input, infix);
@@ -192,9 +192,9 @@
     correct_output = "x27+c25+t+V*";
     
 
-    infix = calloc(MAX_TKN, sizeof(s_tokens));
-    postfix = calloc(MAX_TKN, sizeof(s_tokens));
-    output_string = calloc(MAX_INPUT, sizeof(char));
+    infix = calloc(S21_MAX_TKN, sizeof(s_tokens));
+    postfix = calloc(S21_MAX_TKN, sizeof(s_tokens));
+    output_string = calloc(S21_MAX_INPUT, sizeof(char));
 
     if (infix && postfix) {
         input_conversion(string_input, infix);
@@ -214,10 +214,10 @@
     string_input = "-2+cos(sin(-25)modsin(+cos(66x)))";
     correct_output = "-12*-125*s166x*c*smc+";
 
-    char output_string_3[MAX_TKN] = {};
+    char output_string_3[S21_MAX_TKN] = {};
 
-    infix = calloc(MAX_TKN, sizeof(s_tokens));
-    postfix = calloc(MAX_TKN, sizeof(s_tokens));
+    infix = calloc(S21_MAX_TKN, sizeof(s_tokens));
+    postfix = calloc(S21_MAX_TKN, sizeof(s_tokens));
 
     if (infix && postfix) {
         input_conversion(string_input, infix);
@@ -236,10 +236,10 @@
     string_input = "2^(2^3)";
     correct_output = "223^^";
 
-    char output_string_4[MAX_TKN] = {};
+    char output_string_4[S21_MAX_TKN] = {};
 
-    infix = calloc(MAX_TKN, sizeof(s_tokens));
-    postfix = calloc(MAX_TKN, sizeof(s_tokens));
+    infix = calloc(S21_MAX_TKN, sizeof(s_tokens));
+    postfix = calloc(S21_MAX_TKN, sizeof(s_tokens));
 
     if (infix && postfix) {
         input_conversion(string_input, infix);
@@ -258,10 +258,10 @@
     string_input = "2^(2^3))";
     correct_output = "";
 
-    char output_string_5[MAX_TKN] = {};
+    char output_string_5[S21_MAX_TKN] = {};
 
-    infix = calloc(MAX_TKN, sizeof(s_tokens));
-    postfix = calloc(MAX_TKN, sizeof(s_tokens));
+    infix = calloc(S21_MAX_TKN, sizeof(s_tokens));
+    postfix = calloc(S21_MAX_TKN, sizeof(s_tokens));
 
     if (infix && postfix) {
         input_conversion(string_input, infix);
@@ -287,9 +287,9 @@
     s_tokens *infix = NULL;
     s_tokens *postfix = NULL;
 
-    infix = calloc(MAX_TKN, sizeof(s_tokens));
-    postfix = calloc(MAX_TKN, sizeof(s_tokens));
-    output_string = calloc(MAX_INPUT, sizeof(char));
+    infix = calloc(S21_MAX_TKN, sizeof(s_tokens));
+    postfix = calloc(S21_MAX_TKN, sizeof(s_tokens));
+    output_string = calloc(S21_MAX_INPUT, sizeof(char));
 
     if (infix && postfix && output_string) {
         input_conversion(string_input, infix);
@@ -309,9 +309,9 @@
     string_input = "cos(0.785)+sin(0.785)+tan(0.785)+acos(0.785)+asin(0.785)+atan(0.785)+ln(0.785)+log(0.785)+sqrt(0.785)";
     correct_output = "5.188542";
 
-    infix = calloc(MAX_TKN, sizeof(s_tokens));
-    postfix = calloc(MAX_TKN, sizeof(s_tokens));
-    output_string = calloc(MAX_INPUT, sizeof(char));
+    infix = calloc(S21_MAX_TKN, sizeof(s_tokens));
+    postfix = calloc(S21_MAX_TKN, sizeof(s_tokens));
+    output_string = calloc(S21_MAX_INPUT, sizeof(char));
 
     if (infix && postfix && output_string) {
         input_conversion(string_input, infix);
@@ -332,9 +332,9 @@
     string_input = "-2+cos(sin(-25)modsin(+cos(66)))-(19mod12)^2";
     correct_output = "-50.24094";
 
-    infix = calloc(MAX_TKN, sizeof(s_tokens));
-    postfix = calloc(MAX_TKN, sizeof(s_tokens));
-    output_string = calloc(MAX_INPUT, sizeof(char));
+    infix = calloc(S21_MAX_TKN, sizeof(s_tokens));
+    postfix = calloc(S21_MAX_TKN, sizeof(s_tokens));
+    output_string = calloc(S21_MAX_INPUT, sizeof(char));
 
     if (infix && postfix && output_string) {
         input_conversion(string_input, infix);
@@ -354,9 +354,9 @@
     string_input = "-2/0+123";
     correct_output = "- INFINITY";
 
-    infix = calloc(MAX_TKN, sizeof(s_tokens));
-    postfix = calloc(MAX_TKN, sizeof(s_tokens));
-    output_string = calloc(MAX_INPUT, sizeof(char));
+    infix = calloc(S21_MAX_TKN, sizeof(s_tokens));
+    postfix = calloc(S21_MAX_TKN, sizeof(s_tokens));
+    output_string = calloc(S21_MAX_INPUT, sizeof(char));
 
     if (infix && postfix && output_string) {
         input_conversion(string_input, infix);
@@ -376,9 +376,9 @@
     string_input = "2/0";
     correct_output = "INFINITY";
 
-    infix = calloc(MAX_TKN, sizeof(s_tokens));
-    postfix = calloc(MAX_TKN, sizeof(s_tokens));
-    output_string = calloc(MAX_INPUT, sizeof(char));
+    infix = calloc(S21_MAX_TKN, sizeof(s_tokens));
+    postfix = calloc(S21_MAX_TKN, sizeof(s_tokens));
+    output_string = calloc(S21_MAX_INPUT, sizeof(char));
 
     if (infix && postfix && output_string) {
         input_conversion(string_input, infix);
@@ -398,9 +398,9 @@
     string_input = "sqrt(cos(2+7)+tan(2+5))";
     correct_output = "NaN";
 
-    infix = calloc(MAX_TKN, sizeof(s_tokens));
-    postfix = calloc(MAX_TKN, sizeof(s_tokens));
-    output_string = calloc(MAX_INPUT, sizeof(char));
+    infix = calloc(S21_MAX_TKN, sizeof(s_tokens));
+    postfix = calloc(S21_MAX_TKN, sizeof(s_tokens));
+    output_string = calloc(S21_MAX_INPUT, sizeof(char));
 
     if (infix && postfix && output_string) {
         input_conversion(string_input, infix);
@@ -417,9 +417,9 @@
     string_input = "123456789+123456789+123456789+123456789+123456789+123456789+123456789+123456789+123456789+123456789+123456789+123456789+123456789+123456789+123456789+123456789+123456789+123456789+123456789+123456789+123456789+123456789+123456789+123456789+123456789+12345";
     correct_output = "3086432070";
 
-    infix = calloc(MAX_TKN, sizeof(s_tokens));
-    postfix = calloc(MAX_TKN, sizeof(s_tokens));
-    output_string = calloc(MAX_INPUT, sizeof(char));
+    infix = calloc(S21_MAX_TKN, sizeof(s_tokens));
+    postfix = calloc(S21_MAX_TKN, sizeof(s_tokens));
+    output_string = calloc(S21_MAX_INPUT, sizeof(char));
 
     if (infix && postfix && output_string) {
         input_conversion(string_input, infix);
@@ -445,10 +445,10 @@ double interestRate = 22.0;
 double firstPayment = 0;
 double lastPayment = 0;
 int creditPeriod = 12;
-ck_assert_double_eq_tol(total_payment(loan, interestRate, creditPeriod, ANNUITANTS, &firstPayment, &lastPayment), 56156.64, 10e-2);
+ck_assert_double_eq_tol(total_payment(loan, interestRate, creditPeriod, S21_ANNUITANTS, &firstPayment, &lastPayment), 56156.64, 10e-2);
 ck_assert_double_eq_tol(firstPayment, 4679.72, 10e-2);
 
-ck_assert_double_eq_tol(total_payment(loan, interestRate, creditPeriod, DIFFERENTIATED, &firstPayment, &lastPayment), 55958.33, 10e-2);
+ck_assert_double_eq_tol(total_payment(loan, interestRate, creditPeriod, S21_DIFFERENTIATED, &firstPayment, &lastPayment), 55958.33, 10e-2);
 ck_assert_double_eq_tol(firstPayment, 5083.33, 10e-2);
 ck_assert_double_eq_tol(lastPayment, 4243.06, 10e-2);
 

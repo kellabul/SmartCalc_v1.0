@@ -9,7 +9,7 @@ int stk_empty(token_stack *stk) {  //
 }
 
 int stk_full(token_stack *stk) {  //
-  return (stk->top == MAX_TKN - 1);
+  return (stk->top == S21_MAX_TKN - 1);
 }
 
 void stk_push(token_stack *stk, s_tokens element) {

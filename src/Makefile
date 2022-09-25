@@ -33,7 +33,7 @@ install_gtk_linux:
 	sudo apt-get install libgtk-3-dev
 
 install:
-	gcc smartcalc_main.c -o ../build/$(NAME) `pkg-config --libs --cflags gtk+-3.0` -rdynamic
+	gcc s21_sc_main.c -o ../build/$(NAME) `pkg-config --libs --cflags gtk+-3.0` -rdynamic
 	../build/s21_smartcalc
 
 uninstall:
@@ -98,3 +98,6 @@ deps:
 		pkg-config --list-all | grep -c ^check >/dev/null 2>&1 || { echo >&2 "check is not installed"; exit 1; }; \
 	fi 
 	@echo "dependencies are installed"
+
+# docs for gtk3
+# https://docs.gtk.org/gtk3

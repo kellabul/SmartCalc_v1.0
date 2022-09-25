@@ -5,7 +5,7 @@ void infix_to_postfix(s_tokens *infix, s_tokens *postfix) {
   stk_init(&stack);
   int j = 0;
   for (int i = 0; infix[i].type != 0; i++) {
-    if (infix[i].type == NUMBER || infix[i].type == VARIABLE) {
+    if (infix[i].type == S21_NUMBER || infix[i].type == S21_VARIABLE) {
       postfix[j++] = infix[i];
     } else if (stk_empty(&stack) || infix[i].value == '(') {
       stk_push(&stack, infix[i]);

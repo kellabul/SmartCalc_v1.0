@@ -5,13 +5,13 @@
 // printf("ili tuta str = %c \n", str[i]);
 
 int input_validation(char *str) {
-  int result = CORRECT_INPUT;
+  int result = S21_CORRECT_INPUT;
   if (isWrongFirstElement(str)) {
-    result = INCORRECT_INPUT;
+    result = S21_INS21_CORRECT_INPUT;
   } else if (isWrongLastElement(str[strlen(str) - 1])) {
-    result = INCORRECT_INPUT;
+    result = S21_INS21_CORRECT_INPUT;
   } else if (areWrongMiddleElements(str)) {
-    result = INCORRECT_INPUT;
+    result = S21_INS21_CORRECT_INPUT;
   }
   return result;
 }
@@ -21,11 +21,11 @@ int isWrongFirstElement(char *str) {
 }
 
 int isWrongMiddleElement(char *str) {
-  return str[0] != '(' && !isFunction(&str[0]) && !isNumberOrX(str[0]);
+  return str[0] != '(' && !isFunction(&str[0]) && !isS21_NUMBEROrX(str[0]);
 }
 
 int isWrongLastElement(char element) {
-  return element != ')' && !isNumberOrX(element);
+  return element != ')' && !isS21_NUMBEROrX(element);
 }
 
 int areWrongMiddleElements(char *str) {
@@ -59,12 +59,12 @@ int areWrongMiddleElements(char *str) {
       }
     } else if (isOperation(str[i]) && isWrongMiddleElement(&str[i + 1])) {
       result = -1;
-    } else if (str[i] == '.' && !isNumberOrX(str[i + 1]) &&
+    } else if (str[i] == '.' && !isS21_NUMBEROrX(str[i + 1]) &&
                !isOperation(str[i - 1])) {
       result = -1;
     } else if (str[i] == 'x' && !isOperation(str[i + 1]) && str[i + 1] != ')') {
       result = -1;
-    } else if (!isNumberOrX(str[i]) && !isOperation(str[i]) && str[i] != '.') {
+    } else if (!isS21_NUMBEROrX(str[i]) && !isOperation(str[i]) && str[i] != '.') {
       result = -1;
     }
   }
@@ -93,9 +93,9 @@ int isFunction(char *str) {
   return result;
 }
 
-int isNumberOrX(char element) { return isNumber(element) || element == 'x'; }
+int isS21_NUMBEROrX(char element) { return isS21_NUMBER(element) || element == 'x'; }
 
-int isNumber(char element) { return element >= '0' && element <= '9'; }
+int isS21_NUMBER(char element) { return element >= '0' && element <= '9'; }
 
 int isLn(char *str) { return !strncmp(str, "ln", 2); }
 

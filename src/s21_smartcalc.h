@@ -1,17 +1,17 @@
 #ifndef SRC_S21_SMARTCALC_H_
 #define SRC_S21_SMARTCALC_H_
 
-#define MAX_INPUT 256
-#define MAX_TKN 2 * 256
-#define INCORRECT_INPUT -1
-#define TOO_MUCH_ARGS -2
-#define CORRECT_INPUT 0
-#define NUMBER -1
-#define VARIABLE -2
+#define S21_MAX_INPUT 256
+#define S21_MAX_TKN 2 * 256
+#define S21_INS21_CORRECT_INPUT -1
+#define S21_TOO_MUCH_ARGS -2
+#define S21_CORRECT_INPUT 0
+#define S21_NUMBER -1
+#define S21_VARIABLE -2
 
 
-#define ANNUITANTS 1
-#define DIFFERENTIATED 2
+#define S21_ANNUITANTS 1
+#define S21_DIFFERENTIATED 2
 
 typedef struct tokens {
   double value;
@@ -19,7 +19,7 @@ typedef struct tokens {
 } s_tokens;
 
 typedef struct s_stack {
-  s_tokens token[MAX_TKN];
+  s_tokens token[S21_MAX_TKN];
   int top;
 } token_stack;
 
@@ -52,8 +52,8 @@ int stk_top_type(token_stack *stk);
 
 // santa's little helpers
 int isOperation(char element);
-int isNumberOrX(char element);
-int isNumber(char element);
+int isS21_NUMBEROrX(char element);
+int isS21_NUMBER(char element);
 int isFunction(char *str);
 int isLn(char *str);
 int isLog(char *str);
@@ -73,7 +73,7 @@ int isWrongMiddleElement(char *str);
 // input conversion helpers
 void checkUnarySign(char *input, s_tokens *output, int *i, int *j);
 void convertUnarySign(char sign, s_tokens *token);
-int getNumberFromString(char *string, double *value);
+int getS21_NUMBERFromString(char *string, double *value);
 int convertFunction(char *str, double *value);
 
 // helpers to work with s_tokens
@@ -89,8 +89,8 @@ void addTokensFromStackToPostfixLine(token_stack *stack, s_tokens *postfix);
 
 // calculation helpers
 int operationRequaresOneNum(double value);
-s_tokens calculateOneNumber(token_stack *stack, double operation);
-s_tokens calculateTwoNumbers(token_stack *stack, double operation);
+s_tokens calculateOneS21_NUMBER(token_stack *stack, double operation);
+s_tokens calculateTwoS21_NUMBERs(token_stack *stack, double operation);
 double calculateMod(double second, double first);
 void deleteZeroesFromString(char *str);
 
