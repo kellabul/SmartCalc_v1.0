@@ -20,7 +20,7 @@ endif
 all: clean tests
 
 clean:
-	rm -rf *.o *.a $(COVERAGE_RESULTS) $(COVERAGE_FILES) $(GCOV_FILES) $(LCOV_FILES) $(TEST_NAME) $(TEST_NAME).c gcov_report $(TEST_NAME).dSYM
+	rm -rf *.o *.a $(COVERAGE_RESULTS) $(COVERAGE_FILES) $(GCOV_FILES) $(LCOV_FILES) $(TEST_NAME) $(TEST_NAME).c gcov_report $(TEST_NAME).dSYM ../build/*
 
 tests: compile_test
 	@rm -f $(COVERAGE_RESULTS)
@@ -33,8 +33,8 @@ install_gtk_linux:
 	sudo apt-get install libgtk-3-dev
 
 install:
-	gcc s21_sc_main.c -o $(NAME) `pkg-config --libs --cflags gtk+-3.0` -export-dynamic
-
+	gcc smartcalc_main.c -o ../build/$(NAME) `pkg-config --libs --cflags gtk+-3.0` -rdynamic
+	../build/s21_smartcalc
 
 uninstall:
 

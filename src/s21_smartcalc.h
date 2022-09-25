@@ -4,9 +4,11 @@
 #define MAX_INPUT 256
 #define MAX_TKN 2 * 256
 #define INCORRECT_INPUT -1
+#define TOO_MUCH_ARGS -2
 #define CORRECT_INPUT 0
 #define NUMBER -1
 #define VARIABLE -2
+
 
 #define ANNUITANTS 1
 #define DIFFERENTIATED 2

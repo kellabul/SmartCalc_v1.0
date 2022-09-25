@@ -19,9 +19,9 @@
 int input_conversion(char *input, s_tokens *output) {
   int error = 0;
   if (strlen(input) > 255) {
-    error = 1;
+    error = TOO_MUCH_ARGS;
   } else if (input_validation(input) == INCORRECT_INPUT) {
-    error = 2;
+    error = INCORRECT_INPUT;
   } else {
     int i = 0, j = 0;
     // check if first token is '+' or '-'

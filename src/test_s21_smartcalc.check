@@ -148,12 +148,12 @@
 
     string_input = "1123456789+123456789+123456789+123456789+123456789+123456789+123456789+123456789+123456789+123456789+123456789+123456789+123456789+123456789+123456789+123456789+123456789+123456789+123456789+123456789+123456789+123456789+123456789+123456789+123456789+12345";
     output = calloc(MAX_TKN, sizeof(s_tokens));
-    ck_assert_int_eq(input_conversion(string_input, output), 1);
+    ck_assert_int_eq(input_conversion(string_input, output), TOO_MUCH_ARGS);
 
 // input_conversion case 5
 
     string_input = "(1-1+)";
-    ck_assert_int_eq(input_conversion(string_input, output), 2);
+    ck_assert_int_eq(input_conversion(string_input, output), INCORRECT_INPUT);
     free(output);
 
 
@@ -413,6 +413,7 @@
 
 // calculation case 7
 
+    // 255 arguments input
     string_input = "123456789+123456789+123456789+123456789+123456789+123456789+123456789+123456789+123456789+123456789+123456789+123456789+123456789+123456789+123456789+123456789+123456789+123456789+123456789+123456789+123456789+123456789+123456789+123456789+123456789+12345";
     correct_output = "3086432070";
 
