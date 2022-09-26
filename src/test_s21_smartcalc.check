@@ -153,7 +153,7 @@
 // input_conversion case 5
 
     string_input = "(1-1+)";
-    ck_assert_int_eq(input_conversion(string_input, output), S21_INS21_CORRECT_INPUT);
+    ck_assert_int_eq(input_conversion(string_input, output), S21_INCORRECT_INPUT);
     free(output);
 
 

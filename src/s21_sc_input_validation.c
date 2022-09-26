@@ -7,11 +7,11 @@
 int input_validation(char *str) {
   int result = S21_CORRECT_INPUT;
   if (isWrongFirstElement(str)) {
-    result = S21_INS21_CORRECT_INPUT;
+    result = S21_INCORRECT_INPUT;
   } else if (isWrongLastElement(str[strlen(str) - 1])) {
-    result = S21_INS21_CORRECT_INPUT;
+    result = S21_INCORRECT_INPUT;
   } else if (areWrongMiddleElements(str)) {
-    result = S21_INS21_CORRECT_INPUT;
+    result = S21_INCORRECT_INPUT;
   }
   return result;
 }
@@ -64,7 +64,8 @@ int areWrongMiddleElements(char *str) {
       result = -1;
     } else if (str[i] == 'x' && !isOperation(str[i + 1]) && str[i + 1] != ')') {
       result = -1;
-    } else if (!isS21_NUMBEROrX(str[i]) && !isOperation(str[i]) && str[i] != '.') {
+    } else if (!isS21_NUMBEROrX(str[i]) && !isOperation(str[i]) &&
+               str[i] != '.') {
       result = -1;
     }
   }
@@ -93,7 +94,9 @@ int isFunction(char *str) {
   return result;
 }
 
-int isS21_NUMBEROrX(char element) { return isS21_NUMBER(element) || element == 'x'; }
+int isS21_NUMBEROrX(char element) {
+  return isS21_NUMBER(element) || element == 'x';
+}
 
 int isS21_NUMBER(char element) { return element >= '0' && element <= '9'; }
 

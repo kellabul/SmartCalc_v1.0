@@ -11,7 +11,7 @@ double total_payment(double loan, double interestRate, int creditPeriod,
   double totalPayment = 0;
   if (loan < 0.01 || interestRate < 0.01 || creditPeriod < 1 || !firstPayment ||
       !lastPayment) {
-    totalPayment = S21_INS21_CORRECT_INPUT;
+    totalPayment = S21_INCORRECT_INPUT;
   } else {
     double payment = 0;
     double monthlyInterest = (interestRate / 100) / 12;
@@ -34,7 +34,7 @@ double total_payment(double loan, double interestRate, int creditPeriod,
         if (i == creditPeriod - 1) *lastPayment = payment;
       }
     } else {
-      totalPayment = S21_INS21_CORRECT_INPUT;
+      totalPayment = S21_INCORRECT_INPUT;
     }
   }
   return totalPayment;

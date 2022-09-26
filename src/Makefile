@@ -6,21 +6,28 @@ COVERAGE_RESULTS = ./*.gcda
 GCOV_FILES = ./*.gcov
 LCOV_FILES = ./*.info
 
-SOURCE_FILES = s21*.c
-OBJECT_FILES = s21*.o
+SOURCE_FILES = s21_sc*.c
+OBJECT_FILES = s21_sc*.o
+
+LIBS = `pkg-config --libs --cflags gtk+-3.0` -rdynamic -lm
 
 # different libs for MAC and LINUX
 UNAME_S := $(shell uname -s)
 ifeq ($(UNAME_S),Linux)
-LIBS = $(shell pkg-config --libs check)
+CHECK_LIBS = $(shell pkg-config --libs check)
 else
-LIBS = -lcheck
+CHECK_LIBS = -lcheck
 endif
 
 all: clean tests
 
 clean:
 	rm -rf *.o *.a $(COVERAGE_RESULTS) $(COVERAGE_FILES) $(GCOV_FILES) $(LCOV_FILES) $(TEST_NAME) $(TEST_NAME).c gcov_report $(TEST_NAME).dSYM ../build/*
+
+$(NAME).a:
+	@rm -rf *.o *.a
+	gcc $(FLAGS) -c $(SOURCE_FILES)
+	ar rc $(NAME).a $(OBJECT_FILES)
 
 tests: compile_test
 	@rm -f $(COVERAGE_RESULTS)
@@ -32,8 +39,8 @@ install_gtk_mac:
 install_gtk_linux:
 	sudo apt-get install libgtk-3-dev
 
-install:
-	gcc s21_gtk_sc_main.c -o ../build/$(NAME) `pkg-config --libs --cflags gtk+-3.0` -rdynamic
+install: $(NAME).a
+	gcc s21_gtk_sc_main.c  $(NAME).a -o ../build/$(NAME) $(LIBS)
 	../build/s21_smartcalc
 
 uninstall:
@@ -57,7 +64,7 @@ gcov_report: gcov
 	open gcov_report/index.html
 
 compile_test:
-	checkmk $(TEST_NAME).check | gcc $(FLAGS) $(SOURCE_FILES) -xc - $(LIBS) -o $(TEST_NAME) --coverage
+	checkmk $(TEST_NAME).check | gcc $(FLAGS) $(SOURCE_FILES) -xc - $(CHECK_LIBS) -o $(TEST_NAME) --coverage
 	
 gcov: compile_test
 	@rm -f $(COVERAGE_RESULTS)
@@ -70,7 +77,7 @@ asan: compile_test_with_asan
 	./$(TEST_NAME)
 
 compile_test_with_asan:
-	checkmk $(TEST_NAME).check | gcc $(FLAGS) $(SOURCE_FILES) -xc - $(LIBS) -o $(TEST_NAME) --coverage -g -fsanitize=address
+	checkmk $(TEST_NAME).check | gcc $(FLAGS) $(SOURCE_FILES) -xc - $(CHECK_LIBS) -o $(TEST_NAME) --coverage -g -fsanitize=address
 
 lint:
 	@cp ../materials/linters/.clang-format .clang-format
