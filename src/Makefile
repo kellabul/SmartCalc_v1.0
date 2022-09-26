@@ -9,8 +9,6 @@ LCOV_FILES = ./*.info
 BACKEND_SOURCE_FILES = backend/s21_sc*.c
 BACKEND_OBJECT_FILES = s21_sc*.o
 
-
-
 LIBS = `pkg-config --libs --cflags gtk+-3.0` -rdynamic -lm
 
 # different libs for MAC and LINUX

@@ -41,6 +41,9 @@
     string = "-3^(-2)";
     ck_assert_int_eq(input_validation(string), 0);
 
+    string = "123x";
+    ck_assert_int_eq(input_validation(string), 0);
+
 #test input_incorrect_validation
 /* --------------------------------------input_incorrect_validation---*/
     
@@ -154,6 +157,24 @@
 
     string_input = "(1-1+)";
     ck_assert_int_eq(input_conversion(string_input, output), S21_INCORRECT_INPUT);
+    free(output);
+
+// input_conversion case 6
+
+    string_input = "123x-x";
+    correct_output = "123*x-x";
+
+    char output_string_6[S21_MAX_TKN] = {};
+    output = NULL;
+
+    output = calloc(S21_MAX_TKN, sizeof(s_tokens));
+    if (output) {
+        ck_assert_int_eq(input_conversion(string_input, output), 0);
+        convertTokensToString(output, output_string_6);
+    } else {
+        printf("out of memory\n");
+    }
+    ck_assert_str_eq(output_string_6, correct_output);
     free(output);
 
 
@@ -454,3 +475,43 @@ ck_assert_double_eq_tol(lastPayment, 4243.06, 10e-2);
 
 ck_assert_double_eq_tol(total_payment(loan, interestRate, creditPeriod, 5, &firstPayment, &lastPayment), -1, 10e-2);
 ck_assert_double_eq_tol(total_payment(loan, interestRate, 0, 5, &firstPayment, &lastPayment), -1, 10e-2);
+
+
+#test helpers
+
+int thereIsXinInput(s_tokens *tokens);
+
+
+    char *string_input = "2/x+(3+2)*5";
+
+    char *string = NULL;
+
+    s_tokens *infix = NULL;
+    s_tokens *postfix = NULL;
+
+    infix = calloc(S21_MAX_TKN, sizeof(s_tokens));
+    postfix = calloc(S21_MAX_TKN, sizeof(s_tokens));
+    string = calloc(S21_MAX_TKN, sizeof(char));
+    
+
+    if (infix && postfix) {
+        input_conversion(string_input, infix);
+        convertTokensToString(infix, string);
+        printf("%s\n", string);
+
+        free(string);
+        string = calloc(S21_MAX_TKN, sizeof(char));
+
+        infix_to_postfix(infix, postfix);
+        convertTokensToString(postfix, string);
+        printf("%s\n", string);
+
+        free(string);
+    } else {
+        printf("out of memory\n");
+    }
+
+    ck_assert_int_eq(thereIsXinInput(postfix), 1);
+
+    free(infix);
+    free(postfix);

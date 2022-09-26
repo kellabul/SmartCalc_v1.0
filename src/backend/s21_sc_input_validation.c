@@ -62,7 +62,7 @@ int areWrongMiddleElements(char *str) {
     } else if (str[i] == '.' && !isS21_NUMBEROrX(str[i + 1]) &&
                !isOperation(str[i - 1])) {
       result = -1;
-    } else if (str[i] == 'x' && !isOperation(str[i + 1]) && str[i + 1] != ')') {
+    } else if (str[i] == 'x' && !isOperation(str[i + 1]) && str[i + 1] != ')' && str[i + 1] != '\0') {
       result = -1;
     } else if (!isS21_NUMBEROrX(str[i]) && !isOperation(str[i]) &&
                str[i] != '.') {

@@ -4,31 +4,37 @@
 
 #include "../s21_smartcalc.h"
 
+int thereIsXinInput(s_tokens *tokens);
+
 int calculation(s_tokens *tokens, char *string) {
   token_stack stack = {};
   s_tokens final_result = {};
-  stk_init(&stack);
-  for (int i = 0; tokens[i].type != 0; i++) {
-    if (tokens[i].type == S21_NUMBER || tokens[i].type == S21_VARIABLE) {
-      stk_push(&stack, tokens[i]);
-    } else if (operationRequaresOneNum(tokens[i].value)) {
-      stk_push(&stack, calculateOneS21_NUMBER(&stack, tokens[i].value));
-    } else {
-      stk_push(&stack, calculateTwoS21_NUMBERs(&stack, tokens[i].value));
-    }
-  }
-  final_result = stk_pop(&stack);
-  if (isinf(final_result.value)) {
-    if (final_result.value < 0)
-      sprintf(string, "- INFINITY");
-    else
-      sprintf(string, "INFINITY");
-  } else if (isnan(final_result.value)) {
-    sprintf(string, "NaN");
+  if (thereIsXinInput(tokens)) {
+    sprintf(string, "ENTER X VALUE");
   } else {
-    sprintf(string, "%lf", final_result.value);
+    stk_init(&stack);
+    for (int i = 0; tokens[i].type != 0; i++) {
+      if (tokens[i].type == S21_NUMBER || tokens[i].type == S21_VARIABLE) {
+        stk_push(&stack, tokens[i]);
+      } else if (operationRequaresOneNum(tokens[i].value)) {
+        stk_push(&stack, calculateOneS21_NUMBER(&stack, tokens[i].value));
+      } else {
+        stk_push(&stack, calculateTwoS21_NUMBERs(&stack, tokens[i].value));
+      }
+    }
+    final_result = stk_pop(&stack);
+    if (isinf(final_result.value)) {
+      if (final_result.value < 0)
+        sprintf(string, "- INFINITY");
+      else
+        sprintf(string, "INFINITY");
+    } else if (isnan(final_result.value)) {
+      sprintf(string, "NaN");
+    } else {
+      sprintf(string, "%lf", final_result.value);
+    }
+    deleteZeroesFromString(string);
   }
-  deleteZeroesFromString(string);
   return 0;
 }
 
@@ -40,6 +46,14 @@ void deleteZeroesFromString(char *str) {
       break;
     }
   }
+}
+
+int thereIsXinInput(s_tokens *tokens) {
+  int result = 0;
+  for (int i = 0; tokens[i].type != 0; i++) {
+    if (tokens[i].type == S21_VARIABLE) result = 1;
+  }
+  return result;
 }
 
 int operationRequaresOneNum(double value) {
