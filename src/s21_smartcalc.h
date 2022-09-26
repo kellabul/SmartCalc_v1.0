@@ -91,7 +91,7 @@ int operationRequaresOneNum(double value);
 s_tokens calculateOneS21_NUMBER(token_stack *stack, double operation);
 s_tokens calculateTwoS21_NUMBERs(token_stack *stack, double operation);
 double calculateMod(double second, double first);
-void deleteZeroesFromString(char *str);
+void deleteZeroesFromStringEnd(char *str);
 
 // credit calculator
 double total_payment(double loan, double interestRate, int creditPeriod,

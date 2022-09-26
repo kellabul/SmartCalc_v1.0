@@ -6,7 +6,7 @@
 GtkEntry *entry_exp;
 GtkWidget *main_label_error;
 GtkWidget *label_result;
-char input[S21_MAX_INPUT + 1] = {};
+char input[S21_MAX_INPUT + 10] = {}; /* has to be more than bigest input button  */
 
 int main(int argc, char *argv[]) {
   GtkWidget *window;

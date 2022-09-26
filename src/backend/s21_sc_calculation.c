@@ -32,15 +32,15 @@ int calculation(s_tokens *tokens, char *string) {
       sprintf(string, "NaN");
     } else {
       sprintf(string, "%.7lf", final_result.value);
-      deleteZeroesFromString(string);
+      deleteZeroesFromStringEnd(string);
       if (strlen(string) > 15)
-        sprintf(string, "%.7e", final_result.value);
+        sprintf(string, "%.15e", final_result.value);
     }
   }
   return 0;
 }
 
-void deleteZeroesFromString(char *str) {
+void deleteZeroesFromStringEnd(char *str) {
   for (size_t i = strlen(str) - 1; i != 0; i--) {
     if (str[i] == '.') str[i] = '\0';
     if (str[i] != '0') {

@@ -433,7 +433,7 @@
                 </child>
                 <child>
                   <object class="GtkButton" id="button_draw_graph">
-                    <property name="label" translatable="yes">draw_graphic</property>
+                    <property name="label" translatable="yes">GRAPH</property>
                     <property name="visible">True</property>
                     <property name="can-focus">True</property>
                     <property name="receives-default">True</property>
@@ -513,15 +513,15 @@
                 </child>
                 <child>
                   <object class="GtkToggleButton" id="main_toggle_button">
-                    <property name="label" translatable="yes">find X, if  X =</property>
+                    <property name="label">find X</property>
                     <property name="visible">True</property>
                     <property name="can-focus">True</property>
                     <property name="receives-default">True</property>
+                    <signal name="toggled" handler="main_toggle_button_toggled_cb" swapped="no"/>
                   </object>
                   <packing>
                     <property name="left-attach">0</property>
                     <property name="top-attach">7</property>
-                    <property name="width">2</property>
                   </packing>
                 </child>
                 <child>
@@ -534,6 +534,18 @@
                     <property name="left-attach">0</property>
                     <property name="top-attach">8</property>
                     <property name="width">8</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkLabel">
+                    <property name="visible">True</property>
+                    <property name="can-focus">False</property>
+                    <property name="label" translatable="yes">X VALUE:</property>
+                    <property name="justify">right</property>
+                  </object>
+                  <packing>
+                    <property name="left-attach">1</property>
+                    <property name="top-attach">7</property>
                   </packing>
                 </child>
                 <child>
@@ -741,7 +753,7 @@
                   <object class="GtkLabel" id="bonus1_lobel4">
                     <property name="visible">True</property>
                     <property name="can-focus">False</property>
-                    <property name="label" translatable="yes">Type:</property>
+                    <property name="label">Type:</property>
                     <property name="justify">right</property>
                     <property name="width-chars">0</property>
                     <property name="max-width-chars">0</property>

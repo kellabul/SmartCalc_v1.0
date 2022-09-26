@@ -9,7 +9,7 @@ LCOV_FILES = ./*.info
 BACKEND_SOURCE_FILES = backend/s21_sc*.c
 BACKEND_OBJECT_FILES = s21_sc*.o
 
-LIBS = `pkg-config --libs --cflags gtk+-3.0` -rdynamic -lm -fsanitize=address -g
+LIBS = `pkg-config --libs --cflags gtk+-3.0` -rdynamic -lm #-fsanitize=address -g
 
 # different libs for MAC and LINUX
 UNAME_S := $(shell uname -s)
