@@ -85,19 +85,6 @@ void entry_exp_changed_cb(GtkEntry *entry) {
   }
 }
 
-/*
-void entry_x_changed_cb(GtkEntry *entry) {
-  const char *buffer = gtk_entry_get_text(entry);
-  if (strlen(buffer) = 0) {
-    gtk_label_set_text(GTK_LABEL(main_label_error),
-                       (const gchar *)"TOO MUCH ARGUMENTS");
-  } else {
-    sprintf(input, "%s", buffer);
-    gtk_label_set_text(GTK_LABEL(main_label_error), (const gchar *)"");
-  }
-}
-*/
-
 /* ============= REGULAR BUTTONS ============= */
 
 void button_1_clicked_cb() {
