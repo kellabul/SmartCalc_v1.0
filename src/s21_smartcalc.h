@@ -13,7 +13,7 @@
 #define S21_DIFFERENTIATED 2
 
 typedef struct tokens {
-  double value;
+  long double value;
   int type;
 } s_tokens;
 
@@ -72,8 +72,8 @@ int isWrongMiddleElement(char *str);
 // input conversion helpers
 void checkUnarySign(char *input, s_tokens *output, int *i, int *j);
 void convertUnarySign(char sign, s_tokens *token);
-int getS21_NUMBERFromString(char *string, double *value);
-int convertFunction(char *str, double *value);
+int getS21_NUMBERFromString(char *string, long double *value);
+int convertFunction(char *str, long double *value);
 
 // helpers to work with s_tokens
 void setTokenType(char *string, s_tokens *token);
@@ -87,14 +87,14 @@ int pullContentOfParents(token_stack *stack, s_tokens *postfix);
 void addTokensFromStackToPostfixLine(token_stack *stack, s_tokens *postfix);
 
 // calculation helpers
-int operationRequaresOneNum(double value);
-s_tokens calculateOneS21_NUMBER(token_stack *stack, double operation);
-s_tokens calculateTwoS21_NUMBERs(token_stack *stack, double operation);
-double calculateMod(double second, double first);
+int operationRequaresOneNum(long double value);
+s_tokens calculateOneS21_NUMBER(token_stack *stack, long double operation);
+s_tokens calculateTwoS21_NUMBERs(token_stack *stack, long double operation);
+long double calculateMod(long double second, long double first);
 void deleteZeroesFromString(char *str);
 
 // credit calculator
-double total_payment(double loan, double interestRate, int creditPeriod,
-                     int type, double *firstPayment, double *lastPayment);
+long double total_payment(long double loan, long double interestRate, int creditPeriod,
+                     int type, long double *firstPayment, long double *lastPayment);
 
 #endif  // SRC_S21_SMARTCALC_H_

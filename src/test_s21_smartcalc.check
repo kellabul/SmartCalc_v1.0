@@ -461,20 +461,20 @@
 #test credit_test
 /* --------------------------------------credit---*/
 
-double loan = 50000;
-double interestRate = 22.0;
-double firstPayment = 0;
-double lastPayment = 0;
+long double loan = 50000;
+long double interestRate = 22.0;
+long double firstPayment = 0;
+long double lastPayment = 0;
 int creditPeriod = 12;
-ck_assert_double_eq_tol(total_payment(loan, interestRate, creditPeriod, S21_ANNUITANTS, &firstPayment, &lastPayment), 56156.64, 10e-2);
-ck_assert_double_eq_tol(firstPayment, 4679.72, 10e-2);
+ck_assert_ldouble_eq_tol(total_payment(loan, interestRate, creditPeriod, S21_ANNUITANTS, &firstPayment, &lastPayment), 56156.64, 10e-2);
+ck_assert_ldouble_eq_tol(firstPayment, 4679.72, 10e-2);
 
-ck_assert_double_eq_tol(total_payment(loan, interestRate, creditPeriod, S21_DIFFERENTIATED, &firstPayment, &lastPayment), 55958.33, 10e-2);
-ck_assert_double_eq_tol(firstPayment, 5083.33, 10e-2);
-ck_assert_double_eq_tol(lastPayment, 4243.06, 10e-2);
+ck_assert_ldouble_eq_tol(total_payment(loan, interestRate, creditPeriod, S21_DIFFERENTIATED, &firstPayment, &lastPayment), 55958.33, 10e-2);
+ck_assert_ldouble_eq_tol(firstPayment, 5083.33, 10e-2);
+ck_assert_ldouble_eq_tol(lastPayment, 4243.06, 10e-2);
 
-ck_assert_double_eq_tol(total_payment(loan, interestRate, creditPeriod, 5, &firstPayment, &lastPayment), -1, 10e-2);
-ck_assert_double_eq_tol(total_payment(loan, interestRate, 0, 5, &firstPayment, &lastPayment), -1, 10e-2);
+ck_assert_ldouble_eq_tol(total_payment(loan, interestRate, creditPeriod, 5, &firstPayment, &lastPayment), -1, 10e-2);
+ck_assert_ldouble_eq_tol(total_payment(loan, interestRate, 0, 5, &firstPayment, &lastPayment), -1, 10e-2);
 
 
 #test helpers

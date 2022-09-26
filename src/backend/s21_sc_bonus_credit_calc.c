@@ -6,15 +6,15 @@
 // дифференцированный)
 // - Выход: ежемесячный платеж, переплата по кредиту, общая выплата
 
-double total_payment(double loan, double interestRate, int creditPeriod,
-                     int type, double *firstPayment, double *lastPayment) {
-  double totalPayment = 0;
+long double total_payment(long double loan, long double interestRate, int creditPeriod,
+                     int type, long double *firstPayment, long double *lastPayment) {
+  long double totalPayment = 0;
   if (loan < 0.01 || interestRate < 0.01 || creditPeriod < 1 || !firstPayment ||
       !lastPayment) {
     totalPayment = S21_INCORRECT_INPUT;
   } else {
-    double payment = 0;
-    double monthlyInterest = (interestRate / 100) / 12;
+    long double payment = 0;
+    long double monthlyInterest = (interestRate / 100) / 12;
     if (type == S21_ANNUITANTS) {
       payment = loan * (monthlyInterest +
                         (monthlyInterest /
@@ -22,9 +22,9 @@ double total_payment(double loan, double interestRate, int creditPeriod,
       *firstPayment = *lastPayment = payment;
       totalPayment = payment * creditPeriod;
     } else if (type == S21_DIFFERENTIATED) {
-      double mainPayment = loan / creditPeriod;
-      double alreadyRepaid = 0;
-      double restOfLoan = loan;
+      long double mainPayment = loan / creditPeriod;
+      long double alreadyRepaid = 0;
+      long double restOfLoan = loan;
       for (int i = 0; i < creditPeriod; i++) {
         alreadyRepaid = mainPayment * i;
         restOfLoan = loan - alreadyRepaid;

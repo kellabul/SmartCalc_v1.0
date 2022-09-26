@@ -101,7 +101,7 @@ void setTokenType(char *string, s_tokens *token) {
     token->type = -5;
 }
 
-int convertFunction(char *str, double *value) {
+int convertFunction(char *str, long double *value) {
   int step = 0;
   if ((step = isLn(str))) {
     *value = LN;
@@ -127,9 +127,9 @@ int convertFunction(char *str, double *value) {
   return step;
 }
 
-int getS21_NUMBERFromString(char *string, double *value) {
+int getS21_NUMBERFromString(char *string, long double *value) {
   int step = 0;
-  sscanf(string, "%lf", value);
+  sscanf(string, "%Lf", value);
   while (isS21_NUMBER(string[step]) || string[step] == '.') {
     step++;
   }
