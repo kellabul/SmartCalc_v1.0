@@ -1,6 +1,6 @@
 #include <math.h>
 
-#include "s21_smartcalc.h"
+#include "../s21_smartcalc.h"
 
 /**
  *  - Вход: сумма вклада, срок размещения, процентная ставка, налоговая ставка,

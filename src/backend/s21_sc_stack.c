@@ -1,4 +1,4 @@
-#include "s21_smartcalc.h"
+#include "../s21_smartcalc.h"
 
 void stk_init(token_stack *stk) {  //
   stk->top = 0;

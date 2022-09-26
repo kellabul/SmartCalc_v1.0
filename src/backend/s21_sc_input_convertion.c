@@ -2,7 +2,7 @@
 #include <stdio.h>
 #include <string.h>
 
-#include "s21_smartcalc.h"
+#include "../s21_smartcalc.h"
 
 /**
  *  token types:

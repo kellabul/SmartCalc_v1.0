@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <string.h>
 
-#include "s21_smartcalc.h"
+#include "../s21_smartcalc.h"
 // printf("ili tuta str = %c \n", str[i]);
 
 int input_validation(char *str) {

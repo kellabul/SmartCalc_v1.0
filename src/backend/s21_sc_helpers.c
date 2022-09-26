@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <string.h>
 
-#include "s21_smartcalc.h"
+#include "../s21_smartcalc.h"
 
 void convertTokensToString(s_tokens *tokens, char *string) {
   for (int i = 0; tokens[i].type; i++) {

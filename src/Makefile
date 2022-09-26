@@ -6,8 +6,10 @@ COVERAGE_RESULTS = ./*.gcda
 GCOV_FILES = ./*.gcov
 LCOV_FILES = ./*.info
 
-SOURCE_FILES = s21_sc*.c
-OBJECT_FILES = s21_sc*.o
+BACKEND_SOURCE_FILES = backend/s21_sc*.c
+BACKEND_OBJECT_FILES = s21_sc*.o
+
+
 
 LIBS = `pkg-config --libs --cflags gtk+-3.0` -rdynamic -lm
 
@@ -26,8 +28,8 @@ clean:
 
 $(NAME).a:
 	@rm -rf *.o *.a
-	gcc $(FLAGS) -c $(SOURCE_FILES)
-	ar rc $(NAME).a $(OBJECT_FILES)
+	gcc $(FLAGS) -c $(BACKEND_SOURCE_FILES)
+	ar rc $(NAME).a $(BACKEND_OBJECT_FILES)
 
 tests: compile_test
 	@rm -f $(COVERAGE_RESULTS)
@@ -64,7 +66,7 @@ gcov_report: gcov
 	open gcov_report/index.html
 
 compile_test:
-	checkmk $(TEST_NAME).check | gcc $(FLAGS) $(SOURCE_FILES) -xc - $(CHECK_LIBS) -o $(TEST_NAME) --coverage
+	checkmk $(TEST_NAME).check | gcc $(FLAGS) $(BACKEND_SOURCE_FILES) -xc - $(CHECK_LIBS) -o $(TEST_NAME) --coverage
 	
 gcov: compile_test
 	@rm -f $(COVERAGE_RESULTS)
@@ -77,7 +79,7 @@ asan: compile_test_with_asan
 	./$(TEST_NAME)
 
 compile_test_with_asan:
-	checkmk $(TEST_NAME).check | gcc $(FLAGS) $(SOURCE_FILES) -xc - $(CHECK_LIBS) -o $(TEST_NAME) --coverage -g -fsanitize=address
+	checkmk $(TEST_NAME).check | gcc $(FLAGS) $(BACKEND_SOURCE_FILES) -xc - $(CHECK_LIBS) -o $(TEST_NAME) --coverage -g -fsanitize=address
 
 lint:
 	@cp ../materials/linters/.clang-format .clang-format

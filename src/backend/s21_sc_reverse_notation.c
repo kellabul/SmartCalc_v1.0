@@ -1,4 +1,4 @@
-#include "s21_smartcalc.h"
+#include "../s21_smartcalc.h"
 
 void infix_to_postfix(s_tokens *infix, s_tokens *postfix) {
   token_stack stack = {};
