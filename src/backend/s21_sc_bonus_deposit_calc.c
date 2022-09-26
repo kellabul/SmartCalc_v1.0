@@ -10,9 +10,9 @@
  **/
 
 /*
-long double ya_ne_znayu_poka(long double deposit, int period, long double interestRate,
-                        long double taxRate, int paymentFrequency,
+double ya_ne_znayu_poka(double deposit, int period, double interestRate,
+                        double taxRate, int paymentFrequency,
                         int capitalization ) {
-  long double vozvrashaemoe = 0;
+  double vozvrashaemoe = 0;
 }
 */

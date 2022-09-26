@@ -31,9 +31,11 @@ int calculation(s_tokens *tokens, char *string) {
     } else if (isnan(final_result.value)) {
       sprintf(string, "NaN");
     } else {
-      sprintf(string, "%Lf", final_result.value);
+      sprintf(string, "%.7lf", final_result.value);
+      deleteZeroesFromString(string);
+      if (strlen(string) > 15)
+        sprintf(string, "%.7e", final_result.value);
     }
-    deleteZeroesFromString(string);
   }
   return 0;
 }
@@ -56,13 +58,13 @@ int thereIsXinInput(s_tokens *tokens) {
   return result;
 }
 
-int operationRequaresOneNum(long double value) {
+int operationRequaresOneNum(double value) {
   return (value == LN || value == LOG || value == COS || value == ACOS ||
           value == SIN || value == ASIN || value == TAN || value == ATAN ||
           value == SQRT);
 }
 
-s_tokens calculateTwoS21_NUMBERs(token_stack *stack, long double operation) {
+s_tokens calculateTwoS21_NUMBERs(token_stack *stack, double operation) {
   s_tokens first = stk_pop(stack);
   s_tokens second = stk_pop(stack);
   s_tokens result = {.type = S21_NUMBER};
@@ -82,8 +84,8 @@ s_tokens calculateTwoS21_NUMBERs(token_stack *stack, long double operation) {
   return result;
 }
 
-long double calculateMod(long double left, long double right) {
-  long double result;
+double calculateMod(double left, double right) {
+  double result;
   if ((left < 0 && right < 0) || (left > 0 && right > 0))
     result = fmod(left, right);
   else
@@ -91,7 +93,7 @@ long double calculateMod(long double left, long double right) {
   return result;
 }
 
-s_tokens calculateOneS21_NUMBER(token_stack *stack, long double operation) {
+s_tokens calculateOneS21_NUMBER(token_stack *stack, double operation) {
   s_tokens result = {.type = S21_NUMBER};
   s_tokens NUMBER = stk_pop(stack);
 

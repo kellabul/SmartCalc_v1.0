@@ -19,7 +19,7 @@ else
 CHECK_LIBS = -lcheck
 endif
 
-all: clean tests
+all: clean install
 
 clean:
 	rm -rf *.o *.a $(COVERAGE_RESULTS) $(COVERAGE_FILES) $(GCOV_FILES) $(LCOV_FILES) $(TEST_NAME) $(TEST_NAME).c gcov_report $(TEST_NAME).dSYM ../build/*
