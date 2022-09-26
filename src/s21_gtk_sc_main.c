@@ -6,7 +6,7 @@
 GtkEntry *entry_exp;
 GtkWidget *main_label_error;
 GtkWidget *label_result;
-char input[S21_MAX_INPUT] = {};
+char input[S21_MAX_INPUT + 1] = {};
 
 int main(int argc, char *argv[]) {
   GtkWidget *window;
@@ -65,7 +65,7 @@ void button_rersult_clicked_cb() {
     infix_to_postfix(infix, postfix);
     calculation(postfix, output_string);
     gtk_label_set_text(GTK_LABEL(label_result), output_string);
-    
+
     free(output_string);
     free(postfix);
   }
@@ -75,304 +75,152 @@ void button_rersult_clicked_cb() {
 /* ============= ENTRY ============= */
 
 void entry_exp_changed_cb(GtkEntry *entry) {
-  const char *buffer = gtk_entry_get_text(entry);
-  if (strlen(buffer) > S21_MAX_INPUT) {
-    gtk_label_set_text(GTK_LABEL(main_label_error),
-                       (const gchar *)"TOO MUCH ARGUMENTS");
-  } else {
-    sprintf(input, "%s", buffer);
-    gtk_label_set_text(GTK_LABEL(main_label_error), (const gchar *)"");
-  }
+  sprintf(input, "%s", gtk_entry_get_text(entry));
 }
 
 /* ============= REGULAR BUTTONS ============= */
 
 void button_1_clicked_cb() {
-  if (strlen(input) > S21_MAX_INPUT - 1) {
-    gtk_label_set_text(GTK_LABEL(main_label_error),
-                       (const gchar *)"TOO MUCH ARGUMENTS");
-  } else {
-    strcat(input, "1");
-    gtk_entry_set_text(entry_exp, (const gchar *)input);
-  }
+  strcat(input, "1");
+  gtk_entry_set_text(entry_exp, (const gchar *)input);
 }
 
 void button_2_clicked_cb() {
-  if (strlen(input) > S21_MAX_INPUT - 1) {
-    gtk_label_set_text(GTK_LABEL(main_label_error),
-                       (const gchar *)"TOO MUCH ARGUMENTS");
-  } else {
-    strcat(input, "2");
-    gtk_entry_set_text(entry_exp, (const gchar *)input);
-  }
+  strcat(input, "2");
+  gtk_entry_set_text(entry_exp, (const gchar *)input);
 }
 
 void button_3_clicked_cb() {
-  if (strlen(input) > S21_MAX_INPUT - 1) {
-    gtk_label_set_text(GTK_LABEL(main_label_error),
-                       (const gchar *)"TOO MUCH ARGUMENTS");
-  } else {
-    strcat(input, "3");
-    gtk_entry_set_text(entry_exp, (const gchar *)input);
-  }
+  strcat(input, "3");
+  gtk_entry_set_text(entry_exp, (const gchar *)input);
 }
 
 void button_4_clicked_cb() {
-  if (strlen(input) > S21_MAX_INPUT - 1) {
-    gtk_label_set_text(GTK_LABEL(main_label_error),
-                       (const gchar *)"TOO MUCH ARGUMENTS");
-  } else {
-    strcat(input, "4");
-    gtk_entry_set_text(entry_exp, (const gchar *)input);
-  }
+  strcat(input, "4");
+  gtk_entry_set_text(entry_exp, (const gchar *)input);
 }
 
 void button_5_clicked_cb() {
-  if (strlen(input) > S21_MAX_INPUT - 1) {
-    gtk_label_set_text(GTK_LABEL(main_label_error),
-                       (const gchar *)"TOO MUCH ARGUMENTS");
-  } else {
-    strcat(input, "5");
-    gtk_entry_set_text(entry_exp, (const gchar *)input);
-  }
+  strcat(input, "5");
+  gtk_entry_set_text(entry_exp, (const gchar *)input);
 }
 
 void button_6_clicked_cb() {
-  if (strlen(input) > S21_MAX_INPUT - 1) {
-    gtk_label_set_text(GTK_LABEL(main_label_error),
-                       (const gchar *)"TOO MUCH ARGUMENTS");
-  } else {
-    strcat(input, "6");
-    gtk_entry_set_text(entry_exp, (const gchar *)input);
-  }
+  strcat(input, "6");
+  gtk_entry_set_text(entry_exp, (const gchar *)input);
 }
 
 void button_7_clicked_cb() {
-  if (strlen(input) > S21_MAX_INPUT - 1) {
-    gtk_label_set_text(GTK_LABEL(main_label_error),
-                       (const gchar *)"TOO MUCH ARGUMENTS");
-  } else {
-    strcat(input, "7");
-    gtk_entry_set_text(entry_exp, (const gchar *)input);
-  }
+  strcat(input, "7");
+  gtk_entry_set_text(entry_exp, (const gchar *)input);
 }
 
 void button_8_clicked_cb() {
-  if (strlen(input) > S21_MAX_INPUT - 1) {
-    gtk_label_set_text(GTK_LABEL(main_label_error),
-                       (const gchar *)"TOO MUCH ARGUMENTS");
-  } else {
-    strcat(input, "8");
-    gtk_entry_set_text(entry_exp, (const gchar *)input);
-  }
+  strcat(input, "8");
+  gtk_entry_set_text(entry_exp, (const gchar *)input);
 }
 
 void button_9_clicked_cb() {
-  if (strlen(input) > S21_MAX_INPUT - 1) {
-    gtk_label_set_text(GTK_LABEL(main_label_error),
-                       (const gchar *)"TOO MUCH ARGUMENTS");
-  } else {
-    strcat(input, "9");
-    gtk_entry_set_text(entry_exp, (const gchar *)input);
-  }
+  strcat(input, "9");
+  gtk_entry_set_text(entry_exp, (const gchar *)input);
 }
 
 void button_dot_clicked_cb() {
-  if (strlen(input) > S21_MAX_INPUT - 1) {
-    gtk_label_set_text(GTK_LABEL(main_label_error),
-                       (const gchar *)"TOO MUCH ARGUMENTS");
-  } else {
-    strcat(input, ".");
-    gtk_entry_set_text(entry_exp, (const gchar *)input);
-  }
+  strcat(input, ".");
+  gtk_entry_set_text(entry_exp, (const gchar *)input);
 }
 
 void button_zero_clicked_cb() {
-  if (strlen(input) > S21_MAX_INPUT - 1) {
-    gtk_label_set_text(GTK_LABEL(main_label_error),
-                       (const gchar *)"TOO MUCH ARGUMENTS");
-  } else {
-    strcat(input, "0");
-    gtk_entry_set_text(entry_exp, (const gchar *)input);
-  }
+  strcat(input, "0");
+  gtk_entry_set_text(entry_exp, (const gchar *)input);
 }
 
 void button_x_clicked_cb() {
-  if (strlen(input) > S21_MAX_INPUT - 1) {
-    gtk_label_set_text(GTK_LABEL(main_label_error),
-                       (const gchar *)"TOO MUCH ARGUMENTS");
-  } else {
-    strcat(input, "x");
-    gtk_entry_set_text(entry_exp, (const gchar *)input);
-  }
+  strcat(input, "x");
+  gtk_entry_set_text(entry_exp, (const gchar *)input);
 }
 
 void button_pow_clicked_cb() {
-  if (strlen(input) > S21_MAX_INPUT - 1) {
-    gtk_label_set_text(GTK_LABEL(main_label_error),
-                       (const gchar *)"TOO MUCH ARGUMENTS");
-  } else {
-    strcat(input, "^");
-    gtk_entry_set_text(entry_exp, (const gchar *)input);
-  }
+  strcat(input, "^");
+  gtk_entry_set_text(entry_exp, (const gchar *)input);
 }
 
 void button_left_paren_clicked_cb() {
-  if (strlen(input) > S21_MAX_INPUT - 1) {
-    gtk_label_set_text(GTK_LABEL(main_label_error),
-                       (const gchar *)"TOO MUCH ARGUMENTS");
-  } else {
-    strcat(input, "(");
-    gtk_entry_set_text(entry_exp, (const gchar *)input);
-  }
+  strcat(input, "(");
+  gtk_entry_set_text(entry_exp, (const gchar *)input);
 }
 
 void button_right_paren_clicked_cb() {
-  if (strlen(input) > S21_MAX_INPUT - 1) {
-    gtk_label_set_text(GTK_LABEL(main_label_error),
-                       (const gchar *)"TOO MUCH ARGUMENTS");
-  } else {
-    strcat(input, ")");
-    gtk_entry_set_text(entry_exp, (const gchar *)input);
-  }
+  strcat(input, ")");
+  gtk_entry_set_text(entry_exp, (const gchar *)input);
 }
 
 void button_div_clicked_cb() {
-  if (strlen(input) > S21_MAX_INPUT - 1) {
-    gtk_label_set_text(GTK_LABEL(main_label_error),
-                       (const gchar *)"TOO MUCH ARGUMENTS");
-  } else {
-    strcat(input, "/");
-    gtk_entry_set_text(entry_exp, (const gchar *)input);
-  }
+  strcat(input, "/");
+  gtk_entry_set_text(entry_exp, (const gchar *)input);
 }
 
 void button_mult_clicked_cb() {
-  if (strlen(input) > S21_MAX_INPUT - 1) {
-    gtk_label_set_text(GTK_LABEL(main_label_error),
-                       (const gchar *)"TOO MUCH ARGUMENTS");
-  } else {
-    strcat(input, "*");
-    gtk_entry_set_text(entry_exp, (const gchar *)input);
-  }
+  strcat(input, "*");
+  gtk_entry_set_text(entry_exp, (const gchar *)input);
 }
 
 void button_minus_clicked_cb() {
-  if (strlen(input) > S21_MAX_INPUT - 1) {
-    gtk_label_set_text(GTK_LABEL(main_label_error),
-                       (const gchar *)"TOO MUCH ARGUMENTS");
-  } else {
-    strcat(input, "-");
-    gtk_entry_set_text(entry_exp, (const gchar *)input);
-  }
+  strcat(input, "-");
+  gtk_entry_set_text(entry_exp, (const gchar *)input);
 }
 
 void button_plus_clicked_cb() {
-  if (strlen(input) > S21_MAX_INPUT - 1) {
-    gtk_label_set_text(GTK_LABEL(main_label_error),
-                       (const gchar *)"TOO MUCH ARGUMENTS");
-  } else {
-    strcat(input, "+");
-    gtk_entry_set_text(entry_exp, (const gchar *)input);
-  }
+  strcat(input, "+");
+  gtk_entry_set_text(entry_exp, (const gchar *)input);
 }
 
 void button_ln_clicked_cb() {
-  if (strlen(input) > S21_MAX_INPUT - 3) {
-    gtk_label_set_text(GTK_LABEL(main_label_error),
-                       (const gchar *)"TOO MUCH ARGUMENTS");
-  } else {
-    strcat(input, "ln(");
-    gtk_entry_set_text(entry_exp, (const gchar *)input);
-  }
+  strcat(input, "ln(");
+  gtk_entry_set_text(entry_exp, (const gchar *)input);
 }
 
 void button_mod_clicked_cb() {
-  if (strlen(input) > S21_MAX_INPUT - 3) {
-    gtk_label_set_text(GTK_LABEL(main_label_error),
-                       (const gchar *)"TOO MUCH ARGUMENTS");
-  } else {
-    strcat(input, "mod");
-    gtk_entry_set_text(entry_exp, (const gchar *)input);
-  }
+  strcat(input, "mod");
+  gtk_entry_set_text(entry_exp, (const gchar *)input);
 }
 
 void button_log_clicked_cb() {
-  if (strlen(input) > S21_MAX_INPUT - 4) {
-    gtk_label_set_text(GTK_LABEL(main_label_error),
-                       (const gchar *)"TOO MUCH ARGUMENTS");
-  } else {
-    strcat(input, "log(");
-    gtk_entry_set_text(entry_exp, (const gchar *)input);
-  }
+  strcat(input, "log(");
+  gtk_entry_set_text(entry_exp, (const gchar *)input);
 }
 
 void button_cos_clicked_cb() {
-  if (strlen(input) > S21_MAX_INPUT - 4) {
-    gtk_label_set_text(GTK_LABEL(main_label_error),
-                       (const gchar *)"TOO MUCH ARGUMENTS");
-  } else {
-    strcat(input, "cos(");
-    gtk_entry_set_text(entry_exp, (const gchar *)input);
-  }
+  strcat(input, "cos(");
+  gtk_entry_set_text(entry_exp, (const gchar *)input);
 }
 
 void button_sin_clicked_cb() {
-  if (strlen(input) > S21_MAX_INPUT - 4) {
-    gtk_label_set_text(GTK_LABEL(main_label_error),
-                       (const gchar *)"TOO MUCH ARGUMENTS");
-  } else {
-    strcat(input, "sin(");
-    gtk_entry_set_text(entry_exp, (const gchar *)input);
-  }
+  strcat(input, "sin(");
+  gtk_entry_set_text(entry_exp, (const gchar *)input);
 }
 
 void button_tan_clicked_cb() {
-  if (strlen(input) > S21_MAX_INPUT - 4) {
-    gtk_label_set_text(GTK_LABEL(main_label_error),
-                       (const gchar *)"TOO MUCH ARGUMENTS");
-  } else {
-    strcat(input, "tan(");
-    gtk_entry_set_text(entry_exp, (const gchar *)input);
-  }
+  strcat(input, "tan(");
+  gtk_entry_set_text(entry_exp, (const gchar *)input);
 }
 
 void button_acos_clicked_cb() {
-  if (strlen(input) > S21_MAX_INPUT - 5) {
-    gtk_label_set_text(GTK_LABEL(main_label_error),
-                       (const gchar *)"TOO MUCH ARGUMENTS");
-  } else {
-    strcat(input, "acos(");
-    gtk_entry_set_text(entry_exp, (const gchar *)input);
-  }
+  strcat(input, "acos(");
+  gtk_entry_set_text(entry_exp, (const gchar *)input);
 }
 
 void button_asin_clicked_cb() {
-  if (strlen(input) > S21_MAX_INPUT - 5) {
-    gtk_label_set_text(GTK_LABEL(main_label_error),
-                       (const gchar *)"TOO MUCH ARGUMENTS");
-  } else {
-    strcat(input, "asin(");
-    gtk_entry_set_text(entry_exp, (const gchar *)input);
-  }
+  strcat(input, "asin(");
+  gtk_entry_set_text(entry_exp, (const gchar *)input);
 }
 
 void button_atan_clicked_cb() {
-  if (strlen(input) > S21_MAX_INPUT - 5) {
-    gtk_label_set_text(GTK_LABEL(main_label_error),
-                       (const gchar *)"TOO MUCH ARGUMENTS");
-  } else {
-    strcat(input, "atan(");
-    gtk_entry_set_text(entry_exp, (const gchar *)input);
-  }
+  strcat(input, "atan(");
+  gtk_entry_set_text(entry_exp, (const gchar *)input);
 }
 
 void button_sqrt_clicked_cb() {
-  if (strlen(input) > S21_MAX_INPUT - 5) {
-    gtk_label_set_text(GTK_LABEL(main_label_error),
-                       (const gchar *)"TOO MUCH ARGUMENTS");
-  } else {
-    strcat(input, "sqrt(");
-    gtk_entry_set_text(entry_exp, (const gchar *)input);
-  }
+  strcat(input, "sqrt(");
+  gtk_entry_set_text(entry_exp, (const gchar *)input);
 }

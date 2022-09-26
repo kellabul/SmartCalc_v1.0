@@ -449,6 +449,9 @@
                   <object class="GtkEntry" id="entry_exp">
                     <property name="visible">True</property>
                     <property name="can-focus">True</property>
+                    <property name="max-length">255</property>
+                    <property name="xalign">1</property>
+                    <property name="input-hints">GTK_INPUT_HINT_LOWERCASE | GTK_INPUT_HINT_NO_EMOJI | GTK_INPUT_HINT_NONE</property>
                     <signal name="changed" handler="entry_exp_changed_cb" swapped="no"/>
                   </object>
                   <packing>
