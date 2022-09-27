@@ -19,7 +19,7 @@ else
 CHECK_LIBS = -lcheck
 endif
 
-all: clean install
+all: clean install run
 
 clean:
 	rm -rf *.o *.a $(COVERAGE_RESULTS) $(COVERAGE_FILES) $(GCOV_FILES) $(LCOV_FILES) $(TEST_NAME) $(TEST_NAME).c gcov_report $(TEST_NAME).dSYM ../build/*
@@ -41,6 +41,8 @@ install_gtk_linux:
 
 install: $(NAME).a
 	gcc s21_gtk_sc_main.c  $(NAME).a -o ../build/$(NAME) $(LIBS)
+
+run:
 	../build/s21_smartcalc
 
 uninstall:

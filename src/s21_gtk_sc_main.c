@@ -4,9 +4,12 @@
 #include "s21_smartcalc.h"
 
 GtkEntry *entry_exp;
+GtkEntry *entry_x;
 GtkWidget *main_label_error;
 GtkWidget *label_result;
-char input[S21_MAX_INPUT + 10] = {}; /* has to be more than bigest input button  */
+/* has to be more than bigest button input length */
+char input[S21_MAX_INPUT + 8] = {};
+double x_value = S21_NAN;
 
 int main(int argc, char *argv[]) {
   GtkWidget *window;
@@ -20,6 +23,7 @@ int main(int argc, char *argv[]) {
       GTK_WIDGET(gtk_builder_get_object(builder, "main_label_error"));
   label_result = GTK_WIDGET(gtk_builder_get_object(builder, "label_result"));
   entry_exp = GTK_ENTRY(gtk_builder_get_object(builder, "entry_exp"));
+  entry_x = GTK_ENTRY(gtk_builder_get_object(builder, "entry_x"));
 
   g_signal_connect(window, "destroy", G_CALLBACK(gtk_main_quit), NULL);
 
@@ -63,6 +67,7 @@ void button_rersult_clicked_cb() {
     output_string = calloc(S21_MAX_INPUT, sizeof(char));
 
     infix_to_postfix(infix, postfix);
+    if (!(__builtin_isnan (x_value))) replaceX(postfix, x_value);
     calculation(postfix, output_string);
     gtk_label_set_text(GTK_LABEL(label_result), output_string);
 
@@ -78,10 +83,20 @@ void entry_exp_changed_cb(GtkEntry *entry) {
   sprintf(input, "%s", gtk_entry_get_text(entry));
 }
 
+void entry_x_changed_cb(GtkEntry *entry) {
+  char x_buffer[S21_MAX_INPUT + 1] = {};
+  sprintf(x_buffer, "%s", gtk_entry_get_text(entry));
+  if (x_buffer[0] == '\0')
+    x_value = S21_NAN;
+  else
+    sscanf(x_buffer, "%lf", &x_value);
+}
+
 /* ============= REGULAR BUTTONS ============= */
 
 void button_1_clicked_cb() {
   strcat(input, "1");
+  // printf("%s\n", input);
   gtk_entry_set_text(entry_exp, (const gchar *)input);
 }
 

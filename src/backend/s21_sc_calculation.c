@@ -4,8 +4,6 @@
 
 #include "../s21_smartcalc.h"
 
-int thereIsXinInput(s_tokens *tokens);
-
 int calculation(s_tokens *tokens, char *string) {
   token_stack stack = {};
   s_tokens final_result = {};
@@ -34,7 +32,7 @@ int calculation(s_tokens *tokens, char *string) {
       sprintf(string, "%.7lf", final_result.value);
       deleteZeroesFromStringEnd(string);
       if (strlen(string) > 15)
-        sprintf(string, "%.15e", final_result.value);
+        sprintf(string, "%.10e", final_result.value);
     }
   }
   return 0;
@@ -47,6 +45,15 @@ void deleteZeroesFromStringEnd(char *str) {
       str[i + 1] = '\0';
       break;
     }
+  }
+}
+
+void replaceX(s_tokens *tokens, double x_value) {
+  for (int i = 0; tokens[i].type != 0; i++) {
+    if (tokens[i].type == S21_VARIABLE) {
+      tokens[i].type = S21_NUMBER;
+      tokens[i].value = x_value;
+    };
   }
 }
 

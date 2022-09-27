@@ -8,7 +8,7 @@
 #define S21_CORRECT_INPUT 0
 #define S21_NUMBER -1
 #define S21_VARIABLE -2
-
+#define S21_NAN (__builtin_nanf (""))
 #define S21_ANNUITANTS 1
 #define S21_DIFFERENTIATED 2
 
@@ -92,6 +92,8 @@ s_tokens calculateOneS21_NUMBER(token_stack *stack, double operation);
 s_tokens calculateTwoS21_NUMBERs(token_stack *stack, double operation);
 double calculateMod(double second, double first);
 void deleteZeroesFromStringEnd(char *str);
+int thereIsXinInput(s_tokens *tokens);
+void replaceX(s_tokens *tokens, double x_value);
 
 // credit calculator
 double total_payment(double loan, double interestRate, int creditPeriod,
