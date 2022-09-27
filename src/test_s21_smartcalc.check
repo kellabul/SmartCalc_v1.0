@@ -331,7 +331,7 @@
 // calculation case 2
 
     string_input = "cos(0.785)+sin(0.785)+tan(0.785)+acos(0.785)+asin(0.785)+atan(0.785)+ln(0.785)+log(0.785)+sqrt(0.785)";
-    correct_output = "5.188542";
+    correct_output = "5.1885416";
 
     infix = calloc(S21_MAX_TKN, sizeof(s_tokens));
     postfix = calloc(S21_MAX_TKN, sizeof(s_tokens));
@@ -354,7 +354,7 @@
 // calculation case 3
 
     string_input = "-2+cos(sin(-25)modsin(+cos(66)))-(19mod12)^2";
-    correct_output = "-50.24094";
+    correct_output = "-50.2409403";
 
     infix = calloc(S21_MAX_TKN, sizeof(s_tokens));
     postfix = calloc(S21_MAX_TKN, sizeof(s_tokens));
@@ -457,6 +457,62 @@
     free(infix);
     free(postfix);
     free(output_string);
+
+// calculation case 7
+
+    string_input = "2x+5";
+    correct_output = "ENTER X VALUE";
+
+    infix = calloc(S21_MAX_TKN, sizeof(s_tokens));
+    postfix = calloc(S21_MAX_TKN, sizeof(s_tokens));
+    output_string = calloc(S21_MAX_INPUT, sizeof(char));
+
+    if (infix && postfix && output_string) {
+        input_conversion(string_input, infix);
+        infix_to_postfix(infix, postfix);
+        calculation(postfix, output_string);
+    } else {
+        printf("out of memory\n");
+    }
+    ck_assert_str_eq(output_string, correct_output);
+
+// calculation case 8
+
+    string_input = "2x+5";
+    correct_output = "25";
+
+    infix = calloc(S21_MAX_TKN, sizeof(s_tokens));
+    postfix = calloc(S21_MAX_TKN, sizeof(s_tokens));
+    output_string = calloc(S21_MAX_INPUT, sizeof(char));
+
+    if (infix && postfix && output_string) {
+        input_conversion(string_input, infix);
+        infix_to_postfix(infix, postfix);
+        replaceX(postfix, 10);
+        calculation(postfix, output_string);
+    } else {
+        printf("out of memory\n");
+    }
+    ck_assert_str_eq(output_string, correct_output);
+
+// calculation case 9
+
+    string_input = "123456*78910111213";
+    correct_output = "9.741926690e+15";
+
+    infix = calloc(S21_MAX_TKN, sizeof(s_tokens));
+    postfix = calloc(S21_MAX_TKN, sizeof(s_tokens));
+    output_string = calloc(S21_MAX_INPUT, sizeof(char));
+
+    if (infix && postfix && output_string) {
+        input_conversion(string_input, infix);
+        infix_to_postfix(infix, postfix);
+        calculation(postfix, output_string);
+    } else {
+        printf("out of memory\n");
+    }
+    ck_assert_str_eq(output_string, correct_output);
+
 
 
 /* --------------------------------------BONUS PART--------------------------------------*/

@@ -32,7 +32,7 @@ int calculation(s_tokens *tokens, char *string) {
       sprintf(string, "%.7lf", final_result.value);
       deleteZeroesFromStringEnd(string);
       if (strlen(string) > 15)
-        sprintf(string, "%.10e", final_result.value);
+        sprintf(string, "%.9e", final_result.value);
     }
   }
   return 0;

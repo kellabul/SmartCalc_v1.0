@@ -426,11 +426,11 @@
                     <property name="can-focus">True</property>
                     <property name="max-length">255</property>
                     <property name="xalign">1</property>
-                    <property name="input-hints">GTK_INPUT_HINT_LOWERCASE | GTK_INPUT_HINT_NO_EMOJI | GTK_INPUT_HINT_NONE</property>
+                    <property name="input-purpose">number</property>
                     <signal name="changed" handler="entry_x_changed_cb" swapped="no"/>
                   </object>
                   <packing>
-                    <property name="left-attach">2</property>
+                    <property name="left-attach">1</property>
                     <property name="top-attach">7</property>
                     <property name="width">3</property>
                   </packing>
@@ -516,19 +516,6 @@
                   </packing>
                 </child>
                 <child>
-                  <object class="GtkToggleButton" id="main_toggle_button">
-                    <property name="label">find X</property>
-                    <property name="visible">True</property>
-                    <property name="can-focus">True</property>
-                    <property name="receives-default">True</property>
-                    <signal name="toggled" handler="main_toggle_button_toggled_cb" swapped="no"/>
-                  </object>
-                  <packing>
-                    <property name="left-attach">0</property>
-                    <property name="top-attach">7</property>
-                  </packing>
-                </child>
-                <child>
                   <object class="GtkLabel" id="main_label_error">
                     <property name="visible">True</property>
                     <property name="can-focus">False</property>
@@ -548,7 +535,20 @@
                     <property name="justify">right</property>
                   </object>
                   <packing>
-                    <property name="left-attach">1</property>
+                    <property name="left-attach">0</property>
+                    <property name="top-attach">7</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkButton" id="button_clear_x">
+                    <property name="label" translatable="yes">clear</property>
+                    <property name="visible">True</property>
+                    <property name="can-focus">True</property>
+                    <property name="receives-default">True</property>
+                    <signal name="clicked" handler="button_clear_x_clicked_cb" swapped="no"/>
+                  </object>
+                  <packing>
+                    <property name="left-attach">4</property>
                     <property name="top-attach">7</property>
                   </packing>
                 </child>
@@ -716,6 +716,7 @@
                   <object class="GtkEntry" id="bonus1_entry_total_credit">
                     <property name="visible">True</property>
                     <property name="can-focus">True</property>
+                    <signal name="changed" handler="bonus1_entry_total_credit_changed_cb" swapped="no"/>
                   </object>
                   <packing>
                     <property name="left-attach">4</property>
@@ -773,6 +774,7 @@
                   <object class="GtkEntry" id="bonus1_entry_term">
                     <property name="visible">True</property>
                     <property name="can-focus">True</property>
+                    <signal name="changed" handler="bonus1_entry_term_changed_cb" swapped="no"/>
                   </object>
                   <packing>
                     <property name="left-attach">4</property>
@@ -784,6 +786,7 @@
                   <object class="GtkEntry" id="bonus1_entry_interest">
                     <property name="visible">True</property>
                     <property name="can-focus">True</property>
+                    <signal name="changed" handler="bonus1_entry_interest_changed_cb" swapped="no"/>
                   </object>
                   <packing>
                     <property name="left-attach">4</property>
@@ -825,7 +828,7 @@
                   <object class="GtkLabel" id="bonus1_label_error">
                     <property name="visible">True</property>
                     <property name="can-focus">False</property>
-                    <property name="label" translatable="yes">________</property>
+                    <property name="label" translatable="yes">______</property>
                   </object>
                   <packing>
                     <property name="left-attach">4</property>
@@ -914,6 +917,7 @@
                     <property name="can-focus">True</property>
                     <property name="receives-default">True</property>
                     <property name="relief">half</property>
+                    <signal name="clicked" handler="bonus1_button_clicked_cb" swapped="no"/>
                   </object>
                   <packing>
                     <property name="left-attach">1</property>
@@ -1163,6 +1167,7 @@
                     <property name="visible">True</property>
                     <property name="can-focus">True</property>
                     <property name="receives-default">True</property>
+                    <signal name="clicked" handler="bonus2_button_clicked_cb" swapped="no"/>
                   </object>
                   <packing>
                     <property name="left-attach">1</property>
@@ -1174,6 +1179,7 @@
                   <object class="GtkEntry" id="bonus2_entry_deposit_amount">
                     <property name="visible">True</property>
                     <property name="can-focus">True</property>
+                    <signal name="changed" handler="bonus2_entry_deposit_amount_changed_cb" swapped="no"/>
                   </object>
                   <packing>
                     <property name="left-attach">4</property>
@@ -1185,6 +1191,7 @@
                   <object class="GtkEntry" id="bonus2_entry_deposit_term">
                     <property name="visible">True</property>
                     <property name="can-focus">True</property>
+                    <signal name="changed" handler="bonus2_entry_deposit_term_changed_cb" swapped="no"/>
                   </object>
                   <packing>
                     <property name="left-attach">4</property>
@@ -1196,6 +1203,7 @@
                   <object class="GtkEntry" id="bonus2_entry_interest_rate">
                     <property name="visible">True</property>
                     <property name="can-focus">True</property>
+                    <signal name="changed" handler="bonus2_entry_interest_rate_changed_cb" swapped="no"/>
                   </object>
                   <packing>
                     <property name="left-attach">4</property>
@@ -1207,6 +1215,7 @@
                   <object class="GtkEntry" id="bonus2_entry_tax_rate">
                     <property name="visible">True</property>
                     <property name="can-focus">True</property>
+                    <signal name="changed" handler="bonus2_entry_tax_rate_changed_cb" swapped="no"/>
                   </object>
                   <packing>
                     <property name="left-attach">4</property>
@@ -1218,6 +1227,7 @@
                   <object class="GtkEntry" id="bonus2_entry_periodicity_of_payments">
                     <property name="visible">True</property>
                     <property name="can-focus">True</property>
+                    <signal name="changed" handler="bonus2_entry_periodicity_of_payments_changed_cb" swapped="no"/>
                   </object>
                   <packing>
                     <property name="left-attach">4</property>
@@ -1229,6 +1239,7 @@
                   <object class="GtkEntry" id="bonus2_entry_capitalization_of_interest">
                     <property name="visible">True</property>
                     <property name="can-focus">True</property>
+                    <signal name="changed" handler="bonus2_entry_capitalization_of_interest_changed_cb" swapped="no"/>
                   </object>
                   <packing>
                     <property name="left-attach">4</property>
@@ -1240,7 +1251,7 @@
                   <object class="GtkLabel" id="bonus2_error">
                     <property name="visible">True</property>
                     <property name="can-focus">False</property>
-                    <property name="label" translatable="yes">_____</property>
+                    <property name="label" translatable="yes">______</property>
                   </object>
                   <packing>
                     <property name="left-attach">4</property>

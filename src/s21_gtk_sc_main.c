@@ -1,4 +1,5 @@
 #include <gtk/gtk.h>
+#include <locale.h>
 #include <string.h>
 
 #include "s21_smartcalc.h"
@@ -44,6 +45,10 @@ void button_ce_clicked_cb() {
   gtk_label_set_text(GTK_LABEL(label_result), (const gchar *)"0");
 }
 
+void button_clear_x_clicked_cb() {
+  gtk_entry_set_text(entry_x, (const gchar *)"");
+}
+
 void button_delete_clicked_cb() {
   int input_size = strlen(input);
   if (input_size > 0) {
@@ -53,10 +58,11 @@ void button_delete_clicked_cb() {
 }
 
 void button_rersult_clicked_cb() {
+  setlocale(LC_NUMERIC, "C");
+  
   char *output_string = NULL;
   s_tokens *infix = NULL;
   s_tokens *postfix = NULL;
-
   infix = calloc(S21_MAX_TKN, sizeof(s_tokens));
 
   if (input_conversion(input, infix) == S21_INCORRECT_INPUT) {
@@ -97,7 +103,8 @@ void entry_x_changed_cb(GtkEntry *entry) {
 void button_1_clicked_cb() {
   strcat(input, "1");
   // printf("%s\n", input);
-  gtk_entry_set_text(entry_exp, (const gchar *)input);
+
+  // gtk_entry_set_text(entry_exp, (const gchar *)input);
 }
 
 void button_2_clicked_cb() {
