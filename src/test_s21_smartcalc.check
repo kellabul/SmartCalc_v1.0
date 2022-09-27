@@ -110,6 +110,9 @@
     string = "-3^-2";
     ck_assert_int_eq(input_validation(string), -1);
 
+    string = "2cos(0.5)";
+    ck_assert_int_eq(input_validation(string), -1);
+
 #test input_conversion_test
 /* --------------------------------------input_conversion_test---*/
 

@@ -8,7 +8,7 @@
 #define S21_CORRECT_INPUT 0
 #define S21_NUMBER -1
 #define S21_VARIABLE -2
-#define S21_NAN (__builtin_nanf (""))
+#define S21_NAN (__builtin_nanf(""))
 #define S21_ANNUITANTS 1
 #define S21_DIFFERENTIATED 2
 
@@ -51,7 +51,7 @@ int stk_top_type(token_stack *stk);
 
 // santa's little helpers
 int isOperation(char element);
-int isS21_NUMBEROrX(char element);
+int isNumberOrX(char element);
 int isS21_NUMBER(char element);
 int isFunction(char *str);
 int isLn(char *str);

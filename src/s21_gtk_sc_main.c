@@ -67,7 +67,7 @@ void button_rersult_clicked_cb() {
     output_string = calloc(S21_MAX_INPUT, sizeof(char));
 
     infix_to_postfix(infix, postfix);
-    if (!(__builtin_isnan (x_value))) replaceX(postfix, x_value);
+    if (!(__builtin_isnan(x_value))) replaceX(postfix, x_value);
     calculation(postfix, output_string);
     gtk_label_set_text(GTK_LABEL(label_result), output_string);
 

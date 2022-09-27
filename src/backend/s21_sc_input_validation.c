@@ -21,11 +21,11 @@ int isWrongFirstElement(char *str) {
 }
 
 int isWrongMiddleElement(char *str) {
-  return str[0] != '(' && !isFunction(&str[0]) && !isS21_NUMBEROrX(str[0]);
+  return str[0] != '(' && !isFunction(&str[0]) && !isNumberOrX(str[0]);
 }
 
 int isWrongLastElement(char element) {
-  return element != ')' && !isS21_NUMBEROrX(element);
+  return element != ')' && !isNumberOrX(element);
 }
 
 int areWrongMiddleElements(char *str) {
@@ -59,13 +59,15 @@ int areWrongMiddleElements(char *str) {
       }
     } else if (isOperation(str[i]) && isWrongMiddleElement(&str[i + 1])) {
       result = -1;
-    } else if (str[i] == '.' && !isS21_NUMBEROrX(str[i + 1]) &&
+    } else if (str[i] == '.' && !isNumberOrX(str[i + 1]) &&
                !isOperation(str[i - 1])) {
       result = -1;
-    } else if (str[i] == 'x' && !isOperation(str[i + 1]) && str[i + 1] != ')' && str[i + 1] != '\0') {
+    } else if (isNumberOrX(str[i]) && isFunction(&str[i + 1])) {
       result = -1;
-    } else if (!isS21_NUMBEROrX(str[i]) && !isOperation(str[i]) &&
-               str[i] != '.') {
+    } else if (str[i] == 'x' && !isOperation(str[i + 1]) && str[i + 1] != ')' &&
+               str[i + 1] != '\0') {
+      result = -1;
+    } else if (!isNumberOrX(str[i]) && !isOperation(str[i]) && str[i] != '.') {
       result = -1;
     }
   }
@@ -94,7 +96,7 @@ int isFunction(char *str) {
   return result;
 }
 
-int isS21_NUMBEROrX(char element) {
+int isNumberOrX(char element) {
   return isS21_NUMBER(element) || element == 'x';
 }
 
