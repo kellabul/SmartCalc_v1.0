@@ -1,7 +1,6 @@
 #include <cairo.h>
 #include <gtk/gtk.h>
 #include <locale.h>
-#include <math.h>
 #include <string.h>
 
 #include "s21_smartcalc.h"
@@ -74,17 +73,13 @@ int main(int argc, char *argv[]) {
 
   /*  graph */
   GtkWidget *da;
-
-  gtk_init(&argc, &argv);
-
+  //gtk_init(&argc, &argv);
   graph_window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
   gtk_window_set_default_size(GTK_WINDOW(graph_window), WIDTH, HEIGHT);
   gtk_window_set_title(GTK_WINDOW(graph_window), "Graph drawing");
   g_signal_connect(G_OBJECT(graph_window), "destroy", gtk_main_quit, NULL);
-
   da = gtk_drawing_area_new();
   gtk_container_add(GTK_CONTAINER(graph_window), da);
-
   g_signal_connect(G_OBJECT(da), "draw", G_CALLBACK(on_draw), NULL);
   /*  graph */
 
@@ -137,21 +132,22 @@ void button_rersult_clicked_cb() {
   s_tokens *infix = NULL;
   s_tokens *postfix = NULL;
   infix = calloc(S21_MAX_TKN, sizeof(s_tokens));
-
-  if (input_conversion(input, infix) == S21_INCORRECT_INPUT) {
-    gtk_label_set_text(GTK_LABEL(label_result),
-                       (const gchar *)"INCORRECT INPUT");
-  } else {
-    postfix = calloc(S21_MAX_TKN, sizeof(s_tokens));
-    output_string = calloc(S21_MAX_INPUT, sizeof(char));
-
-    infix_to_postfix(infix, postfix);
-    if (!s21_isnan(x_value)) replaceX(postfix, x_value);
-    calculation(postfix, output_string);
-    gtk_label_set_text(GTK_LABEL(label_result), output_string);
-
-    free(output_string);
-    free(postfix);
+  if (infix != NULL) {
+    if (input_conversion(input, infix) == S21_INCORRECT_INPUT) {
+      gtk_label_set_text(GTK_LABEL(label_result),
+                        (const gchar *)"INCORRECT INPUT");
+    } else {
+      postfix = calloc(S21_MAX_TKN, sizeof(s_tokens));
+      output_string = calloc(S21_MAX_INPUT, sizeof(char));
+      if (output_string != NULL && postfix != NULL) {
+        infix_to_postfix(infix, postfix);
+        if (!s21_isnan(x_value)) replaceX(postfix, x_value);
+        calculation(postfix, output_string);
+        gtk_label_set_text(GTK_LABEL(label_result), output_string);
+      }
+      free(output_string);
+      free(postfix);
+    }
   }
   free(infix);
 }
@@ -402,16 +398,15 @@ gfloat f(gfloat x) {
 
   infix = calloc(S21_MAX_TKN, sizeof(s_tokens));
   postfix = calloc(S21_MAX_TKN, sizeof(s_tokens));
-  output_string = calloc(S21_MAX_INPUT, sizeof(char));
-
-  input_conversion(input, infix);
-  infix_to_postfix(infix, postfix);
-  replaceX(postfix, x);
-  result = calculation(postfix, infix);
+  if (infix != NULL && postfix != NULL) {
+    input_conversion(input, infix);
+    infix_to_postfix(infix, postfix);
+    replaceX(postfix, x);
+    result = calculation(postfix, NULL);
+  }
 
   free(postfix);
   free(infix);
-  free(output_string);
 
   return result;
 }
@@ -447,7 +442,11 @@ static gboolean on_draw(GtkWidget *widget, cairo_t *cr, gpointer user_data) {
   cairo_stroke(cr);
 
   /* Link each data point */
-  for (i = clip_x1; i < clip_x2; i += dx) cairo_line_to(cr, i, f(i));
+  for (i = clip_x1; i < clip_x2; i += dx/5) {
+    gdouble x_value = f(i);
+    cairo_move_to(cr, i, x_value);
+    cairo_line_to(cr, i+dx/5, x_value+dy/5);
+  }
 
   /* Draw the curve */
   cairo_set_source_rgba(cr, 0.72, 0.0, 1, 1);

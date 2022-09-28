@@ -21,18 +21,20 @@ double calculation(s_tokens *tokens, char *string) {
       }
     }
     final_result = stk_pop(&stack);
-    if (isinf(final_result.value)) {
-      if (final_result.value < 0)
-        sprintf(string, "- INFINITY");
-      else
-        sprintf(string, "INFINITY");
-    } else if (isnan(final_result.value)) {
-      sprintf(string, "NaN");
-    } else {
-      sprintf(string, "%.7lf", final_result.value);
-      deleteZeroesFromStringEnd(string);
-      if (strlen(string) > 15)
-        sprintf(string, "%.9e", final_result.value);
+    if (string != NULL) {
+      if (isinf(final_result.value)) {
+        if (final_result.value < 0)
+          sprintf(string, "- INFINITY");
+        else
+          sprintf(string, "INFINITY");
+      } else if (isnan(final_result.value)) {
+        sprintf(string, "NaN");
+      } else {
+        sprintf(string, "%.7lf", final_result.value);
+        deleteZeroesFromStringEnd(string);
+        if (strlen(string) > 15)
+          sprintf(string, "%.9e", final_result.value);
+      }
     }
   }
   return final_result.value;
