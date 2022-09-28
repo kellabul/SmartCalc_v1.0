@@ -18,18 +18,26 @@ double total_payment(double loan, double interestRate, int term, int type,
     totalPayment = S21_INCORRECT_INPUT;
   } else {
     double payment = 0;
-    double monthlyInterest = (interestRate / 100.00) / 12.00;
+    long double monthlyInterest = (interestRate / 100.00) / 12.00;
     if (type == S21_ANNUITANTS) {
-        payment = loan * (monthlyInterest +
-                          (monthlyInterest /
-                           ((pow((1.00 + monthlyInterest), term) - 1.00))));
-                           /*
-      payment =
-          loan *
-          ((monthlyInterest * (pow((1.00 + monthlyInterest), term))) /
-           (((pow((1.00 + monthlyInterest), term) - 1.00))));
 
-           */
+      payment =
+          loan * (monthlyInterest +
+                  (monthlyInterest /
+                   ((pow((1.00 + monthlyInterest), (double)term) - 1.00))));
+
+/* formula from wiki
+      payment =
+          loan * ((monthlyInterest * (pow((1.00 + monthlyInterest), term))) /
+                  (((pow((1.00 + monthlyInterest), term) - 1.00))));
+*/
+
+/* formula from raiffeisen.ru
+      payment =
+          loan * (monthlyInterest /
+                   (1 - (pow((1.00 + monthlyInterest), (double)term * -1.00))));
+*/
+
       *firstPayment = *lastPayment = payment;
       totalPayment = payment * term;
     } else if (type == S21_DIFFERENTIATED) {

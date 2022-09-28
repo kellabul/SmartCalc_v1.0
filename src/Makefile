@@ -6,6 +6,7 @@ COVERAGE_RESULTS = ./*.gcda
 GCOV_FILES = ./*.gcov
 LCOV_FILES = ./*.info
 
+GTK_SOURCE_FILES = s21_gtk_s*.c
 BACKEND_SOURCE_FILES = backend/s21_sc*.c
 BACKEND_OBJECT_FILES = s21_sc*.o
 
@@ -40,7 +41,7 @@ install_gtk_linux:
 	sudo apt-get install libgtk-3-dev
 
 install: $(NAME).a
-	gcc s21_gtk_sc_main.c  $(NAME).a -o ../build/$(NAME) $(LIBS)
+	gcc $(GTK_SOURCE_FILES) $(NAME).a -o ../build/$(NAME) $(LIBS)
 
 run:
 	../build/s21_smartcalc

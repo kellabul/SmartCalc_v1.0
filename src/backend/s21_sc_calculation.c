@@ -4,7 +4,7 @@
 
 #include "../s21_smartcalc.h"
 
-int calculation(s_tokens *tokens, char *string) {
+double calculation(s_tokens *tokens, char *string) {
   token_stack stack = {};
   s_tokens final_result = {};
   if (thereIsXinInput(tokens)) {
@@ -35,8 +35,11 @@ int calculation(s_tokens *tokens, char *string) {
         sprintf(string, "%.9e", final_result.value);
     }
   }
-  return 0;
+  return final_result.value;
 }
+
+
+
 
 void deleteZeroesFromStringEnd(char *str) {
   for (size_t i = strlen(str) - 1; i != 0; i--) {

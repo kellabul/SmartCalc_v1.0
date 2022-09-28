@@ -40,7 +40,7 @@ enum funcs_and_mod {
 int input_validation(char *str);
 int input_conversion(char *input, s_tokens *output);
 void infix_to_postfix(s_tokens *infix, s_tokens *postfix);
-int calculation(s_tokens *tokens, char *string);
+double calculation(s_tokens *tokens, char *string);
 
 // stack data structure
 void stk_init(token_stack *s);
