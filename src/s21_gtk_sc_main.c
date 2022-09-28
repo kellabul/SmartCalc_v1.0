@@ -73,7 +73,7 @@ int main(int argc, char *argv[]) {
 
   /*  graph */
   GtkWidget *da;
-  //gtk_init(&argc, &argv);
+  // gtk_init(&argc, &argv);
   graph_window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
   gtk_window_set_default_size(GTK_WINDOW(graph_window), WIDTH, HEIGHT);
   gtk_window_set_title(GTK_WINDOW(graph_window), "Graph drawing");
@@ -127,29 +127,14 @@ void button_delete_clicked_cb() {
 
 void button_rersult_clicked_cb() {
   setlocale(LC_NUMERIC, "C");
-
-  char *output_string = NULL;
-  s_tokens *infix = NULL;
-  s_tokens *postfix = NULL;
-  infix = calloc(S21_MAX_TKN, sizeof(s_tokens));
-  if (infix != NULL) {
-    if (input_conversion(input, infix) == S21_INCORRECT_INPUT) {
-      gtk_label_set_text(GTK_LABEL(label_result),
-                        (const gchar *)"INCORRECT INPUT");
-    } else {
-      postfix = calloc(S21_MAX_TKN, sizeof(s_tokens));
-      output_string = calloc(S21_MAX_INPUT, sizeof(char));
-      if (output_string != NULL && postfix != NULL) {
-        infix_to_postfix(infix, postfix);
-        if (!s21_isnan(x_value)) replaceX(postfix, x_value);
-        calculation(postfix, output_string);
-        gtk_label_set_text(GTK_LABEL(label_result), output_string);
-      }
-      free(output_string);
-      free(postfix);
-    }
+  double *x = NULL;
+  if (!s21_isnan(x_value)) x = &x_value;
+  char *output_string = calloc(S21_MAX_INPUT, sizeof(char));
+  if (output_string != NULL) {
+    calculation(input, x,  output_string);
+    gtk_label_set_text(GTK_LABEL(label_result), output_string);
   }
-  free(infix);
+  free (output_string);
 }
 
 /* ============= REGULAR BUTTONS ============= */
@@ -388,29 +373,6 @@ void on_bonus1_anuity_toggled(GtkRadioButton *button) {
 
 void button_draw_graph_clicked_cb() { gtk_widget_show_all(graph_window); }
 
-gfloat f(gfloat x) {
-  setlocale(LC_NUMERIC, "C");
-
-  double result = 0;
-  s_tokens *infix = NULL;
-  s_tokens *postfix = NULL;
-  char *output_string = NULL;
-
-  infix = calloc(S21_MAX_TKN, sizeof(s_tokens));
-  postfix = calloc(S21_MAX_TKN, sizeof(s_tokens));
-  if (infix != NULL && postfix != NULL) {
-    input_conversion(input, infix);
-    infix_to_postfix(infix, postfix);
-    replaceX(postfix, x);
-    result = calculation(postfix, NULL);
-  }
-
-  free(postfix);
-  free(infix);
-
-  return result;
-}
-
 static gboolean on_draw(GtkWidget *widget, cairo_t *cr, gpointer user_data) {
   GdkRectangle da;            /* GtkDrawingArea size */
   gdouble dx = 2.0, dy = 2.0; /* Pixels between each point */
@@ -442,10 +404,10 @@ static gboolean on_draw(GtkWidget *widget, cairo_t *cr, gpointer user_data) {
   cairo_stroke(cr);
 
   /* Link each data point */
-  for (i = clip_x1; i < clip_x2; i += dx/5) {
-    gdouble x_value = f(i);
+  for (i = clip_x1; i < clip_x2; i += dx / 5) {
+    gdouble x_value = (gdouble) calculation(input, &i, NULL);
     cairo_move_to(cr, i, x_value);
-    cairo_line_to(cr, i+dx/5, x_value+dy/5);
+    cairo_line_to(cr, i + dx / 5, x_value + dy / 5);
   }
 
   /* Draw the curve */

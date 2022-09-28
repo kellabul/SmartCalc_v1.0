@@ -26,13 +26,13 @@ double total_payment(double loan, double interestRate, int term, int type,
                   (monthlyInterest /
                    ((pow((1.00 + monthlyInterest), (double)term) - 1.00))));
 
-/* formula from wiki
+/* formulae from wiki
       payment =
           loan * ((monthlyInterest * (pow((1.00 + monthlyInterest), term))) /
                   (((pow((1.00 + monthlyInterest), term) - 1.00))));
 */
 
-/* formula from raiffeisen.ru
+/* formulae from raiffeisen.ru
       payment =
           loan * (monthlyInterest /
                    (1 - (pow((1.00 + monthlyInterest), (double)term * -1.00))));

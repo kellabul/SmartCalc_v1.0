@@ -4,20 +4,26 @@
 
 #include "../s21_smartcalc.h"
 
-double calculation(s_tokens *tokens, char *string) {
+double calculation(char *input, double *x_value, char *string) {
   token_stack stack = {};
   s_tokens final_result = {};
-  if (thereIsXinInput(tokens)) {
+  s_tokens infix[S21_MAX_TKN] = {};
+  s_tokens postfix[S21_MAX_TKN] = {};
+  if (input_conversion(input, infix) == S21_INCORRECT_INPUT) {
+      sprintf(string, "INCORRECT INPUT");
+  } else  if (isThereXinInput(infix) && x_value == NULL) {
     sprintf(string, "ENTER X VALUE");
   } else {
+    if (x_value != NULL) replaceX(infix, *x_value);
+    infix_to_postfix(infix, postfix);
     stk_init(&stack);
-    for (int i = 0; tokens[i].type != 0; i++) {
-      if (tokens[i].type == S21_NUMBER || tokens[i].type == S21_VARIABLE) {
-        stk_push(&stack, tokens[i]);
-      } else if (operationRequaresOneNum(tokens[i].value)) {
-        stk_push(&stack, calculateOneS21_NUMBER(&stack, tokens[i].value));
+    for (int i = 0; postfix[i].type != 0; i++) {
+      if (postfix[i].type == S21_NUMBER || postfix[i].type == S21_VARIABLE) {
+        stk_push(&stack, postfix[i]);
+      } else if (operationRequaresOneNum(postfix[i].value)) {
+        stk_push(&stack, calculateOneS21_NUMBER(&stack, postfix[i].value));
       } else {
-        stk_push(&stack, calculateTwoS21_NUMBERs(&stack, tokens[i].value));
+        stk_push(&stack, calculateTwoS21_NUMBERs(&stack, postfix[i].value));
       }
     }
     final_result = stk_pop(&stack);
@@ -40,9 +46,6 @@ double calculation(s_tokens *tokens, char *string) {
   return final_result.value;
 }
 
-
-
-
 void deleteZeroesFromStringEnd(char *str) {
   for (size_t i = strlen(str) - 1; i != 0; i--) {
     if (str[i] == '.') str[i] = '\0';
@@ -62,7 +65,7 @@ void replaceX(s_tokens *tokens, double x_value) {
   }
 }
 
-int thereIsXinInput(s_tokens *tokens) {
+int isThereXinInput(s_tokens *tokens) {
   int result = 0;
   for (int i = 0; tokens[i].type != 0; i++) {
     if (tokens[i].type == S21_VARIABLE) result = 1;

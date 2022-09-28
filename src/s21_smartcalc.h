@@ -40,7 +40,7 @@ enum funcs_and_mod {
 int input_validation(char *str);
 int input_conversion(char *input, s_tokens *output);
 void infix_to_postfix(s_tokens *infix, s_tokens *postfix);
-double calculation(s_tokens *tokens, char *string);
+double calculation(char *input, double *x_value, char *string);
 
 // stack data structure
 void stk_init(token_stack *s);
@@ -93,7 +93,7 @@ s_tokens calculateOneS21_NUMBER(token_stack *stack, double operation);
 s_tokens calculateTwoS21_NUMBERs(token_stack *stack, double operation);
 double calculateMod(double second, double first);
 void deleteZeroesFromStringEnd(char *str);
-int thereIsXinInput(s_tokens *tokens);
+int isThereXinInput(s_tokens *tokens);
 void replaceX(s_tokens *tokens, double x_value);
 
 // bonus 1 - credit calculator
