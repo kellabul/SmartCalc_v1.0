@@ -2,6 +2,12 @@
 <!-- Generated with glade 3.40.0 -->
 <interface>
   <requires lib="gtk+" version="3.24"/>
+  <object class="GtkWindow">
+    <property name="can-focus">False</property>
+    <child>
+      <placeholder/>
+    </child>
+  </object>
   <object class="GtkWindow" id="main_window">
     <property name="can-focus">False</property>
     <child>
@@ -701,7 +707,7 @@
                   <object class="GtkLabel" id="bonus1_label1">
                     <property name="visible">True</property>
                     <property name="can-focus">False</property>
-                    <property name="label" translatable="yes">Total credit amount:</property>
+                    <property name="label" translatable="yes">Total credit amount</property>
                     <property name="justify">right</property>
                     <property name="width-chars">0</property>
                     <property name="max-width-chars">0</property>
@@ -716,6 +722,7 @@
                   <object class="GtkEntry" id="bonus1_entry_total_credit">
                     <property name="visible">True</property>
                     <property name="can-focus">True</property>
+                    <property name="max-length">100</property>
                     <signal name="changed" handler="bonus1_entry_total_credit_changed_cb" swapped="no"/>
                   </object>
                   <packing>
@@ -728,7 +735,7 @@
                   <object class="GtkLabel" id="bonus1_label2">
                     <property name="visible">True</property>
                     <property name="can-focus">False</property>
-                    <property name="label" translatable="yes">Term:</property>
+                    <property name="label" translatable="yes">Term, months</property>
                     <property name="justify">right</property>
                     <property name="width-chars">0</property>
                     <property name="max-width-chars">0</property>
@@ -743,7 +750,7 @@
                   <object class="GtkLabel" id="bonus1_label3">
                     <property name="visible">True</property>
                     <property name="can-focus">False</property>
-                    <property name="label" translatable="yes">Interest Rate:</property>
+                    <property name="label" translatable="yes">Interest Rate, %</property>
                     <property name="justify">right</property>
                     <property name="width-chars">0</property>
                     <property name="max-width-chars">0</property>
@@ -758,7 +765,7 @@
                   <object class="GtkLabel" id="bonus1_lobel4">
                     <property name="visible">True</property>
                     <property name="can-focus">False</property>
-                    <property name="label">Type:</property>
+                    <property name="label">Type</property>
                     <property name="justify">right</property>
                     <property name="width-chars">0</property>
                     <property name="max-width-chars">0</property>
@@ -774,6 +781,7 @@
                   <object class="GtkEntry" id="bonus1_entry_term">
                     <property name="visible">True</property>
                     <property name="can-focus">True</property>
+                    <property name="max-length">100</property>
                     <signal name="changed" handler="bonus1_entry_term_changed_cb" swapped="no"/>
                   </object>
                   <packing>
@@ -786,6 +794,8 @@
                   <object class="GtkEntry" id="bonus1_entry_interest">
                     <property name="visible">True</property>
                     <property name="can-focus">True</property>
+                    <property name="max-length">100</property>
+                    <property name="input-purpose">digits</property>
                     <signal name="changed" handler="bonus1_entry_interest_changed_cb" swapped="no"/>
                   </object>
                   <packing>
@@ -1083,7 +1093,7 @@
                   <object class="GtkLabel" id="bonus2_label3">
                     <property name="visible">True</property>
                     <property name="can-focus">False</property>
-                    <property name="label" translatable="yes">Interest rate:</property>
+                    <property name="label" translatable="yes">Interest rate, %</property>
                   </object>
                   <packing>
                     <property name="left-attach">0</property>
@@ -1181,6 +1191,7 @@
                   <object class="GtkEntry" id="bonus2_entry_deposit_amount">
                     <property name="visible">True</property>
                     <property name="can-focus">True</property>
+                    <property name="max-length">100</property>
                     <signal name="changed" handler="bonus2_entry_deposit_amount_changed_cb" swapped="no"/>
                   </object>
                   <packing>
@@ -1193,6 +1204,7 @@
                   <object class="GtkEntry" id="bonus2_entry_deposit_term">
                     <property name="visible">True</property>
                     <property name="can-focus">True</property>
+                    <property name="max-length">100</property>
                     <signal name="changed" handler="bonus2_entry_deposit_term_changed_cb" swapped="no"/>
                   </object>
                   <packing>
@@ -1205,6 +1217,7 @@
                   <object class="GtkEntry" id="bonus2_entry_interest_rate">
                     <property name="visible">True</property>
                     <property name="can-focus">True</property>
+                    <property name="max-length">100</property>
                     <signal name="changed" handler="bonus2_entry_interest_rate_changed_cb" swapped="no"/>
                   </object>
                   <packing>
@@ -1217,6 +1230,7 @@
                   <object class="GtkEntry" id="bonus2_entry_tax_rate">
                     <property name="visible">True</property>
                     <property name="can-focus">True</property>
+                    <property name="max-length">100</property>
                     <signal name="changed" handler="bonus2_entry_tax_rate_changed_cb" swapped="no"/>
                   </object>
                   <packing>
@@ -1229,6 +1243,7 @@
                   <object class="GtkEntry" id="bonus2_entry_periodicity_of_payments">
                     <property name="visible">True</property>
                     <property name="can-focus">True</property>
+                    <property name="max-length">100</property>
                     <signal name="changed" handler="bonus2_entry_periodicity_of_payments_changed_cb" swapped="no"/>
                   </object>
                   <packing>
@@ -1241,6 +1256,7 @@
                   <object class="GtkEntry" id="bonus2_entry_capitalization_of_interest">
                     <property name="visible">True</property>
                     <property name="can-focus">True</property>
+                    <property name="max-length">100</property>
                     <signal name="changed" handler="bonus2_entry_capitalization_of_interest_changed_cb" swapped="no"/>
                   </object>
                   <packing>
