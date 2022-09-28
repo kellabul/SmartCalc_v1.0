@@ -802,6 +802,7 @@
                     <property name="receives-default">False</property>
                     <property name="active">True</property>
                     <property name="draw-indicator">True</property>
+                    <signal name="toggled" handler="on_bonus1_anuity_toggled" swapped="no"/>
                   </object>
                   <packing>
                     <property name="left-attach">4</property>
@@ -817,6 +818,7 @@
                     <property name="receives-default">False</property>
                     <property name="draw-indicator">True</property>
                     <property name="group">bonus1_anuity</property>
+                    <signal name="toggled" handler="on_bonus1_differentiated_toggled" swapped="no"/>
                   </object>
                   <packing>
                     <property name="left-attach">6</property>

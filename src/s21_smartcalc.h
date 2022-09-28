@@ -9,6 +9,7 @@
 #define S21_NUMBER -1
 #define S21_VARIABLE -2
 #define S21_NAN (__builtin_nanf(""))
+#define s21_isnan(x) __builtin_isnan(x)
 #define S21_ANNUITANTS 1
 #define S21_DIFFERENTIATED 2
 
@@ -95,8 +96,8 @@ void deleteZeroesFromStringEnd(char *str);
 int thereIsXinInput(s_tokens *tokens);
 void replaceX(s_tokens *tokens, double x_value);
 
-// credit calculator
-double total_payment(double loan, double interestRate, int creditPeriod,
+// bonus 1 - credit calculator
+double total_payment(double loan, double interestRate, int term,
                      int type, double *firstPayment, double *lastPayment);
 
 #endif  // SRC_S21_SMARTCALC_H_
