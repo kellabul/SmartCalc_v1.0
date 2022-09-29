@@ -2,12 +2,6 @@
 <!-- Generated with glade 3.40.0 -->
 <interface>
   <requires lib="gtk+" version="3.24"/>
-  <object class="GtkWindow">
-    <property name="can-focus">False</property>
-    <child>
-      <placeholder/>
-    </child>
-  </object>
   <object class="GtkWindow" id="main_window">
     <property name="can-focus">False</property>
     <child>
@@ -54,7 +48,7 @@
                     <property name="visible">True</property>
                     <property name="can-focus">True</property>
                     <property name="receives-default">True</property>
-                    <signal name="clicked" handler="button_plus_clicked_cb" swapped="no"/>
+                    <signal name="clicked" handler="regular_button_clicked" swapped="no"/>
                   </object>
                   <packing>
                     <property name="left-attach">6</property>
@@ -67,7 +61,7 @@
                     <property name="visible">True</property>
                     <property name="can-focus">True</property>
                     <property name="receives-default">True</property>
-                    <signal name="clicked" handler="button_minus_clicked_cb" swapped="no"/>
+                    <signal name="clicked" handler="regular_button_clicked" swapped="no"/>
                   </object>
                   <packing>
                     <property name="left-attach">6</property>
@@ -80,7 +74,7 @@
                     <property name="visible">True</property>
                     <property name="can-focus">True</property>
                     <property name="receives-default">True</property>
-                    <signal name="clicked" handler="button_mult_clicked_cb" swapped="no"/>
+                    <signal name="clicked" handler="regular_button_clicked" swapped="no"/>
                   </object>
                   <packing>
                     <property name="left-attach">6</property>
@@ -93,7 +87,7 @@
                     <property name="visible">True</property>
                     <property name="can-focus">True</property>
                     <property name="receives-default">True</property>
-                    <signal name="clicked" handler="button_sqrt_clicked_cb" swapped="no"/>
+                    <signal name="clicked" handler="function_button_clicked" swapped="no"/>
                   </object>
                   <packing>
                     <property name="left-attach">7</property>
@@ -106,7 +100,7 @@
                     <property name="visible">True</property>
                     <property name="can-focus">True</property>
                     <property name="receives-default">True</property>
-                    <signal name="clicked" handler="button_div_clicked_cb" swapped="no"/>
+                    <signal name="clicked" handler="regular_button_clicked" swapped="no"/>
                   </object>
                   <packing>
                     <property name="left-attach">6</property>
@@ -119,7 +113,7 @@
                     <property name="visible">True</property>
                     <property name="can-focus">True</property>
                     <property name="receives-default">True</property>
-                    <signal name="clicked" handler="button_mod_clicked_cb" swapped="no"/>
+                    <signal name="clicked" handler="regular_button_clicked" swapped="no"/>
                   </object>
                   <packing>
                     <property name="left-attach">7</property>
@@ -132,7 +126,7 @@
                     <property name="visible">True</property>
                     <property name="can-focus">True</property>
                     <property name="receives-default">True</property>
-                    <signal name="clicked" handler="button_dot_clicked_cb" swapped="no"/>
+                    <signal name="clicked" handler="regular_button_clicked" swapped="no"/>
                   </object>
                   <packing>
                     <property name="left-attach">5</property>
@@ -145,7 +139,7 @@
                     <property name="visible">True</property>
                     <property name="can-focus">True</property>
                     <property name="receives-default">True</property>
-                    <signal name="clicked" handler="button_zero_clicked_cb" swapped="no"/>
+                    <signal name="clicked" handler="regular_button_clicked" swapped="no"/>
                   </object>
                   <packing>
                     <property name="left-attach">3</property>
@@ -159,7 +153,7 @@
                     <property name="visible">True</property>
                     <property name="can-focus">True</property>
                     <property name="receives-default">True</property>
-                    <signal name="clicked" handler="button_3_clicked_cb" swapped="no"/>
+                    <signal name="clicked" handler="regular_button_clicked" swapped="no"/>
                   </object>
                   <packing>
                     <property name="left-attach">5</property>
@@ -172,7 +166,7 @@
                     <property name="visible">True</property>
                     <property name="can-focus">True</property>
                     <property name="receives-default">True</property>
-                    <signal name="clicked" handler="button_2_clicked_cb" swapped="no"/>
+                    <signal name="clicked" handler="regular_button_clicked" swapped="no"/>
                   </object>
                   <packing>
                     <property name="left-attach">4</property>
@@ -185,7 +179,7 @@
                     <property name="visible">True</property>
                     <property name="can-focus">True</property>
                     <property name="receives-default">True</property>
-                    <signal name="clicked" handler="button_1_clicked_cb" swapped="no"/>
+                    <signal name="clicked" handler="regular_button_clicked" swapped="no"/>
                   </object>
                   <packing>
                     <property name="left-attach">3</property>
@@ -198,7 +192,7 @@
                     <property name="visible">True</property>
                     <property name="can-focus">True</property>
                     <property name="receives-default">True</property>
-                    <signal name="clicked" handler="button_5_clicked_cb" swapped="no"/>
+                    <signal name="clicked" handler="regular_button_clicked" swapped="no"/>
                   </object>
                   <packing>
                     <property name="left-attach">4</property>
@@ -211,7 +205,7 @@
                     <property name="visible">True</property>
                     <property name="can-focus">True</property>
                     <property name="receives-default">True</property>
-                    <signal name="clicked" handler="button_6_clicked_cb" swapped="no"/>
+                    <signal name="clicked" handler="regular_button_clicked" swapped="no"/>
                   </object>
                   <packing>
                     <property name="left-attach">5</property>
@@ -224,7 +218,7 @@
                     <property name="visible">True</property>
                     <property name="can-focus">True</property>
                     <property name="receives-default">True</property>
-                    <signal name="clicked" handler="button_4_clicked_cb" swapped="no"/>
+                    <signal name="clicked" handler="regular_button_clicked" swapped="no"/>
                   </object>
                   <packing>
                     <property name="left-attach">3</property>
@@ -237,7 +231,7 @@
                     <property name="visible">True</property>
                     <property name="can-focus">True</property>
                     <property name="receives-default">True</property>
-                    <signal name="clicked" handler="button_7_clicked_cb" swapped="no"/>
+                    <signal name="clicked" handler="regular_button_clicked" swapped="no"/>
                   </object>
                   <packing>
                     <property name="left-attach">3</property>
@@ -250,7 +244,7 @@
                     <property name="visible">True</property>
                     <property name="can-focus">True</property>
                     <property name="receives-default">True</property>
-                    <signal name="clicked" handler="button_9_clicked_cb" swapped="no"/>
+                    <signal name="clicked" handler="regular_button_clicked" swapped="no"/>
                   </object>
                   <packing>
                     <property name="left-attach">5</property>
@@ -263,7 +257,7 @@
                     <property name="visible">True</property>
                     <property name="can-focus">True</property>
                     <property name="receives-default">True</property>
-                    <signal name="clicked" handler="button_8_clicked_cb" swapped="no"/>
+                    <signal name="clicked" handler="regular_button_clicked" swapped="no"/>
                   </object>
                   <packing>
                     <property name="left-attach">4</property>
@@ -276,7 +270,7 @@
                     <property name="visible">True</property>
                     <property name="can-focus">True</property>
                     <property name="receives-default">True</property>
-                    <signal name="clicked" handler="button_pow_clicked_cb" swapped="no"/>
+                    <signal name="clicked" handler="regular_button_clicked" swapped="no"/>
                   </object>
                   <packing>
                     <property name="left-attach">2</property>
@@ -289,7 +283,7 @@
                     <property name="visible">True</property>
                     <property name="can-focus">True</property>
                     <property name="receives-default">True</property>
-                    <signal name="clicked" handler="button_ln_clicked_cb" swapped="no"/>
+                    <signal name="clicked" handler="function_button_clicked" swapped="no"/>
                   </object>
                   <packing>
                     <property name="left-attach">1</property>
@@ -302,7 +296,7 @@
                     <property name="visible">True</property>
                     <property name="can-focus">True</property>
                     <property name="receives-default">True</property>
-                    <signal name="clicked" handler="button_log_clicked_cb" swapped="no"/>
+                    <signal name="clicked" handler="function_button_clicked" swapped="no"/>
                   </object>
                   <packing>
                     <property name="left-attach">0</property>
@@ -315,7 +309,7 @@
                     <property name="visible">True</property>
                     <property name="can-focus">True</property>
                     <property name="receives-default">True</property>
-                    <signal name="clicked" handler="button_sin_clicked_cb" swapped="no"/>
+                    <signal name="clicked" handler="function_button_clicked" swapped="no"/>
                   </object>
                   <packing>
                     <property name="left-attach">1</property>
@@ -328,7 +322,7 @@
                     <property name="visible">True</property>
                     <property name="can-focus">True</property>
                     <property name="receives-default">True</property>
-                    <signal name="clicked" handler="button_tan_clicked_cb" swapped="no"/>
+                    <signal name="clicked" handler="function_button_clicked" swapped="no"/>
                   </object>
                   <packing>
                     <property name="left-attach">2</property>
@@ -341,7 +335,7 @@
                     <property name="visible">True</property>
                     <property name="can-focus">True</property>
                     <property name="receives-default">True</property>
-                    <signal name="clicked" handler="button_cos_clicked_cb" swapped="no"/>
+                    <signal name="clicked" handler="function_button_clicked" swapped="no"/>
                   </object>
                   <packing>
                     <property name="left-attach">0</property>
@@ -354,7 +348,7 @@
                     <property name="visible">True</property>
                     <property name="can-focus">True</property>
                     <property name="receives-default">True</property>
-                    <signal name="clicked" handler="button_asin_clicked_cb" swapped="no"/>
+                    <signal name="clicked" handler="function_button_clicked" swapped="no"/>
                   </object>
                   <packing>
                     <property name="left-attach">1</property>
@@ -367,7 +361,7 @@
                     <property name="visible">True</property>
                     <property name="can-focus">True</property>
                     <property name="receives-default">True</property>
-                    <signal name="clicked" handler="button_atan_clicked_cb" swapped="no"/>
+                    <signal name="clicked" handler="function_button_clicked" swapped="no"/>
                   </object>
                   <packing>
                     <property name="left-attach">2</property>
@@ -380,7 +374,7 @@
                     <property name="visible">True</property>
                     <property name="can-focus">True</property>
                     <property name="receives-default">True</property>
-                    <signal name="clicked" handler="button_acos_clicked_cb" swapped="no"/>
+                    <signal name="clicked" handler="function_button_clicked" swapped="no"/>
                   </object>
                   <packing>
                     <property name="left-attach">0</property>
@@ -393,7 +387,7 @@
                     <property name="visible">True</property>
                     <property name="can-focus">True</property>
                     <property name="receives-default">True</property>
-                    <signal name="clicked" handler="button_right_paren_clicked_cb" swapped="no"/>
+                    <signal name="clicked" handler="regular_button_clicked" swapped="no"/>
                   </object>
                   <packing>
                     <property name="left-attach">2</property>
@@ -406,7 +400,7 @@
                     <property name="visible">True</property>
                     <property name="can-focus">True</property>
                     <property name="receives-default">True</property>
-                    <signal name="clicked" handler="button_x_clicked_cb" swapped="no"/>
+                    <signal name="clicked" handler="regular_button_clicked" swapped="no"/>
                   </object>
                   <packing>
                     <property name="left-attach">0</property>
@@ -419,7 +413,7 @@
                     <property name="visible">True</property>
                     <property name="can-focus">True</property>
                     <property name="receives-default">True</property>
-                    <signal name="clicked" handler="button_left_paren_clicked_cb" swapped="no"/>
+                    <signal name="clicked" handler="regular_button_clicked" swapped="no"/>
                   </object>
                   <packing>
                     <property name="left-attach">1</property>

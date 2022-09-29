@@ -100,4 +100,7 @@ void replaceX(s_tokens *tokens, double x_value);
 double total_payment(double loan, double interestRate, int term, int type,
                      double *firstPayment, double *lastPayment);
 
+
+int graph_output(char *input);
+
 #endif  // SRC_S21_SMARTCALC_H_

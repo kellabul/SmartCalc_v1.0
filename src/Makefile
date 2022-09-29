@@ -6,7 +6,7 @@ COVERAGE_RESULTS = ./*.gcda
 GCOV_FILES = ./*.gcov
 LCOV_FILES = ./*.info
 
-GTK_SOURCE_FILES = s21_gtk_s*.c
+GTK_SOURCE_FILES = s21_gtk_*.c
 BACKEND_SOURCE_FILES = backend/s21_sc*.c
 BACKEND_OBJECT_FILES = s21_sc*.o
 

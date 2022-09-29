@@ -5,16 +5,6 @@
 
 #include "s21_smartcalc.h"
 
-/* graph */
-#define WIDTH 640
-#define HEIGHT 480
-#define ZOOM_X 100.0
-#define ZOOM_Y 100.0
-
-GtkWidget *graph_window;
-gfloat f(gfloat x);
-static gboolean on_draw(GtkWidget *widget, cairo_t *cr, gpointer user_data);
-
 /* main part */
 GtkEntry *entry_exp;
 GtkEntry *entry_x;
@@ -71,18 +61,6 @@ int main(int argc, char *argv[]) {
 
   gtk_builder_connect_signals(builder, NULL);
 
-  /*  graph */
-  GtkWidget *da;
-  // gtk_init(&argc, &argv);
-  graph_window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
-  gtk_window_set_default_size(GTK_WINDOW(graph_window), WIDTH, HEIGHT);
-  gtk_window_set_title(GTK_WINDOW(graph_window), "Graph drawing");
-  g_signal_connect(G_OBJECT(graph_window), "destroy", gtk_main_quit, NULL);
-  da = gtk_drawing_area_new();
-  gtk_container_add(GTK_CONTAINER(graph_window), da);
-  g_signal_connect(G_OBJECT(da), "draw", G_CALLBACK(on_draw), NULL);
-  /*  graph */
-
   gtk_widget_show(window);
 
   gtk_main();
@@ -128,159 +106,28 @@ void button_delete_clicked_cb() {
 void button_rersult_clicked_cb() {
   setlocale(LC_NUMERIC, "C");
   double *x = NULL;
-  if (!s21_isnan(x_value)) x = &x_value;
+  if (!s21_isnan(x_value))
+    x = &x_value;
   char *output_string = calloc(S21_MAX_INPUT, sizeof(char));
   if (output_string != NULL) {
-    calculation(input, x,  output_string);
+    calculation(input, x, output_string);
     gtk_label_set_text(GTK_LABEL(label_result), output_string);
   }
-  free (output_string);
+  free(output_string);
 }
 
-/* ============= REGULAR BUTTONS ============= */
+void button_draw_graph_clicked_cb() { graph_output(input); }
 
-void button_1_clicked_cb() {
-  strcat(input, "1");
+void regular_button_clicked(GtkButton *button) {
+  const gchar *text = gtk_button_get_label(button);
+  strcat(input, text);
   gtk_entry_set_text(entry_exp, (const gchar *)input);
 }
 
-void button_2_clicked_cb() {
-  strcat(input, "2");
-  gtk_entry_set_text(entry_exp, (const gchar *)input);
-}
-
-void button_3_clicked_cb() {
-  strcat(input, "3");
-  gtk_entry_set_text(entry_exp, (const gchar *)input);
-}
-
-void button_4_clicked_cb() {
-  strcat(input, "4");
-  gtk_entry_set_text(entry_exp, (const gchar *)input);
-}
-
-void button_5_clicked_cb() {
-  strcat(input, "5");
-  gtk_entry_set_text(entry_exp, (const gchar *)input);
-}
-
-void button_6_clicked_cb() {
-  strcat(input, "6");
-  gtk_entry_set_text(entry_exp, (const gchar *)input);
-}
-
-void button_7_clicked_cb() {
-  strcat(input, "7");
-  gtk_entry_set_text(entry_exp, (const gchar *)input);
-}
-
-void button_8_clicked_cb() {
-  strcat(input, "8");
-  gtk_entry_set_text(entry_exp, (const gchar *)input);
-}
-
-void button_9_clicked_cb() {
-  strcat(input, "9");
-  gtk_entry_set_text(entry_exp, (const gchar *)input);
-}
-
-void button_dot_clicked_cb() {
-  strcat(input, ".");
-  gtk_entry_set_text(entry_exp, (const gchar *)input);
-}
-
-void button_zero_clicked_cb() {
-  strcat(input, "0");
-  gtk_entry_set_text(entry_exp, (const gchar *)input);
-}
-
-void button_x_clicked_cb() {
-  strcat(input, "x");
-  gtk_entry_set_text(entry_exp, (const gchar *)input);
-}
-
-void button_pow_clicked_cb() {
-  strcat(input, "^");
-  gtk_entry_set_text(entry_exp, (const gchar *)input);
-}
-
-void button_left_paren_clicked_cb() {
+void function_button_clicked(GtkButton *button) {
+  const gchar *text = gtk_button_get_label(button);
+  strcat(input, text);
   strcat(input, "(");
-  gtk_entry_set_text(entry_exp, (const gchar *)input);
-}
-
-void button_right_paren_clicked_cb() {
-  strcat(input, ")");
-  gtk_entry_set_text(entry_exp, (const gchar *)input);
-}
-
-void button_div_clicked_cb() {
-  strcat(input, "/");
-  gtk_entry_set_text(entry_exp, (const gchar *)input);
-}
-
-void button_mult_clicked_cb() {
-  strcat(input, "*");
-  gtk_entry_set_text(entry_exp, (const gchar *)input);
-}
-
-void button_minus_clicked_cb() {
-  strcat(input, "-");
-  gtk_entry_set_text(entry_exp, (const gchar *)input);
-}
-
-void button_plus_clicked_cb() {
-  strcat(input, "+");
-  gtk_entry_set_text(entry_exp, (const gchar *)input);
-}
-
-void button_ln_clicked_cb() {
-  strcat(input, "ln(");
-  gtk_entry_set_text(entry_exp, (const gchar *)input);
-}
-
-void button_mod_clicked_cb() {
-  strcat(input, "mod");
-  gtk_entry_set_text(entry_exp, (const gchar *)input);
-}
-
-void button_log_clicked_cb() {
-  strcat(input, "log(");
-  gtk_entry_set_text(entry_exp, (const gchar *)input);
-}
-
-void button_cos_clicked_cb() {
-  strcat(input, "cos(");
-  gtk_entry_set_text(entry_exp, (const gchar *)input);
-}
-
-void button_sin_clicked_cb() {
-  strcat(input, "sin(");
-  gtk_entry_set_text(entry_exp, (const gchar *)input);
-}
-
-void button_tan_clicked_cb() {
-  strcat(input, "tan(");
-  gtk_entry_set_text(entry_exp, (const gchar *)input);
-}
-
-void button_acos_clicked_cb() {
-  strcat(input, "acos(");
-  gtk_entry_set_text(entry_exp, (const gchar *)input);
-}
-
-void button_asin_clicked_cb() {
-  strcat(input, "asin(");
-  gtk_entry_set_text(entry_exp, (const gchar *)input);
-}
-
-void button_atan_clicked_cb() {
-  strcat(input, "atan(");
-  gtk_entry_set_text(entry_exp, (const gchar *)input);
-}
-
-void button_sqrt_clicked_cb() {
-  strcat(input, "sqrt(");
   gtk_entry_set_text(entry_exp, (const gchar *)input);
 }
 
@@ -367,52 +214,4 @@ void on_bonus1_differentiated_toggled(GtkRadioButton *button) {
 
 void on_bonus1_anuity_toggled(GtkRadioButton *button) {
   b1_type = S21_ANNUITANTS;
-}
-
-/*  DRAWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW*/
-
-void button_draw_graph_clicked_cb() { gtk_widget_show_all(graph_window); }
-
-static gboolean on_draw(GtkWidget *widget, cairo_t *cr, gpointer user_data) {
-  GdkRectangle da;            /* GtkDrawingArea size */
-  gdouble dx = 2.0, dy = 2.0; /* Pixels between each point */
-  gdouble i, clip_x1 = 0.0, clip_y1 = 0.0, clip_x2 = 0.0, clip_y2 = 0.0;
-  GdkWindow *window = gtk_widget_get_window(widget);
-
-  /* Determine GtkDrawingArea dimensions */
-  gdk_window_get_geometry(window, &da.x, &da.y, &da.width, &da.height);
-
-  /* Draw on a black background */
-  cairo_set_source_rgb(cr, 0.51, 0.78, 0.78);
-  cairo_paint(cr);
-
-  /* Change the transformation matrix */
-  cairo_translate(cr, da.width / 2, da.height / 2);
-  cairo_scale(cr, ZOOM_X, -ZOOM_Y);
-
-  /* Determine the data points to calculate (ie. those in the clipping zone */
-  cairo_device_to_user_distance(cr, &dx, &dy);
-  cairo_clip_extents(cr, &clip_x1, &clip_y1, &clip_x2, &clip_y2);
-  cairo_set_line_width(cr, dx);
-
-  /* Draws x and y axis */
-  cairo_set_source_rgb(cr, 0.0, 0.0, 0.0);
-  cairo_move_to(cr, clip_x1, 0.0);
-  cairo_line_to(cr, clip_x2, 0.0);
-  cairo_move_to(cr, 0.0, clip_y1);
-  cairo_line_to(cr, 0.0, clip_y2);
-  cairo_stroke(cr);
-
-  /* Link each data point */
-  for (i = clip_x1; i < clip_x2; i += dx / 5) {
-    gdouble x_value = (gdouble) calculation(input, &i, NULL);
-    cairo_move_to(cr, i, x_value);
-    cairo_line_to(cr, i + dx / 5, x_value + dy / 5);
-  }
-
-  /* Draw the curve */
-  cairo_set_source_rgba(cr, 0.72, 0.0, 1, 1);
-  cairo_stroke(cr);
-
-  return FALSE;
 }
