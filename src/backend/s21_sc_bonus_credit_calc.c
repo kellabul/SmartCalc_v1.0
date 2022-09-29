@@ -10,6 +10,7 @@ differentiated)
 *
 **/
 
+
 double total_payment(double loan, double interestRate, int term, int type,
                      double *firstPayment, double *lastPayment) {
   double totalPayment = 0;

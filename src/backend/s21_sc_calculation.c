@@ -13,6 +13,9 @@ double calculation(char *input, double *x_value, char *string) {
       sprintf(string, "INCORRECT INPUT");
   } else  if (isThereXinInput(infix) && x_value == NULL) {
     sprintf(string, "ENTER X VALUE");
+    // if x_value doesn't pass valifation in gtk input, it equals to infinity
+  } else  if (isThereXinInput(infix) && s21_isinf(*x_value)) {
+    sprintf(string, "WRONG X VALUE");
   } else {
     if (x_value != NULL) replaceX(infix, *x_value);
     infix_to_postfix(infix, postfix);
@@ -68,7 +71,10 @@ void replaceX(s_tokens *tokens, double x_value) {
 int isThereXinInput(s_tokens *tokens) {
   int result = 0;
   for (int i = 0; tokens[i].type != 0; i++) {
-    if (tokens[i].type == S21_VARIABLE) result = 1;
+    if (tokens[i].type == S21_VARIABLE) {
+      result = 1;
+      break;
+    }
   }
   return result;
 }

@@ -8,10 +8,12 @@
 #define S21_CORRECT_INPUT 0
 #define S21_NUMBER -1
 #define S21_VARIABLE -2
-#define S21_NAN (__builtin_nanf(""))
-#define s21_isnan(x) __builtin_isnan(x)
 #define S21_ANNUITANTS 1
 #define S21_DIFFERENTIATED 2
+#define S21_NAN (__builtin_nanf(""))
+#define s21_isnan(x) __builtin_isnan(x)
+#define S21_INF (__builtin_inff ())
+#define s21_isinf(x) __builtin_isinf(x)
 
 typedef struct tokens {
   double value;
@@ -100,7 +102,9 @@ void replaceX(s_tokens *tokens, double x_value);
 double total_payment(double loan, double interestRate, int term, int type,
                      double *firstPayment, double *lastPayment);
 
-
+// gtk
 int graph_output(char *input);
+int isNotIntegerInString(char *string);
+int isNotNumberInString(char *string);
 
 #endif  // SRC_S21_SMARTCALC_H_
