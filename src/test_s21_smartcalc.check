@@ -113,6 +113,10 @@
     string = "2cos(0.5)";
     ck_assert_int_eq(input_validation(string), -1);
 
+    string = "cos(0.5)cos(0.5)";
+    ck_assert_int_eq(input_validation(string), -1);
+
+
 #test input_conversion_test
 /* --------------------------------------input_conversion_test---*/
 
@@ -136,8 +140,8 @@
    
 // input_conversion case 2
 
-    string_input = "x*sqrt(2*ln(-10)+tan(atan(25)acos(asin(3x)))-log(123))";
-    correct_output = "x*V(2*l(-1*10)+t(T(25)C(S(3*x)))-L(123))";
+    string_input = "x*sqrt(2*ln(-10)+tan(atan(25)+acos(asin(3x)))-log(123))";
+    correct_output = "x*V(2*l(-1*10)+t(T(25)+C(S(3*x)))-L(123))";
 
     char output_string_2[S21_MAX_TKN] = {};
     output = calloc(S21_MAX_TKN, sizeof(s_tokens));

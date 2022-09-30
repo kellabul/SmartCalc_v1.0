@@ -10,11 +10,11 @@ double calculation(char *input, double *x_value, char *string) {
   s_tokens infix[S21_MAX_TKN] = {};
   s_tokens postfix[S21_MAX_TKN] = {};
   if (input_conversion(input, infix) == S21_INCORRECT_INPUT) {
-      sprintf(string, "INCORRECT INPUT");
-  } else  if (isThereXinInput(infix) && x_value == NULL) {
+    sprintf(string, "INCORRECT INPUT");
+  } else if (isThereXinInput(infix) && x_value == NULL) {
     sprintf(string, "ENTER X VALUE");
     // if x_value doesn't pass valifation in gtk input, it equals to infinity
-  } else  if (isThereXinInput(infix) && s21_isinf(*x_value)) {
+  } else if (isThereXinInput(infix) && s21_isinf(*x_value)) {
     sprintf(string, "WRONG X VALUE");
   } else {
     if (x_value != NULL) replaceX(infix, *x_value);
@@ -41,8 +41,7 @@ double calculation(char *input, double *x_value, char *string) {
       } else {
         sprintf(string, "%.7lf", final_result.value);
         deleteZeroesFromStringEnd(string);
-        if (strlen(string) > 15)
-          sprintf(string, "%.9e", final_result.value);
+        if (strlen(string) > 15) sprintf(string, "%.9e", final_result.value);
       }
     }
   }

@@ -118,7 +118,14 @@ void button_rersult_clicked_cb() {
   free(output_string);
 }
 
-void button_draw_graph_clicked_cb() { graph_output(input); }
+void button_draw_graph_clicked_cb() {
+  if (input_validation(input) == S21_INCORRECT_INPUT) {
+    gtk_label_set_text(GTK_LABEL(label_result),
+                       (const gchar *)"INCORRECT INPUT");
+  } else {
+    graph_output(input);
+  }
+}
 
 void regular_button_clicked(GtkButton *button) {
   const gchar *text = gtk_button_get_label(button);
@@ -209,7 +216,6 @@ void bonus1_entry_interest_changed_cb(GtkEntry *entry) {
   else
     sscanf(x_buffer, "%lf", &b1_interestRate);
 }
-
 void on_bonus1_differentiated_toggled(GtkRadioButton *button) {
   b1_type = S21_DIFFERENTIATED;
 }
@@ -217,6 +223,8 @@ void on_bonus1_differentiated_toggled(GtkRadioButton *button) {
 void on_bonus1_anuity_toggled(GtkRadioButton *button) {
   b1_type = S21_ANNUITANTS;
 }
+
+/* ============= helpres ============= */
 
 int isNotIntegerInString(char *string) {
   int result = 0;
@@ -232,8 +240,8 @@ int isNotIntegerInString(char *string) {
 int isNotNumberInString(char *string) {
   int result = 0;
   int point_count = 0;
-  if (string[0] < '0' || string[0] > '9' || string[strlen(string - 1)] < '0' ||
-      string[strlen(string - 1)] > '9') {
+  if (string[0] < '0' || string[0] > '9' || string[strlen(string) - 1] < '0' ||
+      string[strlen(string) - 1] > '9') {
     result = 1;
   } else {
     for (int i = 1; string[i]; i++) {

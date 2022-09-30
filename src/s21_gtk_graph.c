@@ -1,6 +1,7 @@
-#include "s21_smartcalc.h"
 #include <cairo.h>
 #include <gtk/gtk.h>
+
+#include "s21_smartcalc.h"
 
 #define WIDTH 640
 #define HEIGHT 480
@@ -13,7 +14,7 @@ char expression[S21_MAX_INPUT + 8] = {};
 static gboolean on_draw(GtkWidget *widget, cairo_t *cr, gpointer user_data) {
   GdkRectangle da;            /* GtkDrawingArea size */
   gdouble dx = 2.0, dy = 2.0; /* Pixels between each point */
-  gdouble i, clip_x1 = 0.0, clip_y1 = 0.0, clip_x2 = 0.0, clip_y2 = 0.0;
+  gdouble x, clip_x1 = 0.0, clip_y1 = 0.0, clip_x2 = 0.0, clip_y2 = 0.0;
   GdkWindow *window = gtk_widget_get_window(widget);
 
   /* Determine GtkDrawingArea dimensions */
@@ -40,11 +41,20 @@ static gboolean on_draw(GtkWidget *widget, cairo_t *cr, gpointer user_data) {
   cairo_line_to(cr, 0.0, clip_y2);
   cairo_stroke(cr);
 
+  cairo_set_line_width(cr, dx * 2);
+
   /* Link each data point */
-  for (i = clip_x1; i < clip_x2; i += dx / 5) {
-    gdouble x_value = (gdouble)calculation(expression, &i, NULL);
-    cairo_move_to(cr, i, x_value);
-    cairo_line_to(cr, i + dx / 5, x_value + dy / 5);
+  gdouble y_value_buffer = calculation(expression, &clip_x1, NULL);
+  ;
+
+  for (x = clip_x1; x < clip_x2; x += dx) {
+    gdouble y_value = calculation(expression, &x, NULL);
+    if (y_value_buffer - y_value < 100 * dx) {
+      cairo_line_to(cr, x, y_value);
+    } else {
+      cairo_move_to(cr, x, y_value);
+    }
+    y_value_buffer = y_value;
   }
 
   /* Draw the curve */
@@ -55,7 +65,6 @@ static gboolean on_draw(GtkWidget *widget, cairo_t *cr, gpointer user_data) {
 }
 
 int graph_output(char *input) {
-
   for (int i = 0; input[i]; i++) {
     expression[i] = input[i];
   }

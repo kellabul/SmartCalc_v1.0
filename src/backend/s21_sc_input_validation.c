@@ -6,9 +6,7 @@
 
 int input_validation(char *str) {
   int result = S21_CORRECT_INPUT;
-  if (isWrongFirstElement(str)) {
-    result = S21_INCORRECT_INPUT;
-  } else if (isWrongLastElement(str[strlen(str) - 1])) {
+  if (isWrongFirstElement(str) || isWrongLastElement(str[strlen(str) - 1])) {
     result = S21_INCORRECT_INPUT;
   } else if (areWrongMiddleElements(str)) {
     result = S21_INCORRECT_INPUT;
@@ -52,7 +50,7 @@ int areWrongMiddleElements(char *str) {
         left_paren++;
       }
     } else if (str[i] == ')') {
-      if (right_paren + 1 > left_paren) {
+      if (right_paren + 1 > left_paren || isFunction(&str[i + 1])) {
         result = -1;
       } else {
         right_paren++;
