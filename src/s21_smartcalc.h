@@ -91,8 +91,8 @@ void addTokensFromStackToPostfixLine(token_stack *stack, s_tokens *postfix);
 
 // calculation helpers
 int operationRequaresOneNum(double value);
-s_tokens calculateOneS21_NUMBER(token_stack *stack, double operation);
-s_tokens calculateTwoS21_NUMBERs(token_stack *stack, double operation);
+s_tokens calculateOneNumber(token_stack *stack, double operation);
+s_tokens calculateTwoNumbers(token_stack *stack, double operation);
 double calculateMod(double second, double first);
 void deleteZeroesFromStringEnd(char *str);
 int isThereXinInput(s_tokens *tokens);

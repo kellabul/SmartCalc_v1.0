@@ -32,7 +32,7 @@ int main(int argc, char *argv[]) {
   GtkBuilder *builder;
   gtk_init(&argc, &argv);
 
-  builder = gtk_builder_new_from_file("GUI/s21_smartcal_gui.glade");
+  builder = gtk_builder_new_from_file("GUI/s21_smartcalc_main_gui.glade");
 
   window = GTK_WIDGET(gtk_builder_get_object(builder, "main_window"));
   label_result = GTK_WIDGET(gtk_builder_get_object(builder, "label_result"));
@@ -224,35 +224,18 @@ void on_bonus1_anuity_toggled(GtkRadioButton *button) {
   b1_type = S21_ANNUITANTS;
 }
 
-/* ============= helpres ============= */
+/* ============= PART 2 BONUS ============= */
 
-int isNotIntegerInString(char *string) {
-  int result = 0;
-  for (int i = 0; string[i]; i++) {
-    if (string[i] < '0' || string[i] > '9') {
-      result = 1;
-      break;
-    }
-  }
-  return result;
-}
+void bonus2_entry_capitalization_of_interest_changed_cb(){}
 
-int isNotNumberInString(char *string) {
-  int result = 0;
-  int point_count = 0;
-  if (string[0] < '0' || string[0] > '9' || string[strlen(string) - 1] < '0' ||
-      string[strlen(string) - 1] > '9') {
-    result = 1;
-  } else {
-    for (int i = 1; string[i]; i++) {
-      if (string[i] == '.') {
-        point_count++;
-      } else if (string[i] < '0' || string[i] > '9') {
-        result = 1;
-        break;
-      }
-    }
-  }
-  if (point_count > 1) result = 1;
-  return result;
-}
+void bonus2_entry_periodicity_of_payments_changed_cb(){}
+
+void bonus2_entry_tax_rate_changed_cb(){}
+
+void bonus2_entry_interest_rate_changed_cb(){}
+
+void bonus2_entry_deposit_term_changed_cb(){}
+
+void bonus2_entry_deposit_amount_changed_cb(){}
+
+void bonus2_button_clicked_cb(){}

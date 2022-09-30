@@ -24,9 +24,9 @@ double calculation(char *input, double *x_value, char *string) {
       if (postfix[i].type == S21_NUMBER || postfix[i].type == S21_VARIABLE) {
         stk_push(&stack, postfix[i]);
       } else if (operationRequaresOneNum(postfix[i].value)) {
-        stk_push(&stack, calculateOneS21_NUMBER(&stack, postfix[i].value));
+        stk_push(&stack, calculateOneNumber(&stack, postfix[i].value));
       } else {
-        stk_push(&stack, calculateTwoS21_NUMBERs(&stack, postfix[i].value));
+        stk_push(&stack, calculateTwoNumbers(&stack, postfix[i].value));
       }
     }
     final_result = stk_pop(&stack);
@@ -84,7 +84,7 @@ int operationRequaresOneNum(double value) {
           value == SQRT);
 }
 
-s_tokens calculateTwoS21_NUMBERs(token_stack *stack, double operation) {
+s_tokens calculateTwoNumbers(token_stack *stack, double operation) {
   s_tokens first = stk_pop(stack);
   s_tokens second = stk_pop(stack);
   s_tokens result = {.type = S21_NUMBER};
@@ -113,7 +113,7 @@ double calculateMod(double left, double right) {
   return result;
 }
 
-s_tokens calculateOneS21_NUMBER(token_stack *stack, double operation) {
+s_tokens calculateOneNumber(token_stack *stack, double operation) {
   s_tokens result = {.type = S21_NUMBER};
   s_tokens NUMBER = stk_pop(stack);
 
