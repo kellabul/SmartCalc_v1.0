@@ -50,7 +50,7 @@ int areWrongMiddleElements(char *str) {
         left_paren++;
       }
     } else if (str[i] == ')') {
-      if (right_paren + 1 > left_paren || isFunction(&str[i + 1])) {
+      if (right_paren + 1 > left_paren || !isWrongMiddleElement(&str[i + 1])) {
         result = -1;
       } else {
         right_paren++;
@@ -95,10 +95,10 @@ int isFunction(char *str) {
 }
 
 int isNumberOrX(char element) {
-  return isS21_NUMBER(element) || element == 'x';
+  return isNumber(element) || element == 'x';
 }
 
-int isS21_NUMBER(char element) { return element >= '0' && element <= '9'; }
+int isNumber(char element) { return element >= '0' && element <= '9'; }
 
 int isLn(char *str) { return !strncmp(str, "ln", 2); }
 

@@ -10,7 +10,7 @@ GTK_SOURCE_FILES = s21_gtk_*.c
 BACKEND_SOURCE_FILES = backend/s21_sc*.c
 BACKEND_OBJECT_FILES = s21_sc*.o
 
-LIBS = `pkg-config --libs --cflags gtk+-3.0` -rdynamic -lm -fsanitize=address -g
+LIBS = `pkg-config --libs --cflags gtk+-3.0` -rdynamic -lm #-fsanitize=address -g
 
 # different libs for MAC and LINUX
 UNAME_S := $(shell uname -s)
@@ -92,11 +92,11 @@ cppcheck:
 leaks: compile_test
 	leaks -atExit -- ./$(TEST_NAME) | grep -i LEAK:
 
-valgrind: compile_test
+valgrind_test: compile_test
 	valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes --verbose ./$(TEST_NAME)
 
-docker: clean
-	cd ../materials/build && sh run.sh
+valgrind: install
+	valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes --verbose ../build/s21_smartcalc
 
 deps:
 	@command -v gcc >/dev/null 2>&1 || { echo >&2 "gcc is not installed"; exit 1; }

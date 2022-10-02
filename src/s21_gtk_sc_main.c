@@ -15,9 +15,6 @@ double x_value = S21_NAN;
 
 /* bonus 1*/
 void calculate_credit();
-GtkEntry *b1_entry_total_credit;
-GtkEntry *b1_entry_term;
-GtkEntry *b1_entry_interest;
 GtkWidget *b1_label_error;
 GtkWidget *b1_label_monthly_payment;
 GtkWidget *b1_label_total_payment;
@@ -27,25 +24,24 @@ double b1_interestRate = S21_NAN;
 int b1_term = -1;
 int b1_type = 1;
 
+
 int main(int argc, char *argv[]) {
   GtkWidget *window;
   GtkBuilder *builder;
   gtk_init(&argc, &argv);
 
   builder = gtk_builder_new_from_file("GUI/s21_smartcalc_main_gui.glade");
-
   window = GTK_WIDGET(gtk_builder_get_object(builder, "main_window"));
+
+  g_signal_connect(G_OBJECT(window), "destroy", G_CALLBACK(gtk_main_quit),
+                   NULL);
+  gtk_builder_connect_signals(builder, NULL);
+
   label_result = GTK_WIDGET(gtk_builder_get_object(builder, "label_result"));
   entry_exp = GTK_ENTRY(gtk_builder_get_object(builder, "entry_exp"));
   entry_x = GTK_ENTRY(gtk_builder_get_object(builder, "entry_x"));
 
   /* bonus 1 */
-  b1_entry_total_credit =
-      GTK_ENTRY(gtk_builder_get_object(builder, "bonus1_entry_total_credit"));
-  b1_entry_term =
-      GTK_ENTRY(gtk_builder_get_object(builder, "bonus1_entry_term"));
-  b1_entry_interest =
-      GTK_ENTRY(gtk_builder_get_object(builder, "bonus1_entry_interest"));
   b1_label_error =
       GTK_WIDGET(gtk_builder_get_object(builder, "bonus1_label_error"));
   b1_label_monthly_payment = GTK_WIDGET(
@@ -56,10 +52,7 @@ int main(int argc, char *argv[]) {
       gtk_builder_get_object(builder, "bonus1_label_overpay_on_credit"));
   /* bonus 1 */
 
-  g_signal_connect(G_OBJECT(window), "destroy", G_CALLBACK(gtk_main_quit),
-                   NULL);
-
-  gtk_builder_connect_signals(builder, NULL);
+  g_object_unref(builder);
 
   gtk_widget_show(window);
 
@@ -67,6 +60,7 @@ int main(int argc, char *argv[]) {
 
   return EXIT_SUCCESS;
 }
+
 
 /* ============= ENTRY ============= */
 
@@ -91,7 +85,7 @@ void entry_x_changed_cb(GtkEntry *entry) {
 void button_ce_clicked_cb() {
   input[0] = '\0';
   gtk_entry_set_text(entry_exp, (const gchar *)input);
-  gtk_label_set_text(GTK_LABEL(label_result), (const gchar *)"0");
+  gtk_label_set_text(GTK_LABEL(label_result), (const gchar *)"0.00");
 }
 
 void button_clear_x_clicked_cb() {
@@ -226,16 +220,16 @@ void on_bonus1_anuity_toggled(GtkRadioButton *button) {
 
 /* ============= PART 2 BONUS ============= */
 
-void bonus2_entry_capitalization_of_interest_changed_cb(){}
+void bonus2_entry_capitalization_of_interest_changed_cb() {}
 
-void bonus2_entry_periodicity_of_payments_changed_cb(){}
+void bonus2_entry_periodicity_of_payments_changed_cb() {}
 
-void bonus2_entry_tax_rate_changed_cb(){}
+void bonus2_entry_tax_rate_changed_cb() {}
 
-void bonus2_entry_interest_rate_changed_cb(){}
+void bonus2_entry_interest_rate_changed_cb() {}
 
-void bonus2_entry_deposit_term_changed_cb(){}
+void bonus2_entry_deposit_term_changed_cb() {}
 
-void bonus2_entry_deposit_amount_changed_cb(){}
+void bonus2_entry_deposit_amount_changed_cb() {}
 
-void bonus2_button_clicked_cb(){}
+void bonus2_button_clicked_cb() {}

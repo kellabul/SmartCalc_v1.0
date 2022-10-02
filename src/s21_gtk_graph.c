@@ -1,61 +1,101 @@
 #include <cairo.h>
 #include <gtk/gtk.h>
+#include <math.h>
 
 #include "s21_smartcalc.h"
 
 #define WIDTH 640
 #define HEIGHT 480
 
-#define ZOOM_X 100.0
-#define ZOOM_Y 100.0
+#define ZOOM_X 50.0
+#define ZOOM_Y 50.0
 
-char expression[S21_MAX_INPUT + 8] = {};
+static gboolean on_draw(GtkWidget *widget, cairo_t *cr, gpointer user_data);
+void close_window(GtkWidget *widget, gpointer window);
+void draw_axis(cairo_t *cr, gdouble clip_x1, gdouble clip_x2, gdouble clip_y1,
+               gdouble clip_y2, gdouble dx);
+
+char *expression;
+GtkWidget *drawing_area;
+GtkEntry *graph_entry;
+GtkWidget *graph_window;
+
+int graph_output(char *input) {
+  GtkBuilder *builder;
+  GtkWidget *graph_close_button;
+  GtkWidget *graph_draw_button;
+
+  builder = gtk_builder_new_from_file("GUI/s21_smartcalc_graph_gui.glade");
+
+  graph_window = GTK_WIDGET(gtk_builder_get_object(builder, "graph_window"));
+  drawing_area = GTK_WIDGET(gtk_builder_get_object(builder, "graph_da"));
+  graph_entry = GTK_ENTRY(gtk_builder_get_object(builder, "graph_entry"));
+  graph_close_button =
+      GTK_WIDGET(gtk_builder_get_object(builder, "graph_close"));
+  graph_draw_button =
+      GTK_WIDGET(gtk_builder_get_object(builder, "graph_draw_button"));
+
+  gtk_entry_set_text(graph_entry, (const gchar *)input);
+
+  expression = input;
+
+  g_signal_connect(G_OBJECT(drawing_area), "draw", G_CALLBACK(on_draw), NULL);
+
+  g_signal_connect(G_OBJECT(graph_close_button), "clicked",
+                   G_CALLBACK(close_window), G_OBJECT(graph_window));
+
+  g_signal_connect(G_OBJECT(graph_draw_button), "clicked",
+                   G_CALLBACK(gtk_widget_queue_draw), G_OBJECT(drawing_area));
+
+  gtk_widget_show_all(graph_window);
+
+  return 0;
+}
 
 static gboolean on_draw(GtkWidget *widget, cairo_t *cr, gpointer user_data) {
+  int window_width = WIDTH;
+  int window_height = HEIGHT;
+  int scale_x = ZOOM_X;
+  int scale_y = -ZOOM_Y;
+
   GdkRectangle da;            /* GtkDrawingArea size */
-  gdouble dx = 2.0, dy = 2.0; /* Pixels between each point */
+  gdouble dx = 1.0, dy = 1.0; /* Pixels between each point */
   gdouble x, clip_x1 = 0.0, clip_y1 = 0.0, clip_x2 = 0.0, clip_y2 = 0.0;
   GdkWindow *window = gtk_widget_get_window(widget);
 
   /* Determine GtkDrawingArea dimensions */
   gdk_window_get_geometry(window, &da.x, &da.y, &da.width, &da.height);
 
-  /* Draw on a black background */
-  cairo_set_source_rgb(cr, 0.51, 0.78, 0.78);
+  /* Draw on a background */
+  cairo_set_source_rgb(cr, 0.41, 0.78, 0.78);
   cairo_paint(cr);
 
   /* Change the transformation matrix */
   cairo_translate(cr, da.width / 2, da.height / 2);
-  cairo_scale(cr, ZOOM_X, -ZOOM_Y);
+  cairo_scale(cr, scale_x, scale_y);
 
   /* Determine the data points to calculate (ie. those in the clipping zone */
   cairo_device_to_user_distance(cr, &dx, &dy);
   cairo_clip_extents(cr, &clip_x1, &clip_y1, &clip_x2, &clip_y2);
-  cairo_set_line_width(cr, dx);
 
-  /* Draws x and y axis */
-  cairo_set_source_rgb(cr, 0.0, 0.0, 0.0);
-  cairo_move_to(cr, clip_x1, 0.0);
-  cairo_line_to(cr, clip_x2, 0.0);
-  cairo_move_to(cr, 0.0, clip_y1);
-  cairo_line_to(cr, 0.0, clip_y2);
-  cairo_stroke(cr);
+  draw_axis(cr, clip_x1, clip_x2, clip_y1, clip_y2, dx);
 
   cairo_set_line_width(cr, dx * 2);
 
   /* Link each data point */
   gdouble y_value_buffer = calculation(expression, &clip_x1, NULL);
-  ;
 
   for (x = clip_x1; x < clip_x2; x += dx) {
     gdouble y_value = calculation(expression, &x, NULL);
-    if (y_value_buffer - y_value < 100 * dx) {
+    if (fabs(y_value_buffer - y_value) < 100 * dx) {
       cairo_line_to(cr, x, y_value);
     } else {
       cairo_move_to(cr, x, y_value);
     }
     y_value_buffer = y_value;
   }
+
+  gtk_widget_set_size_request(drawing_area, window_width, window_height);
 
   /* Draw the curve */
   cairo_set_source_rgba(cr, 0.72, 0.0, 1, 1);
@@ -64,28 +104,35 @@ static gboolean on_draw(GtkWidget *widget, cairo_t *cr, gpointer user_data) {
   return FALSE;
 }
 
-int graph_output(char *input) {
-  for (int i = 0; input[i]; i++) {
-    expression[i] = input[i];
+void draw_axis(cairo_t *cr, gdouble clip_x1, gdouble clip_x2, gdouble clip_y1,
+               gdouble clip_y2, gdouble dx) {
+  cairo_set_source_rgb(cr, 0.0, 0.0, 0.0);
+  cairo_set_line_width(cr, dx/10);
+  for (gdouble i = clip_x1; i <= clip_x2; i += (dx * 10)) {
+    cairo_move_to(cr, clip_x1, i);
+    cairo_line_to(cr, clip_x2, i);
   }
+  for (gdouble i = clip_y1; i <= clip_y2; i += (dx * 10)) {
+    cairo_move_to(cr, i, clip_y1);
+    cairo_line_to(cr, i, clip_y2);
+  }
+  cairo_stroke(cr);
 
-  GtkWidget *window;
-  GtkWidget *da;
+  cairo_set_line_width(cr, dx);
+  cairo_move_to(cr, clip_x1, 0.0);
+  cairo_line_to(cr, clip_x2, 0.0);
+  cairo_move_to(cr, 0.0, clip_y1);
+  cairo_line_to(cr, 0.0, clip_y2);
 
-  gtk_init(NULL, NULL);
+  cairo_stroke(cr);
+}
 
-  window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
-  gtk_window_set_default_size(GTK_WINDOW(window), WIDTH, HEIGHT);
-  gtk_window_set_title(GTK_WINDOW(window), "Graph drawing");
-  g_signal_connect(G_OBJECT(window), "destroy", gtk_main_quit, NULL);
+void button_draw_clicked_cb() { gtk_widget_queue_draw(drawing_area); }
 
-  da = gtk_drawing_area_new();
-  gtk_container_add(GTK_CONTAINER(window), da);
+void graph_entry_changed_cb(GtkEntry *entry) {
+  sprintf(expression, "%s", gtk_entry_get_text(entry));
+}
 
-  g_signal_connect(G_OBJECT(da), "draw", G_CALLBACK(on_draw), NULL);
-
-  gtk_widget_show_all(window);
-  gtk_main();
-
-  return 0;
+void close_window(GtkWidget *widget, gpointer window) {
+  gtk_widget_destroy(GTK_WIDGET(window));
 }

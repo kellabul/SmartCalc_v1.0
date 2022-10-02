@@ -32,7 +32,7 @@ int input_conversion(char *input, s_tokens *output) {
       output[j++].value = input[i++];
     }
     for (; input[i]; i++, j++) {
-      if (isS21_NUMBER(input[i])) {
+      if (isNumber(input[i])) {
         setTokenType(&input[i], &output[j]);
         i += getS21_NUMBERFromString(&input[i], &output[j].value);
       } else if (isFunction(&input[i]) || isMod(&input[i])) {
@@ -85,7 +85,7 @@ void convertUnarySign(char sign, s_tokens *token) {
 }
 
 void setTokenType(char *string, s_tokens *token) {
-  if (isS21_NUMBER(*string))
+  if (isNumber(*string))
     token->type = S21_NUMBER;
   else if (*string == 'x')
     token->type = S21_VARIABLE;
@@ -130,7 +130,7 @@ int convertFunction(char *str, double *value) {
 int getS21_NUMBERFromString(char *string, double *value) {
   int step = 0;
   sscanf(string, "%lf", value);
-  while (isS21_NUMBER(string[step]) || string[step] == '.') {
+  while (isNumber(string[step]) || string[step] == '.') {
     step++;
   }
   return step - 1;

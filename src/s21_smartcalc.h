@@ -55,7 +55,7 @@ int stk_top_type(token_stack *stk);
 // santa's little helpers
 int isOperation(char element);
 int isNumberOrX(char element);
-int isS21_NUMBER(char element);
+int isNumber(char element);
 int isFunction(char *str);
 int isLn(char *str);
 int isLog(char *str);
