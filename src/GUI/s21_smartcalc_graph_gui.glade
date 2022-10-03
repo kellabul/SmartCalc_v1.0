@@ -113,6 +113,7 @@
           <object class="GtkSpinButton" id="graph_spin_min_domain">
             <property name="visible">True</property>
             <property name="can-focus">True</property>
+            <property name="input-purpose">digits</property>
             <property name="adjustment">adjustment_graph1</property>
             <property name="numeric">True</property>
           </object>

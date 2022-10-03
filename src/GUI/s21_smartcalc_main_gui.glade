@@ -2,6 +2,35 @@
 <!-- Generated with glade 3.40.0 -->
 <interface>
   <requires lib="gtk+" version="3.24"/>
+  <object class="GtkAdjustment" id="b1_adjustment_interest">
+    <property name="lower">0.01</property>
+    <property name="upper">9999.989999999999</property>
+    <property name="value">10</property>
+    <property name="step-increment">1</property>
+    <property name="page-increment">1</property>
+  </object>
+  <object class="GtkAdjustment" id="b1_adjustment_term">
+    <property name="lower">1</property>
+    <property name="upper">9999</property>
+    <property name="value">1</property>
+    <property name="step-increment">1</property>
+    <property name="page-increment">1</property>
+    <property name="page-size">1</property>
+  </object>
+  <object class="GtkAdjustment" id="b2_adjustment_interest">
+    <property name="lower">0.01</property>
+    <property name="upper">9999.989999999999</property>
+    <property name="value">10</property>
+    <property name="step-increment">1</property>
+    <property name="page-increment">1</property>
+  </object>
+  <object class="GtkAdjustment" id="b2_adjustment_tax">
+    <property name="lower">0.01</property>
+    <property name="upper">9999.989999999999</property>
+    <property name="value">10</property>
+    <property name="step-increment">1</property>
+    <property name="page-increment">1</property>
+  </object>
   <object class="GtkWindow" id="main_window">
     <property name="name">main_window</property>
     <property name="can-focus">False</property>
@@ -698,6 +727,8 @@
               <object class="GtkGrid" id="bonus1_grid">
                 <property name="visible">True</property>
                 <property name="can-focus">False</property>
+                <property name="row-spacing">2</property>
+                <property name="column-spacing">2</property>
                 <property name="row-homogeneous">True</property>
                 <property name="column-homogeneous">True</property>
                 <child>
@@ -772,33 +803,6 @@
                     <property name="left-attach">0</property>
                     <property name="top-attach">4</property>
                     <property name="width">4</property>
-                  </packing>
-                </child>
-                <child>
-                  <object class="GtkEntry" id="bonus1_entry_term">
-                    <property name="visible">True</property>
-                    <property name="can-focus">True</property>
-                    <property name="max-length">100</property>
-                    <signal name="changed" handler="bonus1_entry_term_changed_cb" swapped="no"/>
-                  </object>
-                  <packing>
-                    <property name="left-attach">4</property>
-                    <property name="top-attach">2</property>
-                    <property name="width">5</property>
-                  </packing>
-                </child>
-                <child>
-                  <object class="GtkEntry" id="bonus1_entry_interest">
-                    <property name="visible">True</property>
-                    <property name="can-focus">True</property>
-                    <property name="max-length">100</property>
-                    <property name="input-purpose">digits</property>
-                    <signal name="changed" handler="bonus1_entry_interest_changed_cb" swapped="no"/>
-                  </object>
-                  <packing>
-                    <property name="left-attach">4</property>
-                    <property name="top-attach">3</property>
-                    <property name="width">5</property>
                   </packing>
                 </child>
                 <child>
@@ -935,6 +939,33 @@
                   </packing>
                 </child>
                 <child>
+                  <object class="GtkSpinButton" id="bonus1_spin_term">
+                    <property name="visible">True</property>
+                    <property name="can-focus">True</property>
+                    <property name="adjustment">b1_adjustment_term</property>
+                    <property name="numeric">True</property>
+                  </object>
+                  <packing>
+                    <property name="left-attach">4</property>
+                    <property name="top-attach">2</property>
+                    <property name="width">5</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkSpinButton" id="bonus1_spin_interest">
+                    <property name="visible">True</property>
+                    <property name="can-focus">True</property>
+                    <property name="adjustment">b1_adjustment_interest</property>
+                    <property name="digits">2</property>
+                    <property name="numeric">True</property>
+                  </object>
+                  <packing>
+                    <property name="left-attach">4</property>
+                    <property name="top-attach">3</property>
+                    <property name="width">5</property>
+                  </packing>
+                </child>
+                <child>
                   <placeholder/>
                 </child>
                 <child>
@@ -1060,6 +1091,8 @@
               <object class="GtkGrid" id="bonus2_grid">
                 <property name="visible">True</property>
                 <property name="can-focus">False</property>
+                <property name="row-spacing">2</property>
+                <property name="column-spacing">2</property>
                 <property name="row-homogeneous">True</property>
                 <property name="column-homogeneous">True</property>
                 <child>
@@ -1095,19 +1128,19 @@
                   <packing>
                     <property name="left-attach">0</property>
                     <property name="top-attach">2</property>
-                    <property name="width">4</property>
+                    <property name="width">2</property>
                   </packing>
                 </child>
                 <child>
                   <object class="GtkLabel" id="bonus2_label4">
                     <property name="visible">True</property>
                     <property name="can-focus">False</property>
-                    <property name="label" translatable="yes">Tax rate:</property>
+                    <property name="label" translatable="yes">Tax rate, %:</property>
                   </object>
                   <packing>
-                    <property name="left-attach">0</property>
-                    <property name="top-attach">3</property>
-                    <property name="width">4</property>
+                    <property name="left-attach">4</property>
+                    <property name="top-attach">2</property>
+                    <property name="width">2</property>
                   </packing>
                 </child>
                 <child>
@@ -1118,20 +1151,8 @@
                   </object>
                   <packing>
                     <property name="left-attach">0</property>
-                    <property name="top-attach">4</property>
-                    <property name="width">4</property>
-                  </packing>
-                </child>
-                <child>
-                  <object class="GtkLabel" id="bonus2_label6">
-                    <property name="visible">True</property>
-                    <property name="can-focus">False</property>
-                    <property name="label" translatable="yes">Capitalization of interest:</property>
-                  </object>
-                  <packing>
-                    <property name="left-attach">0</property>
-                    <property name="top-attach">5</property>
-                    <property name="width">4</property>
+                    <property name="top-attach">3</property>
+                    <property name="width">2</property>
                   </packing>
                 </child>
                 <child>
@@ -1172,16 +1193,16 @@
                 </child>
                 <child>
                   <object class="GtkButton" id="bonus2_button">
-                    <property name="label" translatable="yes">calculate</property>
+                    <property name="label">calculate</property>
                     <property name="visible">True</property>
                     <property name="can-focus">True</property>
                     <property name="receives-default">True</property>
                     <signal name="clicked" handler="bonus2_button_clicked_cb" swapped="no"/>
                   </object>
                   <packing>
-                    <property name="left-attach">1</property>
+                    <property name="left-attach">0</property>
                     <property name="top-attach">6</property>
-                    <property name="width">2</property>
+                    <property name="width">4</property>
                   </packing>
                 </child>
                 <child>
@@ -1194,71 +1215,6 @@
                   <packing>
                     <property name="left-attach">4</property>
                     <property name="top-attach">0</property>
-                    <property name="width">4</property>
-                  </packing>
-                </child>
-                <child>
-                  <object class="GtkEntry" id="bonus2_entry_deposit_term">
-                    <property name="visible">True</property>
-                    <property name="can-focus">True</property>
-                    <property name="max-length">100</property>
-                    <signal name="changed" handler="bonus2_entry_deposit_term_changed_cb" swapped="no"/>
-                  </object>
-                  <packing>
-                    <property name="left-attach">4</property>
-                    <property name="top-attach">1</property>
-                    <property name="width">4</property>
-                  </packing>
-                </child>
-                <child>
-                  <object class="GtkEntry" id="bonus2_entry_interest_rate">
-                    <property name="visible">True</property>
-                    <property name="can-focus">True</property>
-                    <property name="max-length">100</property>
-                    <signal name="changed" handler="bonus2_entry_interest_rate_changed_cb" swapped="no"/>
-                  </object>
-                  <packing>
-                    <property name="left-attach">4</property>
-                    <property name="top-attach">2</property>
-                    <property name="width">4</property>
-                  </packing>
-                </child>
-                <child>
-                  <object class="GtkEntry" id="bonus2_entry_tax_rate">
-                    <property name="visible">True</property>
-                    <property name="can-focus">True</property>
-                    <property name="max-length">100</property>
-                    <signal name="changed" handler="bonus2_entry_tax_rate_changed_cb" swapped="no"/>
-                  </object>
-                  <packing>
-                    <property name="left-attach">4</property>
-                    <property name="top-attach">3</property>
-                    <property name="width">4</property>
-                  </packing>
-                </child>
-                <child>
-                  <object class="GtkEntry" id="bonus2_entry_periodicity_of_payments">
-                    <property name="visible">True</property>
-                    <property name="can-focus">True</property>
-                    <property name="max-length">100</property>
-                    <signal name="changed" handler="bonus2_entry_periodicity_of_payments_changed_cb" swapped="no"/>
-                  </object>
-                  <packing>
-                    <property name="left-attach">4</property>
-                    <property name="top-attach">4</property>
-                    <property name="width">4</property>
-                  </packing>
-                </child>
-                <child>
-                  <object class="GtkEntry" id="bonus2_entry_capitalization_of_interest">
-                    <property name="visible">True</property>
-                    <property name="can-focus">True</property>
-                    <property name="max-length">100</property>
-                    <signal name="changed" handler="bonus2_entry_capitalization_of_interest_changed_cb" swapped="no"/>
-                  </object>
-                  <packing>
-                    <property name="left-attach">4</property>
-                    <property name="top-attach">5</property>
                     <property name="width">4</property>
                   </packing>
                 </child>
@@ -1306,6 +1262,199 @@
                     <property name="top-attach">9</property>
                     <property name="width">4</property>
                   </packing>
+                </child>
+                <child>
+                  <object class="GtkCheckButton" id="check_capitalization">
+                    <property name="label" translatable="yes">Capitalization of interest:</property>
+                    <property name="visible">True</property>
+                    <property name="can-focus">True</property>
+                    <property name="receives-default">False</property>
+                    <property name="draw-indicator">True</property>
+                    <signal name="toggled" handler="check_capitalization_toggled_cb" swapped="no"/>
+                  </object>
+                  <packing>
+                    <property name="left-attach">5</property>
+                    <property name="top-attach">3</property>
+                    <property name="width">3</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkSpinButton" id="b2_spin_interest">
+                    <property name="visible">True</property>
+                    <property name="can-focus">True</property>
+                    <property name="adjustment">b2_adjustment_interest</property>
+                    <property name="digits">2</property>
+                    <property name="numeric">True</property>
+                    <property name="value">10</property>
+                  </object>
+                  <packing>
+                    <property name="left-attach">2</property>
+                    <property name="top-attach">2</property>
+                    <property name="width">2</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkSpinButton" id="b2_spin_tax">
+                    <property name="visible">True</property>
+                    <property name="can-focus">True</property>
+                    <property name="adjustment">b2_adjustment_tax</property>
+                    <property name="digits">2</property>
+                    <property name="numeric">True</property>
+                    <property name="value">10</property>
+                  </object>
+                  <packing>
+                    <property name="left-attach">6</property>
+                    <property name="top-attach">2</property>
+                    <property name="width">2</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkSpinButton" id="b2_spin_period_payments">
+                    <property name="visible">True</property>
+                    <property name="can-focus">True</property>
+                    <property name="numeric">True</property>
+                  </object>
+                  <packing>
+                    <property name="left-attach">2</property>
+                    <property name="top-attach">3</property>
+                    <property name="width">2</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkLabel" id="b2_label_1">
+                    <property name="visible">True</property>
+                    <property name="can-focus">False</property>
+                    <property name="label" translatable="yes">b2_label_1</property>
+                  </object>
+                  <packing>
+                    <property name="left-attach">1</property>
+                    <property name="top-attach">4</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkLabel" id="b2_label_2">
+                    <property name="visible">True</property>
+                    <property name="can-focus">False</property>
+                    <property name="label" translatable="yes">b2_label_2</property>
+                  </object>
+                  <packing>
+                    <property name="left-attach">1</property>
+                    <property name="top-attach">5</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkLabel" id="b2_label_3">
+                    <property name="visible">True</property>
+                    <property name="can-focus">False</property>
+                    <property name="label" translatable="yes">b2_label_3</property>
+                  </object>
+                  <packing>
+                    <property name="left-attach">4</property>
+                    <property name="top-attach">4</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkLabel" id="b2_label_4">
+                    <property name="visible">True</property>
+                    <property name="can-focus">False</property>
+                    <property name="label" translatable="yes">b2_label_4</property>
+                  </object>
+                  <packing>
+                    <property name="left-attach">4</property>
+                    <property name="top-attach">5</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkEntry" id="b2_label_1_entry">
+                    <property name="visible">True</property>
+                    <property name="can-focus">True</property>
+                  </object>
+                  <packing>
+                    <property name="left-attach">2</property>
+                    <property name="top-attach">4</property>
+                    <property name="width">2</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkEntry" id="b2_label_3_entry">
+                    <property name="visible">True</property>
+                    <property name="can-focus">True</property>
+                  </object>
+                  <packing>
+                    <property name="left-attach">5</property>
+                    <property name="top-attach">4</property>
+                    <property name="width">2</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkSpinButton" id="b2_spin_label_2">
+                    <property name="visible">True</property>
+                    <property name="can-focus">True</property>
+                    <property name="text" translatable="yes">10,00</property>
+                    <property name="digits">2</property>
+                    <property name="numeric">True</property>
+                    <property name="value">10</property>
+                  </object>
+                  <packing>
+                    <property name="left-attach">2</property>
+                    <property name="top-attach">5</property>
+                    <property name="width">2</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkSpinButton" id="b2_spin_label_4">
+                    <property name="visible">True</property>
+                    <property name="can-focus">True</property>
+                    <property name="text" translatable="yes">10,00</property>
+                    <property name="digits">2</property>
+                    <property name="numeric">True</property>
+                    <property name="value">10</property>
+                  </object>
+                  <packing>
+                    <property name="left-attach">5</property>
+                    <property name="top-attach">5</property>
+                    <property name="width">2</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkSwitch" id="b2_label1_switch">
+                    <property name="visible">True</property>
+                    <property name="can-focus">True</property>
+                    <signal name="activate" handler="b2_label1_switch_activate_cb" swapped="no"/>
+                  </object>
+                  <packing>
+                    <property name="left-attach">7</property>
+                    <property name="top-attach">4</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkSwitch" id="b2_label2_switch">
+                    <property name="visible">True</property>
+                    <property name="can-focus">True</property>
+                    <signal name="activate" handler="b2_label2_switch_activate_cb" swapped="no"/>
+                  </object>
+                  <packing>
+                    <property name="left-attach">7</property>
+                    <property name="top-attach">5</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkSpinButton" id="b2_spin_interest3">
+                    <property name="visible">True</property>
+                    <property name="can-focus">True</property>
+                    <property name="text" translatable="yes">10,00</property>
+                    <property name="adjustment">b2_adjustment_interest</property>
+                    <property name="numeric">True</property>
+                    <property name="value">10</property>
+                  </object>
+                  <packing>
+                    <property name="left-attach">4</property>
+                    <property name="top-attach">1</property>
+                    <property name="width">4</property>
+                  </packing>
+                </child>
+                <child>
+                  <placeholder/>
                 </child>
                 <child>
                   <placeholder/>
