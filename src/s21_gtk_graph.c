@@ -14,6 +14,8 @@ static gboolean on_draw(GtkWidget *widget, cairo_t *cr, gpointer user_data);
 void close_window(GtkWidget *widget, gpointer window);
 void draw_axis(cairo_t *cr, gdouble clip_x1, gdouble clip_x2, gdouble clip_y1,
                gdouble clip_y2, gdouble dx);
+void draw_graph_line(cairo_t *cr, gdouble clip_x1, gdouble clip_x2,
+                     gdouble clip_y1, gdouble clip_y2, gdouble dx);
 
 char *expression;
 GtkWidget *drawing_area;
@@ -65,7 +67,7 @@ static gboolean on_draw(GtkWidget *widget, cairo_t *cr, gpointer user_data) {
 
   GdkRectangle da;            /* GtkDrawingArea size */
   gdouble dx = 1.0, dy = 1.0; /* Pixels between each point */
-  gdouble x, clip_x1 = 0.0, clip_y1 = 0.0, clip_x2 = 0.0, clip_y2 = 0.0;
+  gdouble clip_x1 = 0.0, clip_y1 = 0.0, clip_x2 = 0.0, clip_y2 = 0.0;
   GdkWindow *window = gtk_widget_get_window(widget);
 
   /* Determine GtkDrawingArea dimensions */
@@ -91,28 +93,41 @@ static gboolean on_draw(GtkWidget *widget, cairo_t *cr, gpointer user_data) {
   gtk_widget_set_size_request(drawing_area, window_width, window_height);
 
   if (input_validation(expression) == S21_CORRECT_INPUT) {
-    /* Link each data point */
-    gdouble y_value_buffer = calculation(expression, &clip_x1, NULL);
-
-    for (x = clip_x1; x < clip_x2; x += dx) {
-      gdouble y_value = calculation(expression, &x, NULL);
-      if (fabs(y_value_buffer - y_value) < 1000 * dx) {
-        cairo_line_to(cr, x, y_value);
-      } else {
-        cairo_move_to(cr, x, y_value);
-      }
-      y_value_buffer = y_value;
-    }
-    /* Draw the curve */
-    cairo_set_source_rgba(cr, 0.72, 0.0, 1, 1);
-    cairo_stroke(cr);
-    gtk_label_set_text(GTK_LABEL(graph_error_label),
-                       (const gchar *)"");
+    draw_graph_line(cr, clip_x1, clip_x2, clip_y1, clip_y2, dx);
+    gtk_label_set_text(GTK_LABEL(graph_error_label), (const gchar *)"");
   } else {
     gtk_label_set_text(GTK_LABEL(graph_error_label),
                        (const gchar *)"INCORRECT INPUT");
   }
   return FALSE;
+}
+
+void draw_graph_line(cairo_t *cr, gdouble clip_x1, gdouble clip_x2,
+                     gdouble clip_y1, gdouble clip_y2, gdouble dx) {
+  int flag = 0;
+  for (gdouble x = clip_x1; x < clip_x2; x += dx / 10) {
+    gdouble y_value = calculation(expression, &x, NULL);
+    if (s21_isnan(y_value) || s21_isinf(y_value) || y_value > clip_y2 ||
+        y_value < clip_y1) {
+      // if ((y_value > clip_y2) && flag) {
+      //   cairo_line_to(cr, x, clip_y2);
+      // } else if ((y_value < clip_y1) && flag) {
+      //   cairo_line_to(cr, x, clip_y2);
+      // } else
+      if ((y_value > clip_y2)) {
+        cairo_move_to(cr, x, clip_y2);
+      } else if ((y_value < clip_y1)) {
+        cairo_move_to(cr, x, clip_y1);
+      }
+      flag = 0;
+    } else {
+      flag = 1;
+      cairo_line_to(cr, x, y_value);
+    }
+  }
+  /* Draw the curve */
+  cairo_set_source_rgba(cr, 0.72, 0.0, 1, 1);
+  cairo_stroke(cr);
 }
 
 void draw_axis(cairo_t *cr, gdouble clip_x1, gdouble clip_x2, gdouble clip_y1,
@@ -158,3 +173,6 @@ void graph_entry_changed_cb(GtkEntry *entry) {
 void close_window(GtkWidget *widget, gpointer window) {
   gtk_widget_destroy(GTK_WIDGET(window));
 }
+
+// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!  //
+void graph_toggle_button_toggled_cb() {}

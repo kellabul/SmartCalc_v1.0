@@ -24,7 +24,6 @@ double b1_interestRate = S21_NAN;
 int b1_term = -1;
 int b1_type = 1;
 
-
 int main(int argc, char *argv[]) {
   GtkWidget *window;
   GtkBuilder *builder;
@@ -60,7 +59,6 @@ int main(int argc, char *argv[]) {
 
   return EXIT_SUCCESS;
 }
-
 
 /* ============= ENTRY ============= */
 

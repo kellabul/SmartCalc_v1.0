@@ -193,7 +193,6 @@
             <property name="visible">True</property>
             <property name="can-focus">True</property>
             <property name="receives-default">True</property>
-            <signal name="clicked" handler="graph_close_clicked_cb" swapped="no"/>
           </object>
           <packing>
             <property name="left-attach">5</property>

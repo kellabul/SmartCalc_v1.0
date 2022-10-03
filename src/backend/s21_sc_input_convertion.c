@@ -71,7 +71,7 @@ void checkUnarySign(char *input, s_tokens *output, int *i, int *j) {
   }
 }
 
-  // converting -x to -1*x
+// converting -x to -1*x
 void convertUnarySign(char sign, s_tokens *token) {
   // if it passes validation, there are more than 2 tokens in input
   token[0].type = S21_NUMBER;

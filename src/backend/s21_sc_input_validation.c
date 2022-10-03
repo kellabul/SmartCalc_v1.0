@@ -94,9 +94,7 @@ int isFunction(char *str) {
   return result;
 }
 
-int isNumberOrX(char element) {
-  return isNumber(element) || element == 'x';
-}
+int isNumberOrX(char element) { return isNumber(element) || element == 'x'; }
 
 int isNumber(char element) { return element >= '0' && element <= '9'; }
 
