@@ -5,7 +5,7 @@
 #include "s21_smartcalc.h"
 
 #define WIDTH 640
-#define HEIGHT 480
+#define HEIGHT 640
 
 #define ZOOM_X 50.0
 #define ZOOM_Y 50.0
@@ -19,6 +19,7 @@ char *expression;
 GtkWidget *drawing_area;
 GtkEntry *graph_entry;
 GtkWidget *graph_window;
+GtkWidget *graph_error_label;
 
 int graph_output(char *input) {
   GtkBuilder *builder;
@@ -34,8 +35,12 @@ int graph_output(char *input) {
       GTK_WIDGET(gtk_builder_get_object(builder, "graph_close"));
   graph_draw_button =
       GTK_WIDGET(gtk_builder_get_object(builder, "graph_draw_button"));
+  graph_error_label =
+      GTK_WIDGET(gtk_builder_get_object(builder, "graph_error_label"));
 
   gtk_entry_set_text(graph_entry, (const gchar *)input);
+
+  gtk_builder_connect_signals(builder, NULL);
 
   expression = input;
 
@@ -76,46 +81,63 @@ static gboolean on_draw(GtkWidget *widget, cairo_t *cr, gpointer user_data) {
 
   /* Determine the data points to calculate (ie. those in the clipping zone */
   cairo_device_to_user_distance(cr, &dx, &dy);
+  // printf("%lf %lf \n", dx, dy);
   cairo_clip_extents(cr, &clip_x1, &clip_y1, &clip_x2, &clip_y2);
 
   draw_axis(cr, clip_x1, clip_x2, clip_y1, clip_y2, dx);
 
   cairo_set_line_width(cr, dx * 2);
 
-  /* Link each data point */
-  gdouble y_value_buffer = calculation(expression, &clip_x1, NULL);
-
-  for (x = clip_x1; x < clip_x2; x += dx) {
-    gdouble y_value = calculation(expression, &x, NULL);
-    if (fabs(y_value_buffer - y_value) < 100 * dx) {
-      cairo_line_to(cr, x, y_value);
-    } else {
-      cairo_move_to(cr, x, y_value);
-    }
-    y_value_buffer = y_value;
-  }
-
   gtk_widget_set_size_request(drawing_area, window_width, window_height);
 
-  /* Draw the curve */
-  cairo_set_source_rgba(cr, 0.72, 0.0, 1, 1);
-  cairo_stroke(cr);
+  if (input_validation(expression) == S21_CORRECT_INPUT) {
+    /* Link each data point */
+    gdouble y_value_buffer = calculation(expression, &clip_x1, NULL);
 
+    for (x = clip_x1; x < clip_x2; x += dx) {
+      gdouble y_value = calculation(expression, &x, NULL);
+      if (fabs(y_value_buffer - y_value) < 1000 * dx) {
+        cairo_line_to(cr, x, y_value);
+      } else {
+        cairo_move_to(cr, x, y_value);
+      }
+      y_value_buffer = y_value;
+    }
+    /* Draw the curve */
+    cairo_set_source_rgba(cr, 0.72, 0.0, 1, 1);
+    cairo_stroke(cr);
+    gtk_label_set_text(GTK_LABEL(graph_error_label),
+                       (const gchar *)"");
+  } else {
+    gtk_label_set_text(GTK_LABEL(graph_error_label),
+                       (const gchar *)"INCORRECT INPUT");
+  }
   return FALSE;
 }
 
 void draw_axis(cairo_t *cr, gdouble clip_x1, gdouble clip_x2, gdouble clip_y1,
                gdouble clip_y2, gdouble dx) {
+  // printf("%lf %lf %lf %lf %lf \n", clip_x1, clip_x2, clip_y1, clip_y2, dx);
+
   cairo_set_source_rgb(cr, 0.0, 0.0, 0.0);
-  cairo_set_line_width(cr, dx/10);
-  for (gdouble i = clip_x1; i <= clip_x2; i += (dx * 10)) {
-    cairo_move_to(cr, clip_x1, i);
-    cairo_line_to(cr, clip_x2, i);
-  }
-  for (gdouble i = clip_y1; i <= clip_y2; i += (dx * 10)) {
+  cairo_set_line_width(cr, dx / 10);
+  for (gdouble i = 0; i <= clip_x2; i += 0.5) {
     cairo_move_to(cr, i, clip_y1);
     cairo_line_to(cr, i, clip_y2);
   }
+  for (gdouble i = 0; i >= clip_x1; i -= 0.5) {
+    cairo_move_to(cr, i, clip_y1);
+    cairo_line_to(cr, i, clip_y2);
+  }
+  for (gdouble i = 0; i <= clip_y2; i += 0.5) {
+    cairo_move_to(cr, clip_x1, i);
+    cairo_line_to(cr, clip_x2, i);
+  }
+  for (gdouble i = 0; i >= clip_y1; i -= 0.5) {
+    cairo_move_to(cr, clip_x1, i);
+    cairo_line_to(cr, clip_x2, i);
+  }
+
   cairo_stroke(cr);
 
   cairo_set_line_width(cr, dx);

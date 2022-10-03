@@ -34,12 +34,6 @@ tests: compile_test
 	@rm -f $(COVERAGE_RESULTS)
 	./$(TEST_NAME)
 
-install_gtk_mac:
-	brew install gtk+3
-
-install_gtk_linux:
-	sudo apt-get install libgtk-3-dev
-
 install: $(NAME).a
 	gcc $(GTK_SOURCE_FILES) $(NAME).a -o ../build/$(NAME) $(LIBS)
 
@@ -97,6 +91,12 @@ valgrind_test: compile_test
 
 valgrind: install
 	valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes --verbose ../build/s21_smartcalc
+
+gtk_mac:
+	brew install gtk+3
+
+gtk_linux:
+	sudo apt-get install libgtk-3-dev
 
 deps:
 	@command -v gcc >/dev/null 2>&1 || { echo >&2 "gcc is not installed"; exit 1; }

@@ -75,7 +75,7 @@ int isWrongMiddleElement(char *str);
 // input conversion helpers
 void checkUnarySign(char *input, s_tokens *output, int *i, int *j);
 void convertUnarySign(char sign, s_tokens *token);
-int getS21_NUMBERFromString(char *string, double *value);
+int getNumberFromString(char *string, double *value);
 int convertFunction(char *str, double *value);
 
 // helpers to work with s_tokens

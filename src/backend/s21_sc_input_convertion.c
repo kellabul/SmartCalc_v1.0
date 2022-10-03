@@ -8,7 +8,7 @@
  *  token types:
  * -10 == parentesis
  *  -2 == x (S21_VARIABLE)
- *  -1 == S21_NUMBERs (S21_NUMBER)
+ *  -1 == numbers (S21_NUMBER)
  *   1 == '+', '-' (min. priority)
  *   2 == '*', '\', '%'
  *   3 == '^'
@@ -34,7 +34,7 @@ int input_conversion(char *input, s_tokens *output) {
     for (; input[i]; i++, j++) {
       if (isNumber(input[i])) {
         setTokenType(&input[i], &output[j]);
-        i += getS21_NUMBERFromString(&input[i], &output[j].value);
+        i += getNumberFromString(&input[i], &output[j].value);
       } else if (isFunction(&input[i]) || isMod(&input[i])) {
         setTokenType(&input[i], &output[j]);
         i += convertFunction(&input[i], &output[j].value);
@@ -71,8 +71,8 @@ void checkUnarySign(char *input, s_tokens *output, int *i, int *j) {
   }
 }
 
+  // converting -x to -1*x
 void convertUnarySign(char sign, s_tokens *token) {
-  // converting -... to -1*...
   // if it passes validation, there are more than 2 tokens in input
   token[0].type = S21_NUMBER;
   if (sign == '-') {
@@ -127,11 +127,12 @@ int convertFunction(char *str, double *value) {
   return step;
 }
 
-int getS21_NUMBERFromString(char *string, double *value) {
-  int step = 0;
+// writes number from string to double and returns its length
+int getNumberFromString(char *string, double *value) {
+  int number_length = 0;
   sscanf(string, "%lf", value);
-  while (isNumber(string[step]) || string[step] == '.') {
-    step++;
+  while (isNumber(string[number_length]) || string[number_length] == '.') {
+    number_length++;
   }
-  return step - 1;
+  return number_length - 1;
 }
