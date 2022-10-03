@@ -14,10 +14,11 @@ double calculation(char *input, double *x_value, char *string) {
   } else if (isThereXinInput(infix) && x_value == NULL) {
     sprintf(string, "ENTER X VALUE");
     // if x_value doesn't pass valifation in gtk input, it equals to infinity
-  } else if (isThereXinInput(infix) && s21_isinf(*x_value)) {
+  } else if (isThereXinInput(infix) && isinf(*x_value)) {
     sprintf(string, "WRONG X VALUE");
   } else {
-    if (x_value != NULL) replaceX(infix, *x_value);
+    if (x_value != NULL)
+      replaceX(infix, *x_value);
     infix_to_postfix(infix, postfix);
     stk_init(&stack);
     for (int i = 0; postfix[i].type != 0; i++) {
@@ -41,7 +42,8 @@ double calculation(char *input, double *x_value, char *string) {
       } else {
         sprintf(string, "%.7lf", final_result.value);
         deleteZeroesFromStringEnd(string);
-        if (strlen(string) > 15) sprintf(string, "%.9e", final_result.value);
+        if (strlen(string) > 15)
+          sprintf(string, "%.9e", final_result.value);
       }
     }
   }
@@ -50,7 +52,8 @@ double calculation(char *input, double *x_value, char *string) {
 
 void deleteZeroesFromStringEnd(char *str) {
   for (size_t i = strlen(str) - 1; i != 0; i--) {
-    if (str[i] == '.') str[i] = '\0';
+    if (str[i] == '.')
+      str[i] = '\0';
     if (str[i] != '0') {
       str[i + 1] = '\0';
       break;

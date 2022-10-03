@@ -10,10 +10,6 @@
 #define S21_VARIABLE -2
 #define S21_ANNUITANTS 1
 #define S21_DIFFERENTIATED 2
-#define S21_NAN (__builtin_nanf(""))
-#define s21_isnan(x) __builtin_isnan(x)
-#define S21_INF (__builtin_inff())
-#define s21_isinf(x) __builtin_isinf(x)
 
 typedef struct tokens {
   double value;

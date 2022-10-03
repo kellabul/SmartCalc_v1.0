@@ -9,7 +9,7 @@ GtkEntry *entry_x;
 GtkWidget *label_result;
 /* has to be more than bigest button input length */
 char input[S21_MAX_INPUT + 8] = {};
-double x_value = S21_NAN;
+double x_value = NAN;
 
 /* bonus 1*/
 void calculate_credit();
@@ -17,8 +17,8 @@ GtkWidget *b1_label_error;
 GtkWidget *b1_label_monthly_payment;
 GtkWidget *b1_label_total_payment;
 GtkWidget *b1_label_overpay_on_credit;
-double b1_loan = S21_NAN;
-double b1_interestRate = S21_NAN;
+double b1_loan = NAN;
+double b1_interestRate = NAN;
 int b1_term = -1;
 int b1_type = 1;
 
@@ -68,9 +68,9 @@ void entry_x_changed_cb(GtkEntry *entry) {
   char x_buffer[S21_MAX_INPUT + 1] = {};
   sprintf(x_buffer, "%s", gtk_entry_get_text(entry));
   if (x_buffer[0] == '\0') {
-    x_value = S21_NAN;
+    x_value = NAN;
   } else if (isNotNumberInString(x_buffer)) {
-    x_value = S21_INF;
+    x_value = INFINITY;
   } else {
     sscanf(x_buffer, "%lf", &x_value);
   }
@@ -99,7 +99,8 @@ void button_delete_clicked_cb() {
 void button_rersult_clicked_cb() {
   setlocale(LC_NUMERIC, "C");
   double *x = NULL;
-  if (!s21_isnan(x_value)) x = &x_value;
+  if (!isnan(x_value))
+    x = &x_value;
   char *output_string = calloc(S21_MAX_INPUT, sizeof(char));
   if (output_string != NULL) {
     calculation(input, x, output_string);
@@ -140,11 +141,11 @@ void bonus1_button_clicked_cb() {
   gtk_label_set_text(GTK_LABEL(b1_label_monthly_payment), "");
   gtk_label_set_text(GTK_LABEL(b1_label_overpay_on_credit), "");
 
-  if (s21_isnan(b1_loan)) {
+  if (isnan(b1_loan)) {
     sprintf(error_string, "ENTER TOTAL CREDIT AMOUNT");
   } else if (b1_term == -1) {
     sprintf(error_string, "ENTER TERM");
-  } else if (s21_isnan(b1_interestRate)) {
+  } else if (isnan(b1_interestRate)) {
     sprintf(error_string, "ENTER INTEREST RATE");
   } else if (b1_loan < 0.01) {
     sprintf(error_string, "LOAN VALUE IS TOO LOW");
@@ -184,11 +185,11 @@ void bonus1_entry_total_credit_changed_cb(GtkEntry *entry) {
   char buffer[S21_MAX_INPUT + 1] = {};
   sprintf(buffer, "%s", gtk_entry_get_text(entry));
   if (buffer[0] == '\0') {
-    b1_loan = S21_NAN;
+    b1_loan = NAN;
   } else if (isNotNumberInString(buffer)) {
     gtk_label_set_text(GTK_LABEL(b1_label_error),
                        "INVALID INPUT FOR TOTAL CREDIT AMOUNT");
-    b1_loan = S21_NAN;
+    b1_loan = NAN;
   } else {
     gtk_label_set_text(GTK_LABEL(b1_label_error), "");
     sscanf(buffer, "%lf", &b1_loan);
@@ -208,7 +209,7 @@ void bonus1_entry_interest_changed_cb(GtkEntry *entry) {
   char buffer[S21_MAX_INPUT + 1] = {};
   sprintf(buffer, "%s", gtk_entry_get_text(entry));
   if (buffer[0] == '\0')
-    b1_interestRate = S21_NAN;
+    b1_interestRate = NAN;
   else
     sscanf(buffer, "%lf", &b1_interestRate);
 }

@@ -42,6 +42,7 @@ int isNotNumberInString(char *string) {
       }
     }
   }
-  if (point_count > 1) result = 1;
+  if (point_count > 1)
+    result = 1;
   return result;
 }
