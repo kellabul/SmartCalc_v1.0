@@ -1,9 +1,7 @@
-#include <cairo.h>
-#include <gtk/gtk.h>
-#include <locale.h>
 #include <string.h>
 
 #include "s21_smartcalc.h"
+#include "s21_smartcalc_gtk.h"
 
 /* main part */
 GtkEntry *entry_exp;
@@ -183,38 +181,40 @@ void calculate_credit() {
 }
 
 void bonus1_entry_total_credit_changed_cb(GtkEntry *entry) {
-  char x_buffer[S21_MAX_INPUT + 1] = {};
-  sprintf(x_buffer, "%s", gtk_entry_get_text(entry));
-  if (x_buffer[0] == '\0')
+  char buffer[S21_MAX_INPUT + 1] = {};
+  sprintf(buffer, "%s", gtk_entry_get_text(entry));
+  if (buffer[0] == '\0') {
     b1_loan = S21_NAN;
-  else
-    sscanf(x_buffer, "%lf", &b1_loan);
+  } else if (isNotNumberInString(buffer)) {
+    gtk_label_set_text(GTK_LABEL(b1_label_error),
+                       "INVALID INPUT FOR TOTAL CREDIT AMOUNT");
+    b1_loan = S21_NAN;
+  } else {
+    gtk_label_set_text(GTK_LABEL(b1_label_error), "");
+    sscanf(buffer, "%lf", &b1_loan);
+  }
 }
 
 void bonus1_entry_term_changed_cb(GtkEntry *entry) {
-  char x_buffer[S21_MAX_INPUT + 1] = {};
-  sprintf(x_buffer, "%s", gtk_entry_get_text(entry));
-  if (x_buffer[0] == '\0')
+  char buffer[S21_MAX_INPUT + 1] = {};
+  sprintf(buffer, "%s", gtk_entry_get_text(entry));
+  if (buffer[0] == '\0')
     b1_term = -1;
   else
-    sscanf(x_buffer, "%d", &b1_term);
+    sscanf(buffer, "%d", &b1_term);
 }
 
 void bonus1_entry_interest_changed_cb(GtkEntry *entry) {
-  char x_buffer[S21_MAX_INPUT + 1] = {};
-  sprintf(x_buffer, "%s", gtk_entry_get_text(entry));
-  if (x_buffer[0] == '\0')
+  char buffer[S21_MAX_INPUT + 1] = {};
+  sprintf(buffer, "%s", gtk_entry_get_text(entry));
+  if (buffer[0] == '\0')
     b1_interestRate = S21_NAN;
   else
-    sscanf(x_buffer, "%lf", &b1_interestRate);
+    sscanf(buffer, "%lf", &b1_interestRate);
 }
-void on_bonus1_differentiated_toggled(GtkRadioButton *button) {
-  b1_type = S21_DIFFERENTIATED;
-}
+void on_bonus1_differentiated_toggled() { b1_type = S21_DIFFERENTIATED; }
 
-void on_bonus1_anuity_toggled(GtkRadioButton *button) {
-  b1_type = S21_ANNUITANTS;
-}
+void on_bonus1_anuity_toggled() { b1_type = S21_ANNUITANTS; }
 
 /* ============= PART 2 BONUS ============= */
 

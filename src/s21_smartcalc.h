@@ -98,13 +98,12 @@ void deleteZeroesFromStringEnd(char *str);
 int isThereXinInput(s_tokens *tokens);
 void replaceX(s_tokens *tokens, double x_value);
 
+// another helpers
+int isNotIntegerInString(char *string);
+int isNotNumberInString(char *string);
+
 // bonus 1 - credit calculator
 double total_payment(double loan, double interestRate, int term, int type,
                      double *firstPayment, double *lastPayment);
-
-// gtk
-int graph_output(char *input);
-int isNotIntegerInString(char *string);
-int isNotNumberInString(char *string);
 
 #endif  // SRC_S21_SMARTCALC_H_
