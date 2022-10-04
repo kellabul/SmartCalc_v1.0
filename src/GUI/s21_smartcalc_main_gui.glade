@@ -4,10 +4,11 @@
   <requires lib="gtk+" version="3.24"/>
   <object class="GtkAdjustment" id="b1_adjustment_interest">
     <property name="lower">0.01</property>
-    <property name="upper">9999.989999999999</property>
+    <property name="upper">999999</property>
     <property name="value">10</property>
     <property name="step-increment">1</property>
     <property name="page-increment">1</property>
+    <property name="page-size">0.01</property>
   </object>
   <object class="GtkAdjustment" id="b1_adjustment_term">
     <property name="lower">1</property>
@@ -17,19 +18,20 @@
     <property name="page-increment">1</property>
     <property name="page-size">1</property>
   </object>
-  <object class="GtkAdjustment" id="b2_adjustment_interest">
+  <object class="GtkAdjustment" id="b1_adjustment_total">
     <property name="lower">0.01</property>
-    <property name="upper">9999.989999999999</property>
-    <property name="value">10</property>
+    <property name="upper">999999999</property>
     <property name="step-increment">1</property>
     <property name="page-increment">1</property>
+    <property name="page-size">0.01</property>
   </object>
-  <object class="GtkAdjustment" id="b2_adjustment_tax">
+  <object class="GtkAdjustment" id="b2_adjustment_amount">
     <property name="lower">0.01</property>
-    <property name="upper">9999.989999999999</property>
-    <property name="value">10</property>
+    <property name="upper">999999999</property>
+    <property name="value">1000</property>
     <property name="step-increment">1</property>
     <property name="page-increment">1</property>
+    <property name="page-size">0.01</property>
   </object>
   <object class="GtkWindow" id="main_window">
     <property name="name">main_window</property>
@@ -747,19 +749,6 @@
                   </packing>
                 </child>
                 <child>
-                  <object class="GtkEntry" id="bonus1_entry_total_credit">
-                    <property name="visible">True</property>
-                    <property name="can-focus">True</property>
-                    <property name="max-length">100</property>
-                    <signal name="changed" handler="bonus1_entry_total_credit_changed_cb" swapped="no"/>
-                  </object>
-                  <packing>
-                    <property name="left-attach">4</property>
-                    <property name="top-attach">1</property>
-                    <property name="width">5</property>
-                  </packing>
-                </child>
-                <child>
                   <object class="GtkLabel" id="bonus1_label2">
                     <property name="visible">True</property>
                     <property name="can-focus">False</property>
@@ -939,11 +928,14 @@
                   </packing>
                 </child>
                 <child>
-                  <object class="GtkSpinButton" id="bonus1_spin_term">
+                  <object class="GtkSpinButton" id="bonus1_entry_term">
                     <property name="visible">True</property>
                     <property name="can-focus">True</property>
                     <property name="adjustment">b1_adjustment_term</property>
+                    <property name="climb-rate">1</property>
                     <property name="numeric">True</property>
+                    <property name="value">1</property>
+                    <signal name="changed" handler="bonus1_entry_term_changed_cb" swapped="no"/>
                   </object>
                   <packing>
                     <property name="left-attach">4</property>
@@ -952,16 +944,36 @@
                   </packing>
                 </child>
                 <child>
-                  <object class="GtkSpinButton" id="bonus1_spin_interest">
+                  <object class="GtkSpinButton" id="bonus1_entry_interest">
                     <property name="visible">True</property>
                     <property name="can-focus">True</property>
                     <property name="adjustment">b1_adjustment_interest</property>
+                    <property name="climb-rate">1</property>
                     <property name="digits">2</property>
                     <property name="numeric">True</property>
+                    <property name="value">10</property>
+                    <signal name="changed" handler="bonus1_entry_interest_changed_cb" swapped="no"/>
                   </object>
                   <packing>
                     <property name="left-attach">4</property>
                     <property name="top-attach">3</property>
+                    <property name="width">5</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkSpinButton" id="bonus1_entry_total_credit">
+                    <property name="visible">True</property>
+                    <property name="can-focus">True</property>
+                    <property name="adjustment">b1_adjustment_total</property>
+                    <property name="climb-rate">1</property>
+                    <property name="digits">2</property>
+                    <property name="numeric">True</property>
+                    <property name="value">1000</property>
+                    <signal name="changed" handler="bonus1_entry_total_credit_changed_cb" swapped="no"/>
+                  </object>
+                  <packing>
+                    <property name="left-attach">4</property>
+                    <property name="top-attach">1</property>
                     <property name="width">5</property>
                   </packing>
                 </child>
@@ -1104,7 +1116,7 @@
                   <packing>
                     <property name="left-attach">0</property>
                     <property name="top-attach">0</property>
-                    <property name="width">4</property>
+                    <property name="width">2</property>
                   </packing>
                 </child>
                 <child>
@@ -1114,9 +1126,9 @@
                     <property name="label" translatable="yes">Deposit term:</property>
                   </object>
                   <packing>
-                    <property name="left-attach">0</property>
-                    <property name="top-attach">1</property>
-                    <property name="width">4</property>
+                    <property name="left-attach">4</property>
+                    <property name="top-attach">0</property>
+                    <property name="width">2</property>
                   </packing>
                 </child>
                 <child>
@@ -1127,7 +1139,7 @@
                   </object>
                   <packing>
                     <property name="left-attach">0</property>
-                    <property name="top-attach">2</property>
+                    <property name="top-attach">1</property>
                     <property name="width">2</property>
                   </packing>
                 </child>
@@ -1139,7 +1151,7 @@
                   </object>
                   <packing>
                     <property name="left-attach">4</property>
-                    <property name="top-attach">2</property>
+                    <property name="top-attach">1</property>
                     <property name="width">2</property>
                   </packing>
                 </child>
@@ -1151,7 +1163,7 @@
                   </object>
                   <packing>
                     <property name="left-attach">0</property>
-                    <property name="top-attach">3</property>
+                    <property name="top-attach">2</property>
                     <property name="width">2</property>
                   </packing>
                 </child>
@@ -1200,22 +1212,9 @@
                     <signal name="clicked" handler="bonus2_button_clicked_cb" swapped="no"/>
                   </object>
                   <packing>
-                    <property name="left-attach">0</property>
+                    <property name="left-attach">1</property>
                     <property name="top-attach">6</property>
-                    <property name="width">4</property>
-                  </packing>
-                </child>
-                <child>
-                  <object class="GtkEntry" id="bonus2_entry_deposit_amount">
-                    <property name="visible">True</property>
-                    <property name="can-focus">True</property>
-                    <property name="max-length">100</property>
-                    <signal name="changed" handler="bonus2_entry_deposit_amount_changed_cb" swapped="no"/>
-                  </object>
-                  <packing>
-                    <property name="left-attach">4</property>
-                    <property name="top-attach">0</property>
-                    <property name="width">4</property>
+                    <property name="width">2</property>
                   </packing>
                 </child>
                 <child>
@@ -1274,100 +1273,109 @@
                   </object>
                   <packing>
                     <property name="left-attach">5</property>
-                    <property name="top-attach">3</property>
+                    <property name="top-attach">2</property>
                     <property name="width">3</property>
                   </packing>
                 </child>
                 <child>
-                  <object class="GtkSpinButton" id="b2_spin_interest">
+                  <object class="GtkSpinButton" id="b2_entry_interest">
                     <property name="visible">True</property>
                     <property name="can-focus">True</property>
-                    <property name="adjustment">b2_adjustment_interest</property>
                     <property name="digits">2</property>
                     <property name="numeric">True</property>
                     <property name="value">10</property>
+                    <signal name="change-value" handler="b2_entry_interest_change_value_cb" swapped="no"/>
+                    <signal name="changed" handler="b2_entry_interest_changed_cb" swapped="no"/>
                   </object>
                   <packing>
                     <property name="left-attach">2</property>
-                    <property name="top-attach">2</property>
+                    <property name="top-attach">1</property>
                     <property name="width">2</property>
                   </packing>
                 </child>
                 <child>
-                  <object class="GtkSpinButton" id="b2_spin_tax">
+                  <object class="GtkSpinButton" id="b2_entry_tax">
                     <property name="visible">True</property>
                     <property name="can-focus">True</property>
-                    <property name="adjustment">b2_adjustment_tax</property>
                     <property name="digits">2</property>
                     <property name="numeric">True</property>
                     <property name="value">10</property>
+                    <signal name="change-value" handler="b2_entry_tax_change_value_cb" swapped="no"/>
                   </object>
                   <packing>
                     <property name="left-attach">6</property>
+                    <property name="top-attach">1</property>
+                    <property name="width">2</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkSpinButton" id="b2_entry_period_payments">
+                    <property name="visible">True</property>
+                    <property name="can-focus">True</property>
+                    <property name="numeric">True</property>
+                    <signal name="change-value" handler="b2_entry_period_payments_change_value_cb" swapped="no"/>
+                  </object>
+                  <packing>
+                    <property name="left-attach">2</property>
                     <property name="top-attach">2</property>
                     <property name="width">2</property>
                   </packing>
                 </child>
                 <child>
-                  <object class="GtkSpinButton" id="b2_spin_period_payments">
+                  <object class="GtkLabel" id="b2_label_replen">
                     <property name="visible">True</property>
-                    <property name="can-focus">True</property>
-                    <property name="numeric">True</property>
+                    <property name="can-focus">False</property>
+                    <property name="label" translatable="yes">replenishments</property>
                   </object>
                   <packing>
-                    <property name="left-attach">2</property>
+                    <property name="left-attach">0</property>
                     <property name="top-attach">3</property>
                     <property name="width">2</property>
                   </packing>
                 </child>
                 <child>
-                  <object class="GtkLabel" id="b2_label_1">
+                  <object class="GtkLabel" id="b2_label_replen_period">
                     <property name="visible">True</property>
                     <property name="can-focus">False</property>
-                    <property name="label" translatable="yes">b2_label_1</property>
+                    <property name="label" translatable="yes">periodicity of repl.</property>
                   </object>
                   <packing>
-                    <property name="left-attach">1</property>
+                    <property name="left-attach">0</property>
                     <property name="top-attach">4</property>
-                  </packing>
-                </child>
-                <child>
-                  <object class="GtkLabel" id="b2_label_2">
-                    <property name="visible">True</property>
-                    <property name="can-focus">False</property>
-                    <property name="label" translatable="yes">b2_label_2</property>
-                  </object>
-                  <packing>
-                    <property name="left-attach">1</property>
-                    <property name="top-attach">5</property>
+                    <property name="width">2</property>
                   </packing>
                 </child>
                 <child>
                   <object class="GtkLabel" id="b2_label_3">
                     <property name="visible">True</property>
                     <property name="can-focus">False</property>
-                    <property name="label" translatable="yes">b2_label_3</property>
+                    <property name="label" translatable="yes">partial withdrawals</property>
                   </object>
                   <packing>
                     <property name="left-attach">4</property>
-                    <property name="top-attach">4</property>
+                    <property name="top-attach">3</property>
+                    <property name="width">2</property>
                   </packing>
                 </child>
                 <child>
                   <object class="GtkLabel" id="b2_label_4">
                     <property name="visible">True</property>
                     <property name="can-focus">False</property>
-                    <property name="label" translatable="yes">b2_label_4</property>
+                    <property name="label" translatable="yes">periodicity of withdr.</property>
                   </object>
                   <packing>
                     <property name="left-attach">4</property>
-                    <property name="top-attach">5</property>
+                    <property name="top-attach">4</property>
+                    <property name="width">2</property>
                   </packing>
                 </child>
                 <child>
-                  <object class="GtkEntry" id="b2_label_1_entry">
+                  <object class="GtkSpinButton" id="b2_entry_replen_periodicity">
                     <property name="visible">True</property>
                     <property name="can-focus">True</property>
+                    <property name="text" translatable="yes">10,00</property>
+                    <property name="numeric">True</property>
+                    <signal name="change-value" handler="b2_entry_replen_periodicity_change_value_cb" swapped="no"/>
                   </object>
                   <packing>
                     <property name="left-attach">2</property>
@@ -1376,82 +1384,104 @@
                   </packing>
                 </child>
                 <child>
-                  <object class="GtkEntry" id="b2_label_3_entry">
+                  <object class="GtkSpinButton" id="b2_entry_withdraw_periodicity">
                     <property name="visible">True</property>
                     <property name="can-focus">True</property>
+                    <property name="text" translatable="yes">10,00</property>
+                    <property name="numeric">True</property>
+                    <signal name="change-value" handler="b2_entry_withdraw_periodicity_change_value_cb" swapped="no"/>
                   </object>
                   <packing>
-                    <property name="left-attach">5</property>
+                    <property name="left-attach">6</property>
                     <property name="top-attach">4</property>
                     <property name="width">2</property>
                   </packing>
                 </child>
                 <child>
-                  <object class="GtkSpinButton" id="b2_spin_label_2">
+                  <object class="GtkSpinButton" id="b2_entry_interest3">
                     <property name="visible">True</property>
                     <property name="can-focus">True</property>
                     <property name="text" translatable="yes">10,00</property>
-                    <property name="digits">2</property>
                     <property name="numeric">True</property>
                     <property name="value">10</property>
+                    <signal name="change-value" handler="b2_entry_interest3_change_value_cb" swapped="no"/>
+                  </object>
+                  <packing>
+                    <property name="left-attach">6</property>
+                    <property name="top-attach">0</property>
+                    <property name="width">2</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkSpinButton" id="b2_entry_deposit_amount">
+                    <property name="visible">True</property>
+                    <property name="can-focus">True</property>
+                    <property name="adjustment">b2_adjustment_amount</property>
+                    <property name="climb-rate">1</property>
+                    <property name="digits">2</property>
+                    <property name="numeric">True</property>
+                    <property name="value">10000</property>
+                    <signal name="change-value" handler="b2_entry_deposit_amount_change_value_cb" swapped="no"/>
                   </object>
                   <packing>
                     <property name="left-attach">2</property>
-                    <property name="top-attach">5</property>
+                    <property name="top-attach">0</property>
                     <property name="width">2</property>
                   </packing>
                 </child>
                 <child>
-                  <object class="GtkSpinButton" id="b2_spin_label_4">
+                  <object class="GtkSpinButton" id="b2_entry_replen">
                     <property name="visible">True</property>
                     <property name="can-focus">True</property>
-                    <property name="text" translatable="yes">10,00</property>
+                    <property name="climb-rate">1</property>
                     <property name="digits">2</property>
                     <property name="numeric">True</property>
-                    <property name="value">10</property>
+                    <signal name="change-value" handler="b2_entry_replen_change_value_cb" swapped="no"/>
                   </object>
                   <packing>
-                    <property name="left-attach">5</property>
-                    <property name="top-attach">5</property>
+                    <property name="left-attach">2</property>
+                    <property name="top-attach">3</property>
                     <property name="width">2</property>
                   </packing>
                 </child>
                 <child>
-                  <object class="GtkSwitch" id="b2_label1_switch">
+                  <object class="GtkSpinButton" id="b2_entry_withdraw">
                     <property name="visible">True</property>
                     <property name="can-focus">True</property>
-                    <signal name="activate" handler="b2_label1_switch_activate_cb" swapped="no"/>
-                  </object>
-                  <packing>
-                    <property name="left-attach">7</property>
-                    <property name="top-attach">4</property>
-                  </packing>
-                </child>
-                <child>
-                  <object class="GtkSwitch" id="b2_label2_switch">
-                    <property name="visible">True</property>
-                    <property name="can-focus">True</property>
-                    <signal name="activate" handler="b2_label2_switch_activate_cb" swapped="no"/>
-                  </object>
-                  <packing>
-                    <property name="left-attach">7</property>
-                    <property name="top-attach">5</property>
-                  </packing>
-                </child>
-                <child>
-                  <object class="GtkSpinButton" id="b2_spin_interest3">
-                    <property name="visible">True</property>
-                    <property name="can-focus">True</property>
-                    <property name="text" translatable="yes">10,00</property>
-                    <property name="adjustment">b2_adjustment_interest</property>
+                    <property name="climb-rate">1</property>
+                    <property name="digits">2</property>
                     <property name="numeric">True</property>
-                    <property name="value">10</property>
+                    <signal name="change-value" handler="b2_entry_withdraw_change_value_cb" swapped="no"/>
                   </object>
                   <packing>
-                    <property name="left-attach">4</property>
-                    <property name="top-attach">1</property>
-                    <property name="width">4</property>
+                    <property name="left-attach">6</property>
+                    <property name="top-attach">3</property>
+                    <property name="width">2</property>
                   </packing>
+                </child>
+                <child>
+                  <placeholder/>
+                </child>
+                <child>
+                  <placeholder/>
+                </child>
+                <child>
+                  <placeholder/>
+                </child>
+                <child>
+                  <placeholder/>
+                </child>
+                <child>
+                  <placeholder/>
+                </child>
+                <child>
+                  <placeholder/>
+                </child>
+                <child>
+                  <placeholder/>
+                </child>
+                <child>
+                  <placeholder/>
                 </child>
                 <child>
                   <placeholder/>
@@ -1654,5 +1684,57 @@
         </child>
       </object>
     </child>
+  </object>
+  <object class="GtkAdjustment" id="b2_adjustment_interest">
+    <property name="lower">0.01</property>
+    <property name="upper">999999</property>
+    <property name="step-increment">1</property>
+    <property name="page-increment">1</property>
+    <property name="page-size">0.01</property>
+  </object>
+  <object class="GtkAdjustment" id="b2_adjustment_period">
+    <property name="lower">1</property>
+    <property name="upper">99999</property>
+    <property name="value">1</property>
+    <property name="step-increment">1</property>
+    <property name="page-increment">1</property>
+    <property name="page-size">1</property>
+  </object>
+  <object class="GtkAdjustment" id="b2_adjustment_period_rep">
+    <property name="upper">99999</property>
+    <property name="step-increment">1</property>
+    <property name="page-increment">1</property>
+    <property name="page-size">1</property>
+  </object>
+  <object class="GtkAdjustment" id="b2_adjustment_period_withd">
+    <property name="upper">99999</property>
+    <property name="step-increment">1</property>
+    <property name="page-increment">1</property>
+    <property name="page-size">1</property>
+  </object>
+  <object class="GtkAdjustment" id="b2_adjustment_replen">
+    <property name="upper">999999999</property>
+    <property name="step-increment">1</property>
+    <property name="page-increment">1</property>
+    <property name="page-size">0.01</property>
+  </object>
+  <object class="GtkAdjustment" id="b2_adjustment_tax">
+    <property name="upper">999999</property>
+    <property name="step-increment">1</property>
+    <property name="page-increment">1</property>
+    <property name="page-size">0.01</property>
+  </object>
+  <object class="GtkAdjustment" id="b2_adjustment_term">
+    <property name="lower">1</property>
+    <property name="upper">99999</property>
+    <property name="step-increment">1</property>
+    <property name="page-increment">1</property>
+    <property name="page-size">1</property>
+  </object>
+  <object class="GtkAdjustment" id="b2_adjustment_withdraw">
+    <property name="upper">999999999</property>
+    <property name="step-increment">1</property>
+    <property name="page-increment">1</property>
+    <property name="page-size">0.01</property>
   </object>
 </interface>
