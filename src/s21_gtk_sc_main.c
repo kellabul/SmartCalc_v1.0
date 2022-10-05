@@ -219,16 +219,27 @@ void on_bonus1_anuity_toggled() { b1_type = S21_ANNUITANTS; }
 
 /* ============= PART 2 BONUS ============= */
 
-void bonus2_entry_capitalization_of_interest_changed_cb() {}
+void b2_entry_withdraw_change_value_cb() {}
 
-void bonus2_entry_periodicity_of_payments_changed_cb() {}
+void b2_entry_replen_change_value_cb() {}
 
-void bonus2_entry_tax_rate_changed_cb() {}
+void b2_entry_deposit_amount_change_value_cb() {}
 
-void bonus2_entry_interest_rate_changed_cb() {}
+void b2_entry_interest3_change_value_cb() {}
 
-void bonus2_entry_deposit_term_changed_cb() {}
+void b2_entry_withdraw_periodicity_change_value_cb() {}
 
-void bonus2_entry_deposit_amount_changed_cb() {}
+void b2_entry_replen_periodicity_change_value_cb() {}
 
-void bonus2_button_clicked_cb() {}
+void b2_entry_period_payments_change_value_cb() {}
+
+void b2_entry_tax_change_value_cb() {}
+
+void b2_entry_interest_change_value_cb() {}
+
+void b2_entry_interest_changed_cb() {}
+
+void check_capitalization_toggled_cb(){}
+
+void bonus2_button_clicked_cb(){}
+

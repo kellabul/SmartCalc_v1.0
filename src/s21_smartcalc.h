@@ -11,15 +11,32 @@
 #define S21_ANNUITANTS 1
 #define S21_DIFFERENTIATED 2
 
-typedef struct tokens {
+typedef struct{
   double value;
   int type;
 } s_tokens;
 
-typedef struct s_stack {
+typedef struct {
   s_tokens token[S21_MAX_TKN];
   int top;
 } token_stack;
+
+typedef struct {
+	double amount;
+  int term;
+  double interest_rate;
+  double tax_rate;
+	int periodicity;
+  int capitalization;
+	double replenishments;
+	int freq_of_replen;
+	double withdrawals;
+	int freq_of_withd;
+  // output 
+	double accrued_interest;
+	double tax_amount;
+	double a,ount_by_end;
+} s_deposit;
 
 enum funcs_and_mod {
   LN = 'l',
