@@ -15,17 +15,6 @@ void convertTokensToString(s_tokens *tokens, char *string) {
   }
 }
 
-int isNotIntegerInString(char *string) {
-  int result = 0;
-  for (int i = 0; string[i]; i++) {
-    if (string[i] < '0' || string[i] > '9') {
-      result = 1;
-      break;
-    }
-  }
-  return result;
-}
-
 int isNotNumberInString(char *string) {
   int result = 0;
   int point_count = 0;
@@ -44,4 +33,35 @@ int isNotNumberInString(char *string) {
   }
   if (point_count > 1) result = 1;
   return result;
+}
+
+void convertToFinancialOutputNumber(char *input, char *output) {
+  int length = strlen(input);
+  int i = length+1;
+  int j = 0;
+  for (int h = 0; h < 7 && i > -1; h++) {
+      output[j++] = input[i--];
+  }
+  if (length > 7) {
+    for (int h = 0; i > -1; h++) {
+      if (h%3 == 0) {
+        output[j++] = ' ';
+      }
+      output[j++] = input[i--];
+    }
+  }
+  output[j] = '\0';
+  reverse_string(output);
+}
+
+void reverse_string(char *string) {
+  char buffer;
+  printf("aaa = %d\n", string[0]);
+  int end = strlen(string);
+  for (int start = 0 ; end > start; start++, end--) {
+    buffer = string[start];
+    string[start] = string[end];
+    string[end] = buffer;
+     printf("asdfasdf\n");
+  }
 }

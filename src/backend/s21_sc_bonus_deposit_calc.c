@@ -6,7 +6,6 @@
 void deposit_calculation(s_deposit *d) {
   d->accrued_interest = 0;
   d->tax_amount = 0;
-  d->amount_by_end = 0;
 
   double sum = d->amount;
   double rate = (d->interest_rate / 12) / 100;

@@ -18,6 +18,7 @@ GtkWidget *max_domain_spin;
 GtkWidget *max_codomain_spin;
 
 int graph_output(char *input) {
+  
   GtkBuilder *builder;
   GtkWidget *close_button;
   GtkWidget *draw_button;

@@ -20,10 +20,10 @@ else
 CHECK_LIBS = -lcheck
 endif
 
-all: clean install run
+all: clean uninstall install run
 
 clean:
-	rm -rf *.o *.a $(COVERAGE_RESULTS) $(COVERAGE_FILES) $(GCOV_FILES) $(LCOV_FILES) $(TEST_NAME) $(TEST_NAME).c gcov_report $(TEST_NAME).dSYM ../build/*
+	rm -rf *.o *.a $(COVERAGE_RESULTS) $(COVERAGE_FILES) $(GCOV_FILES) $(LCOV_FILES) $(TEST_NAME) $(TEST_NAME).c gcov_report $(TEST_NAME).dSYM
 
 $(NAME).a:
 	@rm -rf *.o *.a
@@ -41,15 +41,13 @@ run:
 	../build/s21_smartcalc
 
 uninstall:
+	rm -rf ../build/*
 
 dvi:
 
+
 dist:
-
-tests:
-
-gcov_report:
-
+	tar -cf SmartCalc_v1.0.tar *.c *.h Makefile gui backend
 
 gcov_report: gcov
 	@rm -f $(LCOV_FILES)

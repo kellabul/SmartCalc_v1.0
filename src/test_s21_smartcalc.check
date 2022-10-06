@@ -525,13 +525,15 @@ ck_assert_int_eq(isNotNumberInString(input),1);
 input = ".123";
 ck_assert_int_eq(isNotNumberInString(input),1);
 
-input = "1234";
-ck_assert_int_eq(isNotIntegerInString(input),0);
 
-input = "123.4";
-ck_assert_int_eq(isNotIntegerInString(input),1);
+input = "723232323.12";
+char output[128];
+convertToFinancialOutputNumber(input, output);
+printf("%s\n", output+1);
 
-
+input = "323.12";
+convertToFinancialOutputNumber(input, output);
+printf("%s\n", output+1);
 
 /* --------------------------------------BONUS PART--------------------------------------*/
 

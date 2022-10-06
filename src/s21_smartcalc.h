@@ -112,7 +112,6 @@ int isThereXinInput(s_tokens *tokens);
 void replaceX(s_tokens *tokens, double x_value);
 
 // another helpers
-int isNotIntegerInString(char *string);
 int isNotNumberInString(char *string);
 
 // bonus 1 - credit calculator
@@ -121,5 +120,6 @@ double total_payment(double loan, double interestRate, int term, int type,
 
 // bonus 2
 void deposit_calculation(s_deposit *deposit);
-
+void convertToFinancialOutputNumber(char *string, char *output);
+void reverse_string(char *string);
 #endif  // SRC_S21_SMARTCALC_H_

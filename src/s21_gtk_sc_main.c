@@ -13,20 +13,19 @@ double x_value = NAN;
 
 /* bonus 1*/
 void calculate_credit();
-GtkWidget *b1_label_error;
 GtkWidget *b1_label_monthly_payment;
 GtkWidget *b1_label_total_payment;
 GtkWidget *b1_label_overpay_on_credit;
-double b1_loan = NAN;
-double b1_interestRate = NAN;
-int b1_term = -1;
+double b1_loan = 1000;
+double b1_interestRate = 10;
+int b1_term = 1;
 int b1_type = 1;
 
 /* bonus 2*/
 GtkWidget *b2_accured_interest;
 GtkWidget *b2_tax_amount;
 GtkWidget *b2_deposit_amount;
-s_deposit deposit;
+s_deposit deposit = {10000, 10, 10, 10, 1};
 
 int main(int argc, char *argv[]) {
   GtkWidget *window;
@@ -47,19 +46,19 @@ int main(int argc, char *argv[]) {
   /* bonus 1 */
   b1_label_error =
       GTK_WIDGET(gtk_builder_get_object(builder, "b1_label_error"));
-  b1_label_monthly_payment = GTK_WIDGET(
-      gtk_builder_get_object(builder, "b1_label_monthly_payment"));
+  b1_label_monthly_payment =
+      GTK_WIDGET(gtk_builder_get_object(builder, "b1_label_monthly_payment"));
   b1_label_total_payment =
       GTK_WIDGET(gtk_builder_get_object(builder, "b1_label_total_payment"));
-  b1_label_overpay_on_credit = GTK_WIDGET(
-      gtk_builder_get_object(builder, "b1_label_overpay_on_credit"));
+  b1_label_overpay_on_credit =
+      GTK_WIDGET(gtk_builder_get_object(builder, "b1_label_overpay_on_credit"));
 
   /* bonus 2 */
-b2_accured_interest =
+  b2_accured_interest =
       GTK_WIDGET(gtk_builder_get_object(builder, "b2_label_accured_interest"));
-b2_tax_amount =
+  b2_tax_amount =
       GTK_WIDGET(gtk_builder_get_object(builder, "b2_label_tax_amount"));
-b2_deposit_amount =
+  b2_deposit_amount =
       GTK_WIDGET(gtk_builder_get_object(builder, "b2_label_deposit_amount"));
 
   g_object_unref(builder);
@@ -146,34 +145,7 @@ void function_button_clicked(GtkButton *button) {
 /* ============= PART 2 BONUS ============= */
 
 void b1_button_clicked_cb() {
-  char error_string[128] = {};
   setlocale(LC_NUMERIC, "C");
-
-  gtk_label_set_text(GTK_LABEL(b1_label_total_payment), "");
-  gtk_label_set_text(GTK_LABEL(b1_label_monthly_payment), "");
-  gtk_label_set_text(GTK_LABEL(b1_label_overpay_on_credit), "");
-
-  if (isnan(b1_loan)) {
-    sprintf(error_string, "ENTER TOTAL CREDIT AMOUNT");
-  } else if (b1_term == -1) {
-    sprintf(error_string, "ENTER TERM");
-  } else if (isnan(b1_interestRate)) {
-    sprintf(error_string, "ENTER INTEREST RATE");
-  } else if (b1_loan < 0.01) {
-    sprintf(error_string, "LOAN VALUE IS TOO LOW");
-  } else if (b1_term < 1) {
-    sprintf(error_string, "CREDIT PERIOD VALUE IS TOO LOW");
-  } else if ((int)b1_term - b1_term > 0) {
-    sprintf(error_string, "CREDIT PERIOD VALUE MUST BE INTEGER");
-  } else if (b1_interestRate < 0.1) {
-    sprintf(error_string, "INTEREST VALUE IS TOO LOW");
-  } else {
-    calculate_credit();
-  }
-  gtk_label_set_text(GTK_LABEL(b1_label_error), error_string);
-}
-
-void calculate_credit() {
   double total_payment_output = 0;
   double first_payment = 0;
   double last_payment = 0;
@@ -231,26 +203,59 @@ void on_b1_anuity_toggled() { b1_type = S21_ANNUITANTS; }
 
 /* ============= PART 2 BONUS ============= */
 
+void b2_spin_deposit_amount_value_changed_cb(GtkSpinButton *button) {
+  deposit.amount = gtk_spin_button_get_value(button);
+}
 
+void b2_spin_deposit_term_value_changed_cb(GtkSpinButton *button) {
+  deposit.term = gtk_spin_button_get_value(button);
+}
 
-void b2_entry_deposit_amount_change_value_cb() {}
+void b2_spin_interest_value_changed_cb(GtkSpinButton *button) {
+  deposit.interest_rate = gtk_spin_button_get_value(button);
+}
 
-void b2_entry_interest3_change_value_cb() {}
+void b2_spin_tax_value_changed_cb(GtkSpinButton *button) {
+  deposit.tax_rate = gtk_spin_button_get_value(button);
+}
 
-void b2_entry_period_payments_change_value_cb() {}
+void b2_spin_period_payments_value_changed_cb(GtkSpinButton *button) {
+  deposit.periodicity = gtk_spin_button_get_value(button);
+}
 
-void b2_entry_tax_change_value_cb() {}
+void check_capitalization_toggled_cb(GtkToggleButton *button) {
+  gboolean status = gtk_toggle_button_get_active(button);
+  if (status)
+    deposit.capitalization = 1;
+  else
+    deposit.capitalization = 0;
+}
 
-void b2_entry_interest_changed_value_cb() {}
+void b2_spin_replen_value_changed_cb(GtkSpinButton *button) {
+  deposit.replenishment = gtk_spin_button_get_value(button);
+}
 
-void check_capitalization_toggled_cb() {}
+void b2_spin_replen_periodicity_value_changed_cb(GtkSpinButton *button) {
+  deposit.freq_of_replen = gtk_spin_button_get_value(button);
+}
 
-void b2_entry_replen_change_value_cb() {}
+void b2_spin_withdraw_value_changed_cb(GtkSpinButton *button) {
+  deposit.withdrawal = gtk_spin_button_get_value(button);
+}
 
-void b2_entry_replen_periodicity_change_value_cb() {}
+void b2_spin_withdraw_periodicity_value_changed_cb(GtkSpinButton *button) {
+  deposit.freq_of_withd = gtk_spin_button_get_value(button);
+}
 
-void b2_entry_withdraw_change_value_cb() {}
-
-void b2_entry_withdraw_periodicity_change_value_cb() {}
-
-void b2_button_clicked_cb() {}
+void b2_button_clicked_cb(GtkSpinButton *button) {
+  char buffer[128];
+  deposit_calculation(&deposit);
+  sprintf(buffer, "%.2lf", deposit.accrued_interest);
+  gtk_label_set_text(GTK_LABEL(b2_accured_interest), buffer);
+  deposit_calculation(&deposit);
+  sprintf(buffer, "%.2lf", deposit.tax_amount);
+  gtk_label_set_text(GTK_LABEL(b2_tax_amount), buffer);
+  deposit_calculation(&deposit);
+  sprintf(buffer, "%.2lf", deposit.amount_by_end);
+  gtk_label_set_text(GTK_LABEL(b2_deposit_amount), buffer);
+}
