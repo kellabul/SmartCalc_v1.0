@@ -552,3 +552,128 @@ ck_assert_double_eq_tol(lastPayment, 4243.06, 10e-2);
 
 ck_assert_double_eq_tol(total_payment(loan, interestRate, term, 5, &firstPayment, &lastPayment), -1, 10e-2);
 ck_assert_double_eq_tol(total_payment(loan, interestRate, 0, 5, &firstPayment, &lastPayment), -1, 10e-2);
+
+#test deposit_test
+
+    s_deposit deposit = {
+        .amount = 1000,
+        .term = 12,
+        .interest_rate = 12,
+        .periodicity = 1,
+        .capitalization = 1,
+    };
+    deposit_calculation(&deposit);
+    ck_assert_double_eq_tol(deposit.accrued_interest, 126.82, 10e-2);
+    ck_assert_double_eq_tol(deposit.tax_amount, 0, 10e-2);
+    ck_assert_double_eq_tol(deposit.amount_by_end, 1126.83, 10e-2);
+
+    deposit = (s_deposit){
+        .amount = 1000,
+        .term = 12,
+        .interest_rate = 12,
+        .periodicity = 1,
+        .capitalization = 0,
+    };
+    deposit_calculation(&deposit);
+    ck_assert_double_eq_tol(deposit.accrued_interest, 120.00, 10e-2);
+    ck_assert_double_eq_tol(deposit.tax_amount, 0, 10e-2);
+    ck_assert_double_eq_tol(deposit.amount_by_end, 1000.00, 10e-2);
+
+    deposit = (s_deposit){
+        .amount = 1000,
+        .term = 12,
+        .interest_rate = 12,
+        .periodicity = 2,
+        .capitalization = 1,
+    };
+    deposit_calculation(&deposit);
+    ck_assert_double_eq_tol(deposit.accrued_interest, 126.16, 10e-2);
+    ck_assert_double_eq_tol(deposit.tax_amount, 0, 10e-2);
+    ck_assert_double_eq_tol(deposit.amount_by_end, 1126.16, 10e-2);
+
+    deposit = (s_deposit){
+        .amount = 1000,
+        .term = 12,
+        .interest_rate = 12,
+        .periodicity = 2,
+        .capitalization = 0,
+        .tax_rate = 50
+    };
+    deposit_calculation(&deposit);
+    ck_assert_double_eq_tol(deposit.accrued_interest, 60, 10e-2);
+    ck_assert_double_eq_tol(deposit.tax_amount, 60, 10e-2);
+    ck_assert_double_eq_tol(deposit.amount_by_end, 1000, 10e-2);
+
+    deposit = (s_deposit){
+        .amount = 1000000,
+        .term = 12,
+        .interest_rate = 12,
+        .periodicity = 1,
+        .capitalization = 0,
+        .tax_rate = 0,
+        .replenishment = 1000,
+	    .freq_of_replen = 2
+    };
+    deposit_calculation(&deposit);
+    ck_assert_double_eq_tol(deposit.accrued_interest, 120300, 10e-2);
+    ck_assert_double_eq_tol(deposit.tax_amount, 0, 10e-2);
+    ck_assert_double_eq_tol(deposit.amount_by_end, 1006000, 10e-2);
+
+    deposit = (s_deposit){
+        .amount = 1000000,
+        .term = 12,
+        .interest_rate = 12,
+        .periodicity = 1,
+        .capitalization = 0,
+        .tax_rate = 0,
+        .withdrawal = 1000,
+	    .freq_of_withd = 1
+    };
+    deposit_calculation(&deposit);
+    ck_assert_double_eq_tol(deposit.accrued_interest, 119340, 10e-2);
+    ck_assert_double_eq_tol(deposit.tax_amount, 0, 10e-2);
+    ck_assert_double_eq_tol(deposit.amount_by_end, 988000, 10e-2);
+    
+    deposit = (s_deposit){
+        .amount = 1000,
+        .term = 12,
+        .interest_rate = 12,
+        .periodicity = 2,
+        .capitalization = 0,
+        .tax_rate = 50
+    };
+    deposit_calculation(&deposit);
+    ck_assert_double_eq_tol(deposit.accrued_interest, 60, 10e-2);
+    ck_assert_double_eq_tol(deposit.tax_amount, 60, 10e-2);
+    ck_assert_double_eq_tol(deposit.amount_by_end, 1000, 10e-2);
+
+    deposit = (s_deposit){
+        .amount = 1000000,
+        .term = 12,
+        .interest_rate = 12,
+        .periodicity = 1,
+        .capitalization = 1,
+        .tax_rate = 0,
+        .replenishment = 1000,
+	    .freq_of_replen = 2
+    };
+    deposit_calculation(&deposit);
+    ck_assert_double_eq_tol(deposit.accrued_interest, 127134.73, 10e-2);
+    ck_assert_double_eq_tol(deposit.tax_amount, 0, 10e-2);
+    ck_assert_double_eq_tol(deposit.amount_by_end, 1133134.73, 10e-2);
+
+    deposit = (s_deposit){
+        .amount = 1000000,
+        .term = 12,
+        .interest_rate = 12,
+        .periodicity = 1,
+        .capitalization = 1,
+        .tax_rate = 0,
+        .withdrawal = 1000,
+	    .freq_of_withd = 1
+    };
+    
+    deposit_calculation(&deposit);
+    ck_assert_double_eq_tol(deposit.accrued_interest, 126142.53, 10e-2);
+    ck_assert_double_eq_tol(deposit.tax_amount, 0, 10e-2);
+    ck_assert_double_eq_tol(deposit.amount_by_end, 1114142.53, 10e-2);

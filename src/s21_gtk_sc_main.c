@@ -99,8 +99,7 @@ void button_delete_clicked_cb() {
 void button_rersult_clicked_cb() {
   setlocale(LC_NUMERIC, "C");
   double *x = NULL;
-  if (!isnan(x_value))
-    x = &x_value;
+  if (!isnan(x_value)) x = &x_value;
   char *output_string = calloc(S21_MAX_INPUT, sizeof(char));
   if (output_string != NULL) {
     calculation(input, x, output_string);
@@ -239,7 +238,6 @@ void b2_entry_interest_change_value_cb() {}
 
 void b2_entry_interest_changed_cb() {}
 
-void check_capitalization_toggled_cb(){}
+void check_capitalization_toggled_cb() {}
 
-void bonus2_button_clicked_cb(){}
-
+void bonus2_button_clicked_cb() {}

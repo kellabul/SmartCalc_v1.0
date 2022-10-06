@@ -50,10 +50,8 @@ double total_payment(double loan, double interestRate, int term, int type,
         restOfLoan = loan - alreadyRepaid;
         payment = mainPayment + restOfLoan * monthlyInterest;
         totalPayment += payment;
-        if (i == 0)
-          *firstPayment = payment;
-        if (i == term - 1)
-          *lastPayment = payment;
+        if (i == 0) *firstPayment = payment;
+        if (i == term - 1) *lastPayment = payment;
       }
     } else {
       totalPayment = S21_INCORRECT_INPUT;

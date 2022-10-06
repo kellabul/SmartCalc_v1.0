@@ -27,8 +27,7 @@ int pullTokensWithHigherPriority(int priority, token_stack *stack,
   while (stk_top_type(stack) >= priority) {
     postfix[counter] = stk_pop(stack);
     counter++;
-    if (stk_empty(stack))
-      break;
+    if (stk_empty(stack)) break;
   }
   return counter;
 }

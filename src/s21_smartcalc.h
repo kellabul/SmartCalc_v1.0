@@ -11,7 +11,7 @@
 #define S21_ANNUITANTS 1
 #define S21_DIFFERENTIATED 2
 
-typedef struct{
+typedef struct {
   double value;
   int type;
 } s_tokens;
@@ -22,20 +22,20 @@ typedef struct {
 } token_stack;
 
 typedef struct {
-	double amount;
+  double amount;
   int term;
   double interest_rate;
   double tax_rate;
-	int periodicity;
+  int periodicity;
   int capitalization;
-	double replenishments;
-	int freq_of_replen;
-	double withdrawals;
-	int freq_of_withd;
-  // output 
-	double accrued_interest;
-	double tax_amount;
-	double a,ount_by_end;
+  double replenishment;
+  int freq_of_replen;
+  double withdrawal;
+  int freq_of_withd;
+  // output
+  double accrued_interest;
+  double tax_amount;
+  double amount_by_end;
 } s_deposit;
 
 enum funcs_and_mod {
@@ -118,5 +118,8 @@ int isNotNumberInString(char *string);
 // bonus 1 - credit calculator
 double total_payment(double loan, double interestRate, int term, int type,
                      double *firstPayment, double *lastPayment);
+
+// bonus 2
+void deposit_calculation(s_deposit *deposit);
 
 #endif  // SRC_S21_SMARTCALC_H_

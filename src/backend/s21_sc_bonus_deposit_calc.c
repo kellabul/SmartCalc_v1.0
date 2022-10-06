@@ -1,18 +1,47 @@
 #include <math.h>
+#include <stdio.h>
 
 #include "../s21_smartcalc.h"
 
-/**
- *  - Вход: сумма вклада, срок размещения, процентная ставка, налоговая ставка,
- *  периодичность выплат, капитализация процентов, список пополнений, список
- *  частичных снятий
- *  - Выход: начисленные проценты, сумма налога, сумма на вкладе к концу срока
- **/
+void deposit_calculation(s_deposit *d) {
+  double sum = d->amount;
+  double rate = (d->interest_rate / 12) / 100;
+  double tax = d->tax_rate / 100;
+  double cap_sum = 0;
 
-/*
-double ya_ne_znayu_poka(double deposit, int period, double interestRate,
-                        double taxRate, int paymentFrequency,
-                        int capitalization ) {
-  double vozvrashaemoe = 0;
+  for (int i = 0; i < d->term; i++) {
+    double accural = sum * rate;
+    double tax_sum = accural * tax;
+
+    d->tax_amount += tax_sum;
+    d->accrued_interest += accural - tax_sum;
+
+    if (d->periodicity && d->capitalization) {
+      cap_sum += accural - tax_sum;
+      if (!((i + 1) % d->periodicity)) {
+        sum += cap_sum;
+        cap_sum = 0;
+      }
+    }
+    if (d->replenishment && d->freq_of_replen) {
+      if (!((i + 1) % d->freq_of_replen)) {
+        sum += d->replenishment;
+      }
+    }
+    if (d->withdrawal && d->freq_of_withd) {
+      if (!((i + 1) % d->freq_of_withd)) {
+        sum -= d->withdrawal;
+      }
+    }
+  }
+
+  if (d->capitalization) {
+    d->amount_by_end = d->amount + d->accrued_interest;
+  } else {
+    d->amount_by_end = d->amount;
+  }
+  if (d->replenishment && d->freq_of_replen)
+    d->amount_by_end += d->replenishment * (int)(d->term / d->freq_of_replen);
+  if (d->withdrawal && d->freq_of_withd)
+    d->amount_by_end -= d->withdrawal * (int)(d->term / d->freq_of_withd);
 }
-*/
