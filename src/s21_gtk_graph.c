@@ -198,7 +198,6 @@ void scale_minus_clicked_cb() {
   gtk_label_set_text(GTK_LABEL(graph_error_label), (const gchar *)"+");
 }
 
-// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!  //
 void graph_toggle_button_toggled_cb(GtkToggleButton *button) {
   gboolean status = gtk_toggle_button_get_active(button);
   if (status)

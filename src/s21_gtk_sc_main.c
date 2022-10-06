@@ -22,6 +22,12 @@ double b1_interestRate = NAN;
 int b1_term = -1;
 int b1_type = 1;
 
+/* bonus 2*/
+GtkWidget *b2_accured_interest;
+GtkWidget *b2_tax_amount;
+GtkWidget *b2_deposit_amount;
+s_deposit deposit;
+
 int main(int argc, char *argv[]) {
   GtkWidget *window;
   GtkBuilder *builder;
@@ -40,14 +46,21 @@ int main(int argc, char *argv[]) {
 
   /* bonus 1 */
   b1_label_error =
-      GTK_WIDGET(gtk_builder_get_object(builder, "bonus1_label_error"));
+      GTK_WIDGET(gtk_builder_get_object(builder, "b1_label_error"));
   b1_label_monthly_payment = GTK_WIDGET(
-      gtk_builder_get_object(builder, "bonus1_label_monthly_payment"));
+      gtk_builder_get_object(builder, "b1_label_monthly_payment"));
   b1_label_total_payment =
-      GTK_WIDGET(gtk_builder_get_object(builder, "bonus1_label_total_payment"));
+      GTK_WIDGET(gtk_builder_get_object(builder, "b1_label_total_payment"));
   b1_label_overpay_on_credit = GTK_WIDGET(
-      gtk_builder_get_object(builder, "bonus1_label_overpay_on_credit"));
-  /* bonus 1 */
+      gtk_builder_get_object(builder, "b1_label_overpay_on_credit"));
+
+  /* bonus 2 */
+b2_accured_interest =
+      GTK_WIDGET(gtk_builder_get_object(builder, "b2_label_accured_interest"));
+b2_tax_amount =
+      GTK_WIDGET(gtk_builder_get_object(builder, "b2_label_tax_amount"));
+b2_deposit_amount =
+      GTK_WIDGET(gtk_builder_get_object(builder, "b2_label_deposit_amount"));
 
   g_object_unref(builder);
 
@@ -132,7 +145,7 @@ void function_button_clicked(GtkButton *button) {
 
 /* ============= PART 2 BONUS ============= */
 
-void bonus1_button_clicked_cb() {
+void b1_button_clicked_cb() {
   char error_string[128] = {};
   setlocale(LC_NUMERIC, "C");
 
@@ -180,7 +193,7 @@ void calculate_credit() {
   gtk_label_set_text(GTK_LABEL(b1_label_overpay_on_credit), string_buffer);
 }
 
-void bonus1_entry_total_credit_changed_cb(GtkEntry *entry) {
+void b1_entry_total_credit_changed_cb(GtkEntry *entry) {
   char buffer[S21_MAX_INPUT + 1] = {};
   sprintf(buffer, "%s", gtk_entry_get_text(entry));
   if (buffer[0] == '\0') {
@@ -195,7 +208,7 @@ void bonus1_entry_total_credit_changed_cb(GtkEntry *entry) {
   }
 }
 
-void bonus1_entry_term_changed_cb(GtkEntry *entry) {
+void b1_entry_term_changed_cb(GtkEntry *entry) {
   char buffer[S21_MAX_INPUT + 1] = {};
   sprintf(buffer, "%s", gtk_entry_get_text(entry));
   if (buffer[0] == '\0')
@@ -204,7 +217,7 @@ void bonus1_entry_term_changed_cb(GtkEntry *entry) {
     sscanf(buffer, "%d", &b1_term);
 }
 
-void bonus1_entry_interest_changed_cb(GtkEntry *entry) {
+void b1_entry_interest_changed_cb(GtkEntry *entry) {
   char buffer[S21_MAX_INPUT + 1] = {};
   sprintf(buffer, "%s", gtk_entry_get_text(entry));
   if (buffer[0] == '\0')
@@ -212,32 +225,32 @@ void bonus1_entry_interest_changed_cb(GtkEntry *entry) {
   else
     sscanf(buffer, "%lf", &b1_interestRate);
 }
-void on_bonus1_differentiated_toggled() { b1_type = S21_DIFFERENTIATED; }
+void on_b1_differentiated_toggled() { b1_type = S21_DIFFERENTIATED; }
 
-void on_bonus1_anuity_toggled() { b1_type = S21_ANNUITANTS; }
+void on_b1_anuity_toggled() { b1_type = S21_ANNUITANTS; }
 
 /* ============= PART 2 BONUS ============= */
 
-void b2_entry_withdraw_change_value_cb() {}
 
-void b2_entry_replen_change_value_cb() {}
 
 void b2_entry_deposit_amount_change_value_cb() {}
 
 void b2_entry_interest3_change_value_cb() {}
 
-void b2_entry_withdraw_periodicity_change_value_cb() {}
-
-void b2_entry_replen_periodicity_change_value_cb() {}
-
 void b2_entry_period_payments_change_value_cb() {}
 
 void b2_entry_tax_change_value_cb() {}
 
-void b2_entry_interest_change_value_cb() {}
-
-void b2_entry_interest_changed_cb() {}
+void b2_entry_interest_changed_value_cb() {}
 
 void check_capitalization_toggled_cb() {}
 
-void bonus2_button_clicked_cb() {}
+void b2_entry_replen_change_value_cb() {}
+
+void b2_entry_replen_periodicity_change_value_cb() {}
+
+void b2_entry_withdraw_change_value_cb() {}
+
+void b2_entry_withdraw_periodicity_change_value_cb() {}
+
+void b2_button_clicked_cb() {}

@@ -640,7 +640,10 @@ ck_assert_double_eq_tol(total_payment(loan, interestRate, 0, 5, &firstPayment, &
         .interest_rate = 12,
         .periodicity = 2,
         .capitalization = 0,
-        .tax_rate = 50
+        .tax_rate = 50,
+        .accrued_interest = 123,
+        .tax_amount = 123,
+        .amount_by_end = 123
     };
     deposit_calculation(&deposit);
     ck_assert_double_eq_tol(deposit.accrued_interest, 60, 10e-2);

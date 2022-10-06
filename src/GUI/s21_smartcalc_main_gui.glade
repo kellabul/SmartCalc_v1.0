@@ -726,7 +726,7 @@
             </child>
             <child>
               <!-- n-columns=12 n-rows=9 -->
-              <object class="GtkGrid" id="bonus1_grid">
+              <object class="GtkGrid" id="b1_grid">
                 <property name="visible">True</property>
                 <property name="can-focus">False</property>
                 <property name="row-spacing">2</property>
@@ -734,7 +734,7 @@
                 <property name="row-homogeneous">True</property>
                 <property name="column-homogeneous">True</property>
                 <child>
-                  <object class="GtkLabel" id="bonus1_label1">
+                  <object class="GtkLabel" id="b1_label1">
                     <property name="visible">True</property>
                     <property name="can-focus">False</property>
                     <property name="label" translatable="yes">Total credit amount</property>
@@ -749,7 +749,7 @@
                   </packing>
                 </child>
                 <child>
-                  <object class="GtkLabel" id="bonus1_label2">
+                  <object class="GtkLabel" id="b1_label2">
                     <property name="visible">True</property>
                     <property name="can-focus">False</property>
                     <property name="label" translatable="yes">Term, months</property>
@@ -764,7 +764,7 @@
                   </packing>
                 </child>
                 <child>
-                  <object class="GtkLabel" id="bonus1_label3">
+                  <object class="GtkLabel" id="b1_label3">
                     <property name="visible">True</property>
                     <property name="can-focus">False</property>
                     <property name="label" translatable="yes">Interest Rate, %</property>
@@ -779,7 +779,7 @@
                   </packing>
                 </child>
                 <child>
-                  <object class="GtkLabel" id="bonus1_lobel4">
+                  <object class="GtkLabel" id="b1_lobel4">
                     <property name="visible">True</property>
                     <property name="can-focus">False</property>
                     <property name="label">Type</property>
@@ -795,14 +795,14 @@
                   </packing>
                 </child>
                 <child>
-                  <object class="GtkRadioButton" id="bonus1_anuity">
+                  <object class="GtkRadioButton" id="b1_anuity">
                     <property name="label" translatable="yes">annuity</property>
                     <property name="visible">True</property>
                     <property name="can-focus">True</property>
                     <property name="receives-default">False</property>
                     <property name="active">True</property>
                     <property name="draw-indicator">True</property>
-                    <signal name="toggled" handler="on_bonus1_anuity_toggled" swapped="no"/>
+                    <signal name="toggled" handler="on_b1_anuity_toggled" swapped="no"/>
                   </object>
                   <packing>
                     <property name="left-attach">4</property>
@@ -811,14 +811,14 @@
                   </packing>
                 </child>
                 <child>
-                  <object class="GtkRadioButton" id="bonus1_differentiated">
+                  <object class="GtkRadioButton" id="b1_differentiated">
                     <property name="label" translatable="yes">differentiated</property>
                     <property name="visible">True</property>
                     <property name="can-focus">True</property>
                     <property name="receives-default">False</property>
                     <property name="draw-indicator">True</property>
-                    <property name="group">bonus1_anuity</property>
-                    <signal name="toggled" handler="on_bonus1_differentiated_toggled" swapped="no"/>
+                    <property name="group">b1_anuity</property>
+                    <signal name="toggled" handler="on_b1_differentiated_toggled" swapped="no"/>
                   </object>
                   <packing>
                     <property name="left-attach">6</property>
@@ -827,7 +827,7 @@
                   </packing>
                 </child>
                 <child>
-                  <object class="GtkLabel" id="bonus1_label_error">
+                  <object class="GtkLabel" id="b1_label_error">
                     <property name="visible">True</property>
                     <property name="can-focus">False</property>
                     <property name="label" translatable="yes">______</property>
@@ -839,7 +839,7 @@
                   </packing>
                 </child>
                 <child>
-                  <object class="GtkLabel" id="bonus1_label6">
+                  <object class="GtkLabel" id="b1_label6">
                     <property name="visible">True</property>
                     <property name="can-focus">False</property>
                     <property name="label" translatable="yes">monthly payment:</property>
@@ -854,7 +854,7 @@
                   </packing>
                 </child>
                 <child>
-                  <object class="GtkLabel" id="bonus1_label7">
+                  <object class="GtkLabel" id="b1_label7">
                     <property name="visible">True</property>
                     <property name="can-focus">False</property>
                     <property name="label" translatable="yes">overpay on credit:</property>
@@ -867,7 +867,7 @@
                   </packing>
                 </child>
                 <child>
-                  <object class="GtkLabel" id="bonus1_label8">
+                  <object class="GtkLabel" id="b1_label8">
                     <property name="visible">True</property>
                     <property name="can-focus">False</property>
                     <property name="label" translatable="yes">total payment:</property>
@@ -880,7 +880,7 @@
                   </packing>
                 </child>
                 <child>
-                  <object class="GtkLabel" id="bonus1_label_monthly_payment">
+                  <object class="GtkLabel" id="b1_label_monthly_payment">
                     <property name="visible">True</property>
                     <property name="can-focus">False</property>
                   </object>
@@ -891,7 +891,7 @@
                   </packing>
                 </child>
                 <child>
-                  <object class="GtkLabel" id="bonus1_label_total_payment">
+                  <object class="GtkLabel" id="b1_label_total_payment">
                     <property name="visible">True</property>
                     <property name="can-focus">False</property>
                   </object>
@@ -902,7 +902,7 @@
                   </packing>
                 </child>
                 <child>
-                  <object class="GtkLabel" id="bonus1_label_overpay_on_credit">
+                  <object class="GtkLabel" id="b1_label_overpay_on_credit">
                     <property name="visible">True</property>
                     <property name="can-focus">False</property>
                   </object>
@@ -913,13 +913,13 @@
                   </packing>
                 </child>
                 <child>
-                  <object class="GtkButton" id="bonus1_button">
+                  <object class="GtkButton" id="b1_button">
                     <property name="label" translatable="yes">calculate</property>
                     <property name="visible">True</property>
                     <property name="can-focus">True</property>
                     <property name="receives-default">True</property>
                     <property name="relief">half</property>
-                    <signal name="clicked" handler="bonus1_button_clicked_cb" swapped="no"/>
+                    <signal name="clicked" handler="b1_button_clicked_cb" swapped="no"/>
                   </object>
                   <packing>
                     <property name="left-attach">1</property>
@@ -928,14 +928,14 @@
                   </packing>
                 </child>
                 <child>
-                  <object class="GtkSpinButton" id="bonus1_entry_term">
+                  <object class="GtkSpinButton" id="b1_entry_term">
                     <property name="visible">True</property>
                     <property name="can-focus">True</property>
                     <property name="adjustment">b1_adjustment_term</property>
                     <property name="climb-rate">1</property>
                     <property name="numeric">True</property>
                     <property name="value">1</property>
-                    <signal name="changed" handler="bonus1_entry_term_changed_cb" swapped="no"/>
+                    <signal name="changed" handler="b1_entry_term_changed_cb" swapped="no"/>
                   </object>
                   <packing>
                     <property name="left-attach">4</property>
@@ -944,7 +944,7 @@
                   </packing>
                 </child>
                 <child>
-                  <object class="GtkSpinButton" id="bonus1_entry_interest">
+                  <object class="GtkSpinButton" id="b1_entry_interest">
                     <property name="visible">True</property>
                     <property name="can-focus">True</property>
                     <property name="adjustment">b1_adjustment_interest</property>
@@ -952,7 +952,7 @@
                     <property name="digits">2</property>
                     <property name="numeric">True</property>
                     <property name="value">10</property>
-                    <signal name="changed" handler="bonus1_entry_interest_changed_cb" swapped="no"/>
+                    <signal name="changed" handler="b1_entry_interest_changed_cb" swapped="no"/>
                   </object>
                   <packing>
                     <property name="left-attach">4</property>
@@ -961,7 +961,7 @@
                   </packing>
                 </child>
                 <child>
-                  <object class="GtkSpinButton" id="bonus1_entry_total_credit">
+                  <object class="GtkSpinButton" id="b1_entry_total_credit">
                     <property name="visible">True</property>
                     <property name="can-focus">True</property>
                     <property name="adjustment">b1_adjustment_total</property>
@@ -969,7 +969,7 @@
                     <property name="digits">2</property>
                     <property name="numeric">True</property>
                     <property name="value">1000</property>
-                    <signal name="changed" handler="bonus1_entry_total_credit_changed_cb" swapped="no"/>
+                    <signal name="changed" handler="b1_entry_total_credit_changed_cb" swapped="no"/>
                   </object>
                   <packing>
                     <property name="left-attach">4</property>
@@ -1100,7 +1100,7 @@
             </child>
             <child>
               <!-- n-columns=12 n-rows=10 -->
-              <object class="GtkGrid" id="bonus2_grid">
+              <object class="GtkGrid" id="b2_grid">
                 <property name="visible">True</property>
                 <property name="can-focus">False</property>
                 <property name="row-spacing">2</property>
@@ -1108,7 +1108,7 @@
                 <property name="row-homogeneous">True</property>
                 <property name="column-homogeneous">True</property>
                 <child>
-                  <object class="GtkLabel" id="bonus2_label1">
+                  <object class="GtkLabel" id="b2_label1">
                     <property name="visible">True</property>
                     <property name="can-focus">False</property>
                     <property name="label" translatable="yes">Deposit amount:</property>
@@ -1120,7 +1120,7 @@
                   </packing>
                 </child>
                 <child>
-                  <object class="GtkLabel" id="bonus2_label2">
+                  <object class="GtkLabel" id="b2_label2">
                     <property name="visible">True</property>
                     <property name="can-focus">False</property>
                     <property name="label" translatable="yes">Deposit term:</property>
@@ -1132,7 +1132,7 @@
                   </packing>
                 </child>
                 <child>
-                  <object class="GtkLabel" id="bonus2_label3">
+                  <object class="GtkLabel" id="b2_label3">
                     <property name="visible">True</property>
                     <property name="can-focus">False</property>
                     <property name="label" translatable="yes">Interest rate, %</property>
@@ -1144,7 +1144,7 @@
                   </packing>
                 </child>
                 <child>
-                  <object class="GtkLabel" id="bonus2_label4">
+                  <object class="GtkLabel" id="b2_label4">
                     <property name="visible">True</property>
                     <property name="can-focus">False</property>
                     <property name="label" translatable="yes">Tax rate, %:</property>
@@ -1156,7 +1156,7 @@
                   </packing>
                 </child>
                 <child>
-                  <object class="GtkLabel" id="bonus2_label5">
+                  <object class="GtkLabel" id="b2_label5">
                     <property name="visible">True</property>
                     <property name="can-focus">False</property>
                     <property name="label" translatable="yes">Periodicity of payments:</property>
@@ -1168,7 +1168,7 @@
                   </packing>
                 </child>
                 <child>
-                  <object class="GtkLabel" id="bonus2_label7">
+                  <object class="GtkLabel" id="b2_label7">
                     <property name="visible">True</property>
                     <property name="can-focus">False</property>
                     <property name="label" translatable="yes">accrued interest:</property>
@@ -1180,7 +1180,7 @@
                   </packing>
                 </child>
                 <child>
-                  <object class="GtkLabel" id="bonus2_label8">
+                  <object class="GtkLabel" id="b2_label8">
                     <property name="visible">True</property>
                     <property name="can-focus">False</property>
                     <property name="label" translatable="yes">tax amount:</property>
@@ -1192,7 +1192,7 @@
                   </packing>
                 </child>
                 <child>
-                  <object class="GtkLabel" id="bonus2_label9">
+                  <object class="GtkLabel" id="b2_label9">
                     <property name="visible">True</property>
                     <property name="can-focus">False</property>
                     <property name="label" translatable="yes">deposit amount by the end of the term:</property>
@@ -1204,12 +1204,12 @@
                   </packing>
                 </child>
                 <child>
-                  <object class="GtkButton" id="bonus2_button">
+                  <object class="GtkButton" id="b2_button">
                     <property name="label">calculate</property>
                     <property name="visible">True</property>
                     <property name="can-focus">True</property>
                     <property name="receives-default">True</property>
-                    <signal name="clicked" handler="bonus2_button_clicked_cb" swapped="no"/>
+                    <signal name="clicked" handler="b2_button_clicked_cb" swapped="no"/>
                   </object>
                   <packing>
                     <property name="left-attach">1</property>
@@ -1218,7 +1218,7 @@
                   </packing>
                 </child>
                 <child>
-                  <object class="GtkLabel" id="bonus2_error">
+                  <object class="GtkLabel" id="b2_error">
                     <property name="visible">True</property>
                     <property name="can-focus">False</property>
                     <property name="label" translatable="yes">______</property>
@@ -1230,7 +1230,7 @@
                   </packing>
                 </child>
                 <child>
-                  <object class="GtkLabel" id="bonus2_label_accured_interest">
+                  <object class="GtkLabel" id="b2_label_accured_interest">
                     <property name="visible">True</property>
                     <property name="can-focus">False</property>
                   </object>
@@ -1241,7 +1241,7 @@
                   </packing>
                 </child>
                 <child>
-                  <object class="GtkLabel" id="bonus2_label_tax_amount">
+                  <object class="GtkLabel" id="b2_label_tax_amount">
                     <property name="visible">True</property>
                     <property name="can-focus">False</property>
                   </object>
@@ -1252,7 +1252,7 @@
                   </packing>
                 </child>
                 <child>
-                  <object class="GtkLabel" id="bonus2_label_deposit_amount">
+                  <object class="GtkLabel" id="b2_label_deposit_amount">
                     <property name="visible">True</property>
                     <property name="can-focus">False</property>
                   </object>
@@ -1284,8 +1284,7 @@
                     <property name="digits">2</property>
                     <property name="numeric">True</property>
                     <property name="value">10</property>
-                    <signal name="change-value" handler="b2_entry_interest_change_value_cb" swapped="no"/>
-                    <signal name="changed" handler="b2_entry_interest_changed_cb" swapped="no"/>
+                    <signal name="change-value" handler="b2_entry_interest_changed_value_cb" swapped="no"/>
                   </object>
                   <packing>
                     <property name="left-attach">2</property>
