@@ -44,7 +44,7 @@ uninstall:
 	rm -rf ../build/*
 
 dvi:
-
+	open readme.html
 
 dist:
 	tar -cf SmartCalc_v1.0.tar *.c *.h Makefile gui backend

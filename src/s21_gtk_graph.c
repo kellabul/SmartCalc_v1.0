@@ -154,6 +154,8 @@ void draw_axis(s_graph_properties *gp) {
     cairo_move_to(gp->cr, i, gp->min_y);
     cairo_line_to(gp->cr, i, gp->max_y);
   }
+  cairo_move_to(gp->cr, 0, 0);
+  cairo_show_text(gp->cr, "X123123");
   for (gdouble i = 0; i >= gp->min_x; i -= 0.5) {
     cairo_move_to(gp->cr, i, gp->min_y);
     cairo_line_to(gp->cr, i, gp->max_y);

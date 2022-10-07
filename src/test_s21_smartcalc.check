@@ -540,10 +540,10 @@ printf("%s\n", output);
 #test credit_test
 /* --------------------------------------credit---*/
 
-double loan = 50000;
-double interestRate = 22.0;
-double firstPayment = 0;
-double lastPayment = 0;
+long double loan = 50000;
+long double interestRate = 22.0;
+long double firstPayment = 0;
+long double lastPayment = 0;
 int term = 12;
 ck_assert_double_eq_tol(total_payment(loan, interestRate, term, S21_ANNUITANTS, &firstPayment, &lastPayment), 56156.64, 10e-2);
 ck_assert_double_eq_tol(firstPayment, 4679.72, 10e-2);

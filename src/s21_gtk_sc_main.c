@@ -261,7 +261,7 @@ void b2_button_clicked_cb(GtkSpinButton *button) {
 void printDepositOutput(long double value, char *output) {
   char buffer[64];
   if (isnan(value) || isinf(value)) {
-    sprintf(output, "VALUES ARE TOO HIGH");
+    sprintf(output, "INPUT VALUES ARE TOO HIGH");
   } else if (value < 10e33) {
     sprintf(buffer, "%.2Lf", value);
     convertToFinancialOutputNumber(buffer, output);
