@@ -10,8 +10,9 @@ differentiated)
 *
 **/
 
-long double total_payment(long double loan, long double interestRate, int term, int type,
-                     long double *firstPayment, long double *lastPayment) {
+long double total_payment(long double loan, long double interestRate, int term,
+                          int type, long double *firstPayment,
+                          long double *lastPayment) {
   long double totalPayment = 0;
   if (loan < 0.01 || interestRate < 0.01 || term < 1 || !firstPayment ||
       !lastPayment) {
@@ -20,10 +21,10 @@ long double total_payment(long double loan, long double interestRate, int term, 
     long double payment = 0;
     long double monthlyInterest = (interestRate / 100.00) / 12.00;
     if (type == S21_ANNUITANTS) {
-      payment =
-          loan * (monthlyInterest +
-                  (monthlyInterest /
-                   ((pow((1.00 + monthlyInterest), (long double)term) - 1.00))));
+      payment = loan *
+                (monthlyInterest +
+                 (monthlyInterest /
+                  ((pow((1.00 + monthlyInterest), (long double)term) - 1.00))));
 
       /* formulae from wiki
             payment =

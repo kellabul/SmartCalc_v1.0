@@ -19,8 +19,7 @@ void printDepositOutput(long double value, char *output);
 
 // graph
 int graph_output(char *input);
-static gboolean on_draw(GtkWidget *widget, cairo_t *cairo,
-                        gpointer error_label);
+static gboolean on_draw(GtkWidget *widget, cairo_t *cairo);
 void close_window(GtkWidget *widget, gpointer window);
 void draw_axis(s_graph_properties *gp);
 void draw_graph_line(s_graph_properties *gp);
