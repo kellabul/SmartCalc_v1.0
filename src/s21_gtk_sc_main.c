@@ -68,8 +68,6 @@ int main(int argc, char *argv[]) {
   return EXIT_SUCCESS;
 }
 
-/* ============= ENTRY ============= */
-
 void entry_exp_changed_cb(GtkEntry *entry) {
   sprintf(input, "%s", gtk_entry_get_text(entry));
 }
@@ -85,8 +83,6 @@ void entry_x_changed_cb(GtkEntry *entry) {
     sscanf(x_buffer, "%lf", &x_value);
   }
 }
-
-/* ============= BUTTONS WITH LOGIC ============= */
 
 void button_ce_clicked_cb() {
   input[0] = '\0';
@@ -199,7 +195,7 @@ void on_b1_differentiated_toggled() { b1_type = S21_DIFFERENTIATED; }
 
 void on_b1_anuity_toggled() { b1_type = S21_ANNUITANTS; }
 
-/* ============= PART 2 BONUS ============= */
+/* ============= PART 3 BONUS ============= */
 
 void b2_spin_deposit_amount_value_changed_cb(GtkSpinButton *button) {
   deposit.amount = gtk_spin_button_get_value(button);
@@ -246,18 +242,30 @@ void b2_spin_withdraw_periodicity_value_changed_cb(GtkSpinButton *button) {
 }
 
 void b2_button_clicked_cb(GtkSpinButton *button) {
-  char buffer[64];
   char output[64];
   deposit_calculation(&deposit);
-  sprintf(buffer, "%.2Lf", deposit.accrued_interest);
-  convertToFinancialOutputNumber(buffer, output);
-  gtk_label_set_text(GTK_LABEL(b2_accured_interest), output);
-  deposit_calculation(&deposit);
-  sprintf(buffer, "%.2Lf", deposit.tax_amount);
-  convertToFinancialOutputNumber(buffer, output);
-  gtk_label_set_text(GTK_LABEL(b2_tax_amount), output);
-  deposit_calculation(&deposit);
-  sprintf(buffer, "%.2Lf", deposit.amount_by_end);
-  convertToFinancialOutputNumber(buffer, output);
-  gtk_label_set_text(GTK_LABEL(b2_deposit_amount), output);
+  if (deposit.amount_by_end < 0) {
+    gtk_label_set_text(GTK_LABEL(b2_accured_interest), "TOO MUCH WITHDRAWALS");
+    gtk_label_set_text(GTK_LABEL(b2_tax_amount), "");
+    gtk_label_set_text(GTK_LABEL(b2_deposit_amount), "");
+  } else {
+    printDepositOutput(deposit.accrued_interest, output);
+    gtk_label_set_text(GTK_LABEL(b2_accured_interest), output);
+    printDepositOutput(deposit.tax_amount, output);
+    gtk_label_set_text(GTK_LABEL(b2_tax_amount), output);
+    printDepositOutput(deposit.amount_by_end, output);
+    gtk_label_set_text(GTK_LABEL(b2_deposit_amount), output);
+  }
+}
+
+void printDepositOutput(long double value, char *output) {
+  char buffer[64];
+  if (isnan(value) || isinf(value)) {
+    sprintf(output, "VALUES ARE TOO HIGH");
+  } else if (value < 10e33) {
+    sprintf(buffer, "%.2Lf", value);
+    convertToFinancialOutputNumber(buffer, output);
+  } else {
+    sprintf(output, "%.2Le", value);
+  }
 }

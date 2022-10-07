@@ -36,19 +36,19 @@
     <property name="page-increment">1</property>
   </object>
   <object class="GtkAdjustment" id="b2_adjustment_period">
-    <property name="lower">1</property>
-    <property name="upper">99999</property>
+    <property name="lower">0</property>
+    <property name="upper">9999</property>
     <property name="value">1</property>
     <property name="step-increment">1</property>
     <property name="page-increment">1</property>
   </object>
   <object class="GtkAdjustment" id="b2_adjustment_period_rep">
-    <property name="upper">99999</property>
+    <property name="upper">9999</property>
     <property name="step-increment">1</property>
     <property name="page-increment">1</property>
   </object>
   <object class="GtkAdjustment" id="b2_adjustment_period_withd">
-    <property name="upper">99999</property>
+    <property name="upper">9999</property>
     <property name="step-increment">1</property>
     <property name="page-increment">1</property>
   </object>
@@ -58,13 +58,13 @@
     <property name="page-increment">1</property>
   </object>
   <object class="GtkAdjustment" id="b2_adjustment_tax">
-    <property name="upper">999999</property>
+    <property name="upper">100</property>
     <property name="step-increment">1</property>
     <property name="page-increment">1</property>
   </object>
   <object class="GtkAdjustment" id="b2_adjustment_term">
     <property name="lower">1</property>
-    <property name="upper">99999</property>
+    <property name="upper">9999</property>
     <property name="step-increment">1</property>
     <property name="page-increment">1</property>
   </object>

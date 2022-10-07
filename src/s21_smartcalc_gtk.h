@@ -15,6 +15,8 @@ typedef struct cairo_graph_properties {
   gdouble dy;
 } s_graph_properties;
 
+void printDepositOutput(long double value, char *output);
+
 // graph
 int graph_output(char *input);
 static gboolean on_draw(GtkWidget *widget, cairo_t *cairo,
