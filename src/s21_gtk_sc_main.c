@@ -16,8 +16,8 @@ void calculate_credit();
 GtkWidget *b1_label_monthly_payment;
 GtkWidget *b1_label_total_payment;
 GtkWidget *b1_label_overpay_on_credit;
-double b1_loan = 1000;
-double b1_interestRate = 10;
+long double b1_loan = 1000;
+long double b1_interestRate = 10;
 int b1_term = 1;
 int b1_type = 1;
 
@@ -44,8 +44,6 @@ int main(int argc, char *argv[]) {
   entry_x = GTK_ENTRY(gtk_builder_get_object(builder, "entry_x"));
 
   /* bonus 1 */
-  b1_label_error =
-      GTK_WIDGET(gtk_builder_get_object(builder, "b1_label_error"));
   b1_label_monthly_payment =
       GTK_WIDGET(gtk_builder_get_object(builder, "b1_label_monthly_payment"));
   b1_label_total_payment =
@@ -146,23 +144,28 @@ void function_button_clicked(GtkButton *button) {
 
 void b1_button_clicked_cb() {
   setlocale(LC_NUMERIC, "C");
-  double total_payment_output = 0;
-  double first_payment = 0;
-  double last_payment = 0;
-  char string_buffer[128] = {};
+  long double total_payment_output = 0;
+  long double first_payment = 0;
+  long double last_payment = 0;
+  char string_buffer[64] = {};
+  char output[64] = {};
   total_payment_output = total_payment(b1_loan, b1_interestRate, b1_term,
                                        b1_type, &first_payment, &last_payment);
-  sprintf(string_buffer, "%.2lf", total_payment_output);
-  gtk_label_set_text(GTK_LABEL(b1_label_total_payment), string_buffer);
+  sprintf(string_buffer, "%.2Lf", total_payment_output);
+  convertToFinancialOutputNumber(string_buffer, output);
+  gtk_label_set_text(GTK_LABEL(b1_label_total_payment), output);
   if (first_payment == last_payment) {
-    sprintf(string_buffer, "%.2lf", first_payment);
-    gtk_label_set_text(GTK_LABEL(b1_label_monthly_payment), string_buffer);
+    sprintf(string_buffer, "%.2Lf", first_payment);
+    convertToFinancialOutputNumber(string_buffer, output);
+    gtk_label_set_text(GTK_LABEL(b1_label_monthly_payment), output);
   } else {
-    sprintf(string_buffer, "%.2lf ... %.2lf", first_payment, last_payment);
-    gtk_label_set_text(GTK_LABEL(b1_label_monthly_payment), string_buffer);
+    sprintf(string_buffer, "%.2Lf ... %.2Lf", first_payment, last_payment);
+    convertToFinancialOutputNumber(string_buffer, output);
+    gtk_label_set_text(GTK_LABEL(b1_label_monthly_payment), output);
   }
-  sprintf(string_buffer, "%.2lf", total_payment_output - b1_loan);
-  gtk_label_set_text(GTK_LABEL(b1_label_overpay_on_credit), string_buffer);
+  sprintf(string_buffer, "%.2Lf", total_payment_output - b1_loan);
+  convertToFinancialOutputNumber(string_buffer, output);
+  gtk_label_set_text(GTK_LABEL(b1_label_overpay_on_credit), output);
 }
 
 void b1_entry_total_credit_changed_cb(GtkEntry *entry) {
@@ -170,13 +173,8 @@ void b1_entry_total_credit_changed_cb(GtkEntry *entry) {
   sprintf(buffer, "%s", gtk_entry_get_text(entry));
   if (buffer[0] == '\0') {
     b1_loan = NAN;
-  } else if (isNotNumberInString(buffer)) {
-    gtk_label_set_text(GTK_LABEL(b1_label_error),
-                       "INVALID INPUT FOR TOTAL CREDIT AMOUNT");
-    b1_loan = NAN;
   } else {
-    gtk_label_set_text(GTK_LABEL(b1_label_error), "");
-    sscanf(buffer, "%lf", &b1_loan);
+    sscanf(buffer, "%Lf", &b1_loan);
   }
 }
 
@@ -195,7 +193,7 @@ void b1_entry_interest_changed_cb(GtkEntry *entry) {
   if (buffer[0] == '\0')
     b1_interestRate = NAN;
   else
-    sscanf(buffer, "%lf", &b1_interestRate);
+    sscanf(buffer, "%Lf", &b1_interestRate);
 }
 void on_b1_differentiated_toggled() { b1_type = S21_DIFFERENTIATED; }
 
@@ -248,14 +246,18 @@ void b2_spin_withdraw_periodicity_value_changed_cb(GtkSpinButton *button) {
 }
 
 void b2_button_clicked_cb(GtkSpinButton *button) {
-  char buffer[128];
+  char buffer[64];
+  char output[64];
   deposit_calculation(&deposit);
-  sprintf(buffer, "%.2lf", deposit.accrued_interest);
-  gtk_label_set_text(GTK_LABEL(b2_accured_interest), buffer);
+  sprintf(buffer, "%.2Lf", deposit.accrued_interest);
+  convertToFinancialOutputNumber(buffer, output);
+  gtk_label_set_text(GTK_LABEL(b2_accured_interest), output);
   deposit_calculation(&deposit);
-  sprintf(buffer, "%.2lf", deposit.tax_amount);
-  gtk_label_set_text(GTK_LABEL(b2_tax_amount), buffer);
+  sprintf(buffer, "%.2Lf", deposit.tax_amount);
+  convertToFinancialOutputNumber(buffer, output);
+  gtk_label_set_text(GTK_LABEL(b2_tax_amount), output);
   deposit_calculation(&deposit);
-  sprintf(buffer, "%.2lf", deposit.amount_by_end);
-  gtk_label_set_text(GTK_LABEL(b2_deposit_amount), buffer);
+  sprintf(buffer, "%.2Lf", deposit.amount_by_end);
+  convertToFinancialOutputNumber(buffer, output);
+  gtk_label_set_text(GTK_LABEL(b2_deposit_amount), output);
 }

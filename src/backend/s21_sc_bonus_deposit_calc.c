@@ -7,14 +7,14 @@ void deposit_calculation(s_deposit *d) {
   d->accrued_interest = 0;
   d->tax_amount = 0;
 
-  double sum = d->amount;
-  double rate = (d->interest_rate / 12) / 100;
-  double tax = d->tax_rate / 100;
-  double cap_sum = 0;
+  long double sum = d->amount;
+  long double rate = (d->interest_rate / 12) / 100;
+  long double tax = d->tax_rate / 100;
+  long double cap_sum = 0;
 
   for (int i = 0; i < d->term; i++) {
-    double accural = sum * rate;
-    double tax_sum = accural * tax;
+    long double accural = sum * rate;
+    long double tax_sum = accural * tax;
 
     d->tax_amount += tax_sum;
     d->accrued_interest += accural - tax_sum;

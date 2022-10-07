@@ -35,7 +35,7 @@ tests: compile_test
 	./$(TEST_NAME)
 
 install: $(NAME).a
-	gcc $(GTK_SOURCE_FILES) $(NAME).a -o ../build/$(NAME) $(LIBS)
+	gcc $(GTK_SOURCE_FILES) $(NAME).a -o ../build/$(NAME) $(LIBS) #$(FLAGS)
 
 run:
 	../build/s21_smartcalc

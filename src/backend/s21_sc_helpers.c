@@ -37,14 +37,14 @@ int isNotNumberInString(char *string) {
 
 void convertToFinancialOutputNumber(char *input, char *output) {
   int length = strlen(input);
-  int i = length+1;
+  int i = length - 1;
   int j = 0;
-  for (int h = 0; h < 7 && i > -1; h++) {
-      output[j++] = input[i--];
+  for (int h = 0; h < 6 && i > -1; h++) {
+    output[j++] = input[i--];
   }
-  if (length > 7) {
+  if (length > 6) {
     for (int h = 0; i > -1; h++) {
-      if (h%3 == 0) {
+      if (h % 3 == 0) {
         output[j++] = ' ';
       }
       output[j++] = input[i--];
@@ -56,12 +56,10 @@ void convertToFinancialOutputNumber(char *input, char *output) {
 
 void reverse_string(char *string) {
   char buffer;
-  printf("aaa = %d\n", string[0]);
-  int end = strlen(string);
-  for (int start = 0 ; end > start; start++, end--) {
+  int end = strlen(string) - 1;
+  for (int start = 0; end > start; start++, end--) {
     buffer = string[start];
     string[start] = string[end];
     string[end] = buffer;
-     printf("asdfasdf\n");
   }
 }

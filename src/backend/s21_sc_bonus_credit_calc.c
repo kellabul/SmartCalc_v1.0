@@ -10,20 +10,20 @@ differentiated)
 *
 **/
 
-double total_payment(double loan, double interestRate, int term, int type,
-                     double *firstPayment, double *lastPayment) {
-  double totalPayment = 0;
+long double total_payment(long double loan, long double interestRate, int term, int type,
+                     long double *firstPayment, long double *lastPayment) {
+  long double totalPayment = 0;
   if (loan < 0.01 || interestRate < 0.01 || term < 1 || !firstPayment ||
       !lastPayment) {
     totalPayment = S21_INCORRECT_INPUT;
   } else {
-    double payment = 0;
+    long double payment = 0;
     long double monthlyInterest = (interestRate / 100.00) / 12.00;
     if (type == S21_ANNUITANTS) {
       payment =
           loan * (monthlyInterest +
                   (monthlyInterest /
-                   ((pow((1.00 + monthlyInterest), (double)term) - 1.00))));
+                   ((pow((1.00 + monthlyInterest), (long double)term) - 1.00))));
 
       /* formulae from wiki
             payment =
@@ -35,16 +35,16 @@ double total_payment(double loan, double interestRate, int term, int type,
       /* formulae from raiffeisen.ru
             payment =
                 loan * (monthlyInterest /
-                         (1 - (pow((1.00 + monthlyInterest), (double)term *
+                         (1 - (pow((1.00 + monthlyInterest), (long double)term *
          -1.00))));
       */
 
       *firstPayment = *lastPayment = payment;
       totalPayment = payment * term;
     } else if (type == S21_DIFFERENTIATED) {
-      double mainPayment = loan / term;
-      double alreadyRepaid = 0;
-      double restOfLoan = loan;
+      long double mainPayment = loan / term;
+      long double alreadyRepaid = 0;
+      long double restOfLoan = loan;
       for (int i = 0; i < term; i++) {
         alreadyRepaid = mainPayment * i;
         restOfLoan = loan - alreadyRepaid;

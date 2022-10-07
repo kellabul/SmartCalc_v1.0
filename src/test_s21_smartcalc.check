@@ -526,14 +526,14 @@ input = ".123";
 ck_assert_int_eq(isNotNumberInString(input),1);
 
 
-input = "723232323.12";
+input = "723232323.19";
 char output[128];
 convertToFinancialOutputNumber(input, output);
-printf("%s\n", output+1);
+printf("%s\n", output);
 
-input = "323.12";
+input = "523.19";
 convertToFinancialOutputNumber(input, output);
-printf("%s\n", output+1);
+printf("%s\n", output);
 
 /* --------------------------------------BONUS PART--------------------------------------*/
 

@@ -22,20 +22,20 @@ typedef struct {
 } token_stack;
 
 typedef struct {
-  double amount;
+  long double amount;
   int term;
-  double interest_rate;
-  double tax_rate;
+  long double interest_rate;
+  long double tax_rate;
   int periodicity;
   int capitalization;
-  double replenishment;
+  long double replenishment;
   int freq_of_replen;
-  double withdrawal;
+  long double withdrawal;
   int freq_of_withd;
   // output
-  double accrued_interest;
-  double tax_amount;
-  double amount_by_end;
+  long double accrued_interest;
+  long double tax_amount;
+  long double amount_by_end;
 } s_deposit;
 
 enum funcs_and_mod {
@@ -115,8 +115,8 @@ void replaceX(s_tokens *tokens, double x_value);
 int isNotNumberInString(char *string);
 
 // bonus 1 - credit calculator
-double total_payment(double loan, double interestRate, int term, int type,
-                     double *firstPayment, double *lastPayment);
+long double total_payment(long double loan, long double interestRate, int term, int type,
+                     long double *firstPayment, long double *lastPayment);
 
 // bonus 2
 void deposit_calculation(s_deposit *deposit);
