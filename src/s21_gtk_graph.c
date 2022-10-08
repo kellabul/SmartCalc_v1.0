@@ -61,6 +61,7 @@ int graph_output(char *input) {
   g_signal_connect(G_OBJECT(close_button), "clicked", G_CALLBACK(close_window),
                    G_OBJECT(graph_window));
 
+  gtk_window_set_position(GTK_WINDOW(graph_window), GTK_WIN_POS_CENTER);
   gtk_widget_show_all(graph_window);
 
   return 0;

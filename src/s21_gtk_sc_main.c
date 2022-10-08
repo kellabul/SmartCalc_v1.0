@@ -58,8 +58,10 @@ int main(int argc, char *argv[]) {
       GTK_WIDGET(gtk_builder_get_object(builder, "b2_label_tax_amount"));
   b2_deposit_amount =
       GTK_WIDGET(gtk_builder_get_object(builder, "b2_label_deposit_amount"));
-
+  
   g_object_unref(builder);
+
+  gtk_window_set_position(GTK_WINDOW(window), GTK_WIN_POS_CENTER);
 
   gtk_widget_show(window);
 
@@ -155,8 +157,13 @@ void b1_button_clicked_cb() {
     convertToFinancialOutputNumber(string_buffer, output);
     gtk_label_set_text(GTK_LABEL(b1_label_monthly_payment), output);
   } else {
-    sprintf(string_buffer, "%.2Lf ... %.2Lf", first_payment, last_payment);
+    char buffer_2[64];
+    sprintf(string_buffer, "%.2Lf", first_payment);
     convertToFinancialOutputNumber(string_buffer, output);
+    strcat(output, " ... ");
+    sprintf(string_buffer, "%.2Lf", first_payment);
+    convertToFinancialOutputNumber(string_buffer, buffer_2);
+    strcat(output, buffer_2);
     gtk_label_set_text(GTK_LABEL(b1_label_monthly_payment), output);
   }
   sprintf(string_buffer, "%.2Lf", total_payment_output - b1_loan);
