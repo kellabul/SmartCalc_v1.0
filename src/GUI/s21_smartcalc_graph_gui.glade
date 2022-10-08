@@ -2,30 +2,30 @@
 <!-- Generated with glade 3.40.0 -->
 <interface>
   <requires lib="gtk+" version="3.24"/>
-  <object class="GtkAdjustment" id="adjustment_graph1">
+  <object class="GtkAdjustment" id="adjustment_min_domain">
     <property name="lower">-1000000</property>
     <property name="value">-100</property>
-    <property name="step-increment">10</property>
+    <property name="step-increment">0.01</property>
     <property name="page-increment">1000</property>
   </object>
-  <object class="GtkAdjustment" id="adjustment_graph2">
+  <object class="GtkAdjustment" id="adjustment_max_domain">
     <property name="lower">10</property>
     <property name="upper">1000000</property>
     <property name="value">100</property>
-    <property name="step-increment">10</property>
+    <property name="step-increment">0.01</property>
     <property name="page-increment">1000</property>
   </object>
-  <object class="GtkAdjustment" id="adjustment_graph3">
+  <object class="GtkAdjustment" id="adjustment_min_codomain">
     <property name="lower">-1000000</property>
     <property name="value">-100</property>
-    <property name="step-increment">10</property>
+    <property name="step-increment">0.01</property>
     <property name="page-increment">1000</property>
   </object>
-  <object class="GtkAdjustment" id="adjustment_graph4">
+  <object class="GtkAdjustment" id="adjustment_max_codomain">
     <property name="lower">10</property>
     <property name="upper">1000000</property>
     <property name="value">100</property>
-    <property name="step-increment">10</property>
+    <property name="step-increment">0.01</property>
     <property name="page-increment">1000</property>
   </object>
   <object class="GtkWindow" id="graph_window">
@@ -114,7 +114,7 @@
             <property name="visible">True</property>
             <property name="can-focus">True</property>
             <property name="input-purpose">digits</property>
-            <property name="adjustment">adjustment_graph1</property>
+            <property name="adjustment">adjustment_min_domain</property>
             <property name="digits">2</property>
             <property name="numeric">True</property>
           </object>
@@ -127,7 +127,7 @@
           <object class="GtkSpinButton" id="graph_spin_min_codomain">
             <property name="visible">True</property>
             <property name="can-focus">True</property>
-            <property name="adjustment">adjustment_graph3</property>
+            <property name="adjustment">adjustment_min_codomain</property>
             <property name="digits">2</property>
             <property name="numeric">True</property>
           </object>
@@ -140,7 +140,7 @@
           <object class="GtkSpinButton" id="graph_spin_max_codomain">
             <property name="visible">True</property>
             <property name="can-focus">True</property>
-            <property name="adjustment">adjustment_graph4</property>
+            <property name="adjustment">adjustment_max_codomain</property>
             <property name="digits">2</property>
             <property name="numeric">True</property>
             <property name="value">0.05</property>
@@ -177,7 +177,7 @@
           <object class="GtkSpinButton" id="graph_spin_max_domain">
             <property name="visible">True</property>
             <property name="can-focus">True</property>
-            <property name="adjustment">adjustment_graph2</property>
+            <property name="adjustment">adjustment_max_domain</property>
             <property name="digits">2</property>
             <property name="numeric">True</property>
           </object>

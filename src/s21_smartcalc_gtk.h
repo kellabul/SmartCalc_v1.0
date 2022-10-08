@@ -16,6 +16,8 @@ typedef struct cairo_graph_properties {
 } s_graph_properties;
 
 void printDepositOutput(long double value, char *output);
+void button_draw_clicked(GtkWidget *button, gpointer entry);
+void set_values_from_spin_buttons(s_graph_properties *gp);
 
 // graph
 int graph_output(char *input);
