@@ -69,16 +69,16 @@ static gboolean on_draw(GtkWidget *widget, cairo_t *cairo) {
 
   cairo_device_to_user_distance(gp.cr, &gp.dx, &gp.dy);
 
-  gp.max_x = gtk_spin_button_get_value(GTK_SPIN_BUTTON(domain_spin));
-  gp.max_y = gtk_spin_button_get_value(GTK_SPIN_BUTTON(codomain_spin));
+  gp.max_x = 400;
+  gp.max_y = 400;
   if (gp.max_y > gp.max_x) gp.max_y = gp.max_x;
-  gp.min_x = -gp.max_x;
-  gp.min_y = -gp.max_y;
+  gp.min_x = -200;
+  gp.min_y = -200;
 
   gp.dx = (gp.max_x - gp.min_x) / DA_HEIGHT;
   gp.dy = (gp.max_x - gp.min_x) / DA_WIDTH; /* Pixels between each point */
 
-  cairo_translate(gp.cr, DA_HEIGHT / 2, DA_WIDTH / 2);
+  cairo_translate(gp.cr, 200, 400);
 
   cairo_scale(gp.cr, 1 / gp.dx, 1 / gp.dy);
 
@@ -185,13 +185,13 @@ void draw_axis(s_graph_properties *gp) {
     cairo_move_to(gp->cr, i, gp->max_x - text_offset);
     draw_axys_text(gp, i, ROTATE);
   }
-  for (gdouble i = middleY; i < gp->max_x; i += step) {
+  for (gdouble i = middleY; i < gp->max_y; i += step) {
     cairo_move_to(gp->cr, gp->min_x, i);
     cairo_line_to(gp->cr, gp->max_x, i);
     cairo_move_to(gp->cr, gp->min_x, i);
     draw_axys_text(gp, -i, DONT_ROTATE);
   }
-  for (gdouble i = middleY; i > gp->min_x; i -= step) {
+  for (gdouble i = middleY; i > gp->min_y; i -= step) {
     cairo_move_to(gp->cr, gp->min_x, i);
     cairo_line_to(gp->cr, gp->max_x, i);
     cairo_move_to(gp->cr, gp->min_x, i);
@@ -203,8 +203,8 @@ void draw_axis(s_graph_properties *gp) {
   cairo_set_line_width(gp->cr, gp->dx / 2);
   cairo_move_to(gp->cr, gp->min_x, middleY);
   cairo_line_to(gp->cr, gp->max_x, middleY);
-  cairo_move_to(gp->cr, middleX, gp->min_x);
-  cairo_line_to(gp->cr, middleX, gp->max_x);
+  cairo_move_to(gp->cr, middleX, gp->min_y);
+  cairo_line_to(gp->cr, middleX, gp->max_y);
 
   cairo_set_font_size(gp->cr, 15 * gp->dx);
   cairo_move_to(gp->cr, gp->max_x - 15 * gp->dx, middleY + 15 * gp->dx);
