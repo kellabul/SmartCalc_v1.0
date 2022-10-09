@@ -78,9 +78,11 @@ static gboolean on_draw(GtkWidget *widget, cairo_t *cairo) {
   gp.dx = (gp.max_x - gp.min_x) / DA_HEIGHT;
   gp.dy = (gp.max_x - gp.min_x) / DA_WIDTH; /* Pixels between each point */
 
+  printf("dx = %lf, dy = %lf\n", gp.dx, gp.dy);
+  
   cairo_translate(gp.cr, 200, 400);
 
-  cairo_scale(gp.cr, 1 / gp.dx, 1 / gp.dy);
+  cairo_scale(gp.cr, 1 / gp.dx, -1 / gp.dy);
 
   draw_axis(&gp);
 

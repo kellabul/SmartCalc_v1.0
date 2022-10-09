@@ -2,27 +2,27 @@
 <!-- Generated with glade 3.40.0 -->
 <interface>
   <requires lib="gtk+" version="3.24"/>
-  <object class="GtkAdjustment" id="adjustment_codomain">
+  <object class="GtkAdjustment" id="adjustment_codomain_max">
     <property name="lower">0.10</property>
     <property name="upper">1000000</property>
     <property name="value">100</property>
     <property name="step-increment">0.01</property>
     <property name="page-increment">1000</property>
   </object>
-  <object class="GtkAdjustment" id="adjustment_codomain1">
+  <object class="GtkAdjustment" id="adjustment_codomain_min">
     <property name="lower">0.10</property>
     <property name="upper">1000000</property>
     <property name="step-increment">0.01</property>
     <property name="page-increment">1000</property>
   </object>
-  <object class="GtkAdjustment" id="adjustment_domain">
+  <object class="GtkAdjustment" id="adjustment_domain_max">
     <property name="lower">1</property>
     <property name="upper">1000000</property>
     <property name="value">100</property>
     <property name="step-increment">0.01</property>
     <property name="page-increment">100</property>
   </object>
-  <object class="GtkAdjustment" id="adjustment_domain1">
+  <object class="GtkAdjustment" id="adjustment_domain_min">
     <property name="lower">1</property>
     <property name="upper">1000000</property>
     <property name="step-increment">0.01</property>
@@ -43,7 +43,7 @@
           <object class="GtkLabel" id="graph_label_domain">
             <property name="visible">True</property>
             <property name="can-focus">False</property>
-            <property name="label" translatable="yes">domain, +/-</property>
+            <property name="label" translatable="yes">max domain</property>
           </object>
           <packing>
             <property name="left-attach">0</property>
@@ -82,7 +82,7 @@
             <property name="visible">True</property>
             <property name="can-focus">True</property>
             <property name="input-purpose">digits</property>
-            <property name="adjustment">adjustment_domain</property>
+            <property name="adjustment">adjustment_domain_max</property>
             <property name="digits">2</property>
             <property name="numeric">True</property>
             <property name="value">15</property>
@@ -96,7 +96,7 @@
           <object class="GtkSpinButton" id="graph_spin_codomain">
             <property name="visible">True</property>
             <property name="can-focus">True</property>
-            <property name="adjustment">adjustment_codomain</property>
+            <property name="adjustment">adjustment_domain_min</property>
             <property name="digits">2</property>
             <property name="numeric">True</property>
             <property name="value">1000000</property>
@@ -143,7 +143,7 @@
           </object>
           <packing>
             <property name="left-attach">4</property>
-            <property name="top-attach">9</property>
+            <property name="top-attach">11</property>
           </packing>
         </child>
         <child>
@@ -163,10 +163,10 @@
           </packing>
         </child>
         <child>
-          <object class="GtkLabel" id="graph_label_codomain">
+          <object class="GtkLabel" id="graph_label_domain_min">
             <property name="visible">True</property>
             <property name="can-focus">False</property>
-            <property name="label" translatable="yes">codomain, +/-</property>
+            <property name="label" translatable="yes">min_domain</property>
           </object>
           <packing>
             <property name="left-attach">0</property>
@@ -178,40 +178,38 @@
           <object class="GtkLabel" id="graph_label_domain1">
             <property name="visible">True</property>
             <property name="can-focus">False</property>
-            <property name="label" translatable="yes">domain, +/-</property>
+            <property name="label" translatable="yes">max codomain</property>
           </object>
           <packing>
-            <property name="left-attach">0</property>
-            <property name="top-attach">10</property>
-            <property name="width">2</property>
+            <property name="left-attach">3</property>
+            <property name="top-attach">8</property>
           </packing>
         </child>
         <child>
           <object class="GtkLabel" id="graph_label_codomain1">
             <property name="visible">True</property>
             <property name="can-focus">False</property>
-            <property name="label" translatable="yes">codomain, +/-</property>
+            <property name="label" translatable="yes">min codomain</property>
           </object>
           <packing>
-            <property name="left-attach">0</property>
-            <property name="top-attach">11</property>
-            <property name="width">2</property>
+            <property name="left-attach">3</property>
+            <property name="top-attach">9</property>
           </packing>
         </child>
         <child>
-          <object class="GtkSpinButton" id="graph_spin_domain1">
+          <object class="GtkSpinButton" id="graph_spin_codomain_max">
             <property name="visible">True</property>
             <property name="can-focus">True</property>
             <property name="text" translatable="yes">15,00</property>
             <property name="input-purpose">digits</property>
-            <property name="adjustment">adjustment_domain1</property>
+            <property name="adjustment">adjustment_codomain_max</property>
             <property name="digits">2</property>
             <property name="numeric">True</property>
             <property name="value">15</property>
           </object>
           <packing>
-            <property name="left-attach">2</property>
-            <property name="top-attach">10</property>
+            <property name="left-attach">4</property>
+            <property name="top-attach">8</property>
           </packing>
         </child>
         <child>
@@ -219,33 +217,67 @@
             <property name="visible">True</property>
             <property name="can-focus">True</property>
             <property name="text" translatable="yes">1000000,00</property>
-            <property name="adjustment">adjustment_codomain1</property>
+            <property name="adjustment">adjustment_codomain_min</property>
             <property name="digits">2</property>
             <property name="numeric">True</property>
             <property name="value">1000000</property>
           </object>
           <packing>
-            <property name="left-attach">2</property>
+            <property name="left-attach">4</property>
+            <property name="top-attach">9</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkCheckButton" id="check_same_dom">
+            <property name="label" translatable="yes">max domain = - min domain</property>
+            <property name="visible">True</property>
+            <property name="can-focus">True</property>
+            <property name="receives-default">False</property>
+            <property name="draw-indicator">True</property>
+            <signal name="toggled" handler="on_check_same_dom_toggled" swapped="no"/>
+          </object>
+          <packing>
+            <property name="left-attach">0</property>
+            <property name="top-attach">10</property>
+            <property name="width">3</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkCheckButton" id="check_same_codom">
+            <property name="label" translatable="yes">max codomain = - min codomain</property>
+            <property name="visible">True</property>
+            <property name="can-focus">True</property>
+            <property name="receives-default">False</property>
+            <property name="draw-indicator">True</property>
+            <signal name="toggled" handler="check_same_codom_toggled_cb" swapped="no"/>
+          </object>
+          <packing>
+            <property name="left-attach">3</property>
+            <property name="top-attach">10</property>
+            <property name="width">2</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkSwitch">
+            <property name="visible">True</property>
+            <property name="can-focus">True</property>
+          </object>
+          <packing>
+            <property name="left-attach">0</property>
             <property name="top-attach">11</property>
           </packing>
         </child>
         <child>
-          <placeholder/>
-        </child>
-        <child>
-          <placeholder/>
-        </child>
-        <child>
-          <placeholder/>
-        </child>
-        <child>
-          <placeholder/>
-        </child>
-        <child>
-          <placeholder/>
-        </child>
-        <child>
-          <placeholder/>
+          <object class="GtkLabel">
+            <property name="visible">True</property>
+            <property name="can-focus">False</property>
+            <property name="label" translatable="yes">domain = codomain</property>
+          </object>
+          <packing>
+            <property name="left-attach">1</property>
+            <property name="top-attach">11</property>
+            <property name="width">2</property>
+          </packing>
         </child>
         <child>
           <placeholder/>
