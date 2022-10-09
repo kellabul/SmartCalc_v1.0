@@ -58,7 +58,7 @@ int main(int argc, char *argv[]) {
       GTK_WIDGET(gtk_builder_get_object(builder, "b2_label_tax_amount"));
   b2_deposit_amount =
       GTK_WIDGET(gtk_builder_get_object(builder, "b2_label_deposit_amount"));
-  
+
   g_object_unref(builder);
 
   gtk_window_set_position(GTK_WINDOW(window), GTK_WIN_POS_CENTER);

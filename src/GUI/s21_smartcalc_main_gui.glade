@@ -36,7 +36,6 @@
     <property name="page-increment">1</property>
   </object>
   <object class="GtkAdjustment" id="b2_adjustment_period">
-    <property name="lower">0</property>
     <property name="upper">9999</property>
     <property name="value">1</property>
     <property name="step-increment">1</property>
@@ -1143,10 +1142,7 @@
               <object class="GtkGrid" id="b2_grid">
                 <property name="visible">True</property>
                 <property name="can-focus">False</property>
-                <property name="row-spacing">2</property>
-                <property name="column-spacing">2</property>
                 <property name="row-homogeneous">True</property>
-                <property name="column-homogeneous">True</property>
                 <child>
                   <object class="GtkLabel" id="b2_label1">
                     <property name="visible">True</property>
@@ -1156,19 +1152,18 @@
                   <packing>
                     <property name="left-attach">0</property>
                     <property name="top-attach">0</property>
-                    <property name="width">2</property>
                   </packing>
                 </child>
                 <child>
                   <object class="GtkLabel" id="b2_label2">
                     <property name="visible">True</property>
                     <property name="can-focus">False</property>
-                    <property name="label" translatable="yes">Deposit term, monthes:</property>
+                    <property name="label" translatable="yes">Deposit term, 
+monthes:</property>
                   </object>
                   <packing>
-                    <property name="left-attach">4</property>
+                    <property name="left-attach">6</property>
                     <property name="top-attach">0</property>
-                    <property name="width">2</property>
                   </packing>
                 </child>
                 <child>
@@ -1180,7 +1175,6 @@
                   <packing>
                     <property name="left-attach">0</property>
                     <property name="top-attach">1</property>
-                    <property name="width">2</property>
                   </packing>
                 </child>
                 <child>
@@ -1190,23 +1184,21 @@
                     <property name="label" translatable="yes">Tax rate, %:</property>
                   </object>
                   <packing>
-                    <property name="left-attach">4</property>
+                    <property name="left-attach">6</property>
                     <property name="top-attach">1</property>
-                    <property name="width">2</property>
                   </packing>
                 </child>
                 <child>
                   <object class="GtkLabel" id="b2_label5">
                     <property name="visible">True</property>
                     <property name="can-focus">False</property>
-                    <property name="label" translatable="yes">Periodicity of payments,
- monthes:</property>
+                    <property name="label" translatable="yes">Periodicity of pay-
+ments, monthes:</property>
                     <property name="justify">right</property>
                   </object>
                   <packing>
                     <property name="left-attach">0</property>
                     <property name="top-attach">2</property>
-                    <property name="width">2</property>
                   </packing>
                 </child>
                 <child>
@@ -1218,7 +1210,7 @@
                   <packing>
                     <property name="left-attach">0</property>
                     <property name="top-attach">7</property>
-                    <property name="width">4</property>
+                    <property name="width">6</property>
                   </packing>
                 </child>
                 <child>
@@ -1230,7 +1222,7 @@
                   <packing>
                     <property name="left-attach">0</property>
                     <property name="top-attach">8</property>
-                    <property name="width">4</property>
+                    <property name="width">6</property>
                   </packing>
                 </child>
                 <child>
@@ -1242,7 +1234,7 @@
                   <packing>
                     <property name="left-attach">0</property>
                     <property name="top-attach">9</property>
-                    <property name="width">4</property>
+                    <property name="width">6</property>
                   </packing>
                 </child>
                 <child>
@@ -1256,7 +1248,7 @@
                   <packing>
                     <property name="left-attach">1</property>
                     <property name="top-attach">6</property>
-                    <property name="width">2</property>
+                    <property name="width">4</property>
                   </packing>
                 </child>
                 <child>
@@ -1266,9 +1258,9 @@
                     <property name="label" translatable="yes">______</property>
                   </object>
                   <packing>
-                    <property name="left-attach">4</property>
+                    <property name="left-attach">6</property>
                     <property name="top-attach">6</property>
-                    <property name="width">4</property>
+                    <property name="width">6</property>
                   </packing>
                 </child>
                 <child>
@@ -1277,9 +1269,9 @@
                     <property name="can-focus">False</property>
                   </object>
                   <packing>
-                    <property name="left-attach">4</property>
+                    <property name="left-attach">6</property>
                     <property name="top-attach">7</property>
-                    <property name="width">4</property>
+                    <property name="width">6</property>
                   </packing>
                 </child>
                 <child>
@@ -1288,9 +1280,9 @@
                     <property name="can-focus">False</property>
                   </object>
                   <packing>
-                    <property name="left-attach">4</property>
+                    <property name="left-attach">6</property>
                     <property name="top-attach">8</property>
-                    <property name="width">4</property>
+                    <property name="width">6</property>
                   </packing>
                 </child>
                 <child>
@@ -1299,9 +1291,9 @@
                     <property name="can-focus">False</property>
                   </object>
                   <packing>
-                    <property name="left-attach">4</property>
+                    <property name="left-attach">6</property>
                     <property name="top-attach">9</property>
-                    <property name="width">4</property>
+                    <property name="width">6</property>
                   </packing>
                 </child>
                 <child>
@@ -1314,9 +1306,9 @@
                     <signal name="toggled" handler="check_capitalization_toggled_cb" swapped="no"/>
                   </object>
                   <packing>
-                    <property name="left-attach">5</property>
+                    <property name="left-attach">7</property>
                     <property name="top-attach">2</property>
-                    <property name="width">3</property>
+                    <property name="width">5</property>
                   </packing>
                 </child>
                 <child>
@@ -1330,9 +1322,9 @@
                     <signal name="value-changed" handler="b2_spin_interest_value_changed_cb" swapped="no"/>
                   </object>
                   <packing>
-                    <property name="left-attach">2</property>
+                    <property name="left-attach">1</property>
                     <property name="top-attach">1</property>
-                    <property name="width">2</property>
+                    <property name="width">5</property>
                   </packing>
                 </child>
                 <child>
@@ -1346,9 +1338,9 @@
                     <signal name="value-changed" handler="b2_spin_tax_value_changed_cb" swapped="no"/>
                   </object>
                   <packing>
-                    <property name="left-attach">6</property>
+                    <property name="left-attach">7</property>
                     <property name="top-attach">1</property>
-                    <property name="width">2</property>
+                    <property name="width">5</property>
                   </packing>
                 </child>
                 <child>
@@ -1360,65 +1352,61 @@
                     <signal name="value-changed" handler="b2_spin_period_payments_value_changed_cb" swapped="no"/>
                   </object>
                   <packing>
-                    <property name="left-attach">2</property>
+                    <property name="left-attach">1</property>
                     <property name="top-attach">2</property>
-                    <property name="width">2</property>
+                    <property name="width">5</property>
                   </packing>
                 </child>
                 <child>
                   <object class="GtkLabel" id="b2_label_replen">
                     <property name="visible">True</property>
                     <property name="can-focus">False</property>
-                    <property name="label" translatable="yes">replenishment
+                    <property name="label" translatable="yes">Replenishment
 amount:</property>
                     <property name="justify">right</property>
                   </object>
                   <packing>
                     <property name="left-attach">0</property>
                     <property name="top-attach">3</property>
-                    <property name="width">2</property>
                   </packing>
                 </child>
                 <child>
                   <object class="GtkLabel" id="b2_label_replen_period">
                     <property name="visible">True</property>
                     <property name="can-focus">False</property>
-                    <property name="label" translatable="yes">periodicity of repl., 
-monthes:</property>
+                    <property name="label" translatable="yes">Periodicity of 
+repl., monthes:</property>
                     <property name="justify">right</property>
                   </object>
                   <packing>
                     <property name="left-attach">0</property>
                     <property name="top-attach">4</property>
-                    <property name="width">2</property>
                   </packing>
                 </child>
                 <child>
                   <object class="GtkLabel" id="b2_label_3">
                     <property name="visible">True</property>
                     <property name="can-focus">False</property>
-                    <property name="label" translatable="yes">partial withdrawal
+                    <property name="label" translatable="yes">Partial withdrawal
 amount:</property>
                     <property name="justify">right</property>
                   </object>
                   <packing>
-                    <property name="left-attach">4</property>
+                    <property name="left-attach">6</property>
                     <property name="top-attach">3</property>
-                    <property name="width">2</property>
                   </packing>
                 </child>
                 <child>
                   <object class="GtkLabel" id="b2_label_4">
                     <property name="visible">True</property>
                     <property name="can-focus">False</property>
-                    <property name="label" translatable="yes">periodicity of withdr., 
-monthes:</property>
+                    <property name="label" translatable="yes">Periodicity of 
+withdr., monthes:</property>
                     <property name="justify">right</property>
                   </object>
                   <packing>
-                    <property name="left-attach">4</property>
+                    <property name="left-attach">6</property>
                     <property name="top-attach">4</property>
-                    <property name="width">2</property>
                   </packing>
                 </child>
                 <child>
@@ -1431,9 +1419,9 @@ monthes:</property>
                     <signal name="value-changed" handler="b2_spin_replen_periodicity_value_changed_cb" swapped="no"/>
                   </object>
                   <packing>
-                    <property name="left-attach">2</property>
+                    <property name="left-attach">1</property>
                     <property name="top-attach">4</property>
-                    <property name="width">2</property>
+                    <property name="width">5</property>
                   </packing>
                 </child>
                 <child>
@@ -1446,15 +1434,16 @@ monthes:</property>
                     <signal name="value-changed" handler="b2_spin_withdraw_periodicity_value_changed_cb" swapped="no"/>
                   </object>
                   <packing>
-                    <property name="left-attach">6</property>
+                    <property name="left-attach">7</property>
                     <property name="top-attach">4</property>
-                    <property name="width">2</property>
+                    <property name="width">5</property>
                   </packing>
                 </child>
                 <child>
                   <object class="GtkSpinButton" id="b2_spin_deposit_term">
                     <property name="visible">True</property>
                     <property name="can-focus">True</property>
+                    <property name="width-chars">14</property>
                     <property name="text" translatable="yes">10,00</property>
                     <property name="adjustment">b2_adjustment_term</property>
                     <property name="numeric">True</property>
@@ -1462,9 +1451,9 @@ monthes:</property>
                     <signal name="value-changed" handler="b2_spin_deposit_term_value_changed_cb" swapped="no"/>
                   </object>
                   <packing>
-                    <property name="left-attach">6</property>
+                    <property name="left-attach">7</property>
                     <property name="top-attach">0</property>
-                    <property name="width">2</property>
+                    <property name="width">5</property>
                   </packing>
                 </child>
                 <child>
@@ -1478,9 +1467,9 @@ monthes:</property>
                     <signal name="value-changed" handler="b2_spin_replen_value_changed_cb" swapped="no"/>
                   </object>
                   <packing>
-                    <property name="left-attach">2</property>
+                    <property name="left-attach">1</property>
                     <property name="top-attach">3</property>
-                    <property name="width">2</property>
+                    <property name="width">5</property>
                   </packing>
                 </child>
                 <child>
@@ -1494,15 +1483,16 @@ monthes:</property>
                     <signal name="value-changed" handler="b2_spin_withdraw_value_changed_cb" swapped="no"/>
                   </object>
                   <packing>
-                    <property name="left-attach">6</property>
+                    <property name="left-attach">7</property>
                     <property name="top-attach">3</property>
-                    <property name="width">2</property>
+                    <property name="width">5</property>
                   </packing>
                 </child>
                 <child>
                   <object class="GtkSpinButton" id="b2_spin_deposit_amount">
                     <property name="visible">True</property>
                     <property name="can-focus">True</property>
+                    <property name="width-chars">14</property>
                     <property name="adjustment">b2_adjustment_amount</property>
                     <property name="climb-rate">1</property>
                     <property name="digits">2</property>
@@ -1511,118 +1501,10 @@ monthes:</property>
                     <signal name="value-changed" handler="b2_spin_deposit_amount_value_changed_cb" swapped="no"/>
                   </object>
                   <packing>
-                    <property name="left-attach">2</property>
+                    <property name="left-attach">1</property>
                     <property name="top-attach">0</property>
-                    <property name="width">2</property>
+                    <property name="width">5</property>
                   </packing>
-                </child>
-                <child>
-                  <placeholder/>
-                </child>
-                <child>
-                  <placeholder/>
-                </child>
-                <child>
-                  <placeholder/>
-                </child>
-                <child>
-                  <placeholder/>
-                </child>
-                <child>
-                  <placeholder/>
-                </child>
-                <child>
-                  <placeholder/>
-                </child>
-                <child>
-                  <placeholder/>
-                </child>
-                <child>
-                  <placeholder/>
-                </child>
-                <child>
-                  <placeholder/>
-                </child>
-                <child>
-                  <placeholder/>
-                </child>
-                <child>
-                  <placeholder/>
-                </child>
-                <child>
-                  <placeholder/>
-                </child>
-                <child>
-                  <placeholder/>
-                </child>
-                <child>
-                  <placeholder/>
-                </child>
-                <child>
-                  <placeholder/>
-                </child>
-                <child>
-                  <placeholder/>
-                </child>
-                <child>
-                  <placeholder/>
-                </child>
-                <child>
-                  <placeholder/>
-                </child>
-                <child>
-                  <placeholder/>
-                </child>
-                <child>
-                  <placeholder/>
-                </child>
-                <child>
-                  <placeholder/>
-                </child>
-                <child>
-                  <placeholder/>
-                </child>
-                <child>
-                  <placeholder/>
-                </child>
-                <child>
-                  <placeholder/>
-                </child>
-                <child>
-                  <placeholder/>
-                </child>
-                <child>
-                  <placeholder/>
-                </child>
-                <child>
-                  <placeholder/>
-                </child>
-                <child>
-                  <placeholder/>
-                </child>
-                <child>
-                  <placeholder/>
-                </child>
-                <child>
-                  <placeholder/>
-                </child>
-                <child>
-                  <placeholder/>
-                </child>
-                <child>
-                  <placeholder/>
-                </child>
-                <child>
-                  <placeholder/>
-                </child>
-                <child>
-                  <placeholder/>
-                </child>
-                <child>
-                  <placeholder/>
-                </child>
-                <child>
-                  <placeholder/>
                 </child>
                 <child>
                   <placeholder/>

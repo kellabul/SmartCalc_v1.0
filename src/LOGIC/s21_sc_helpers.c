@@ -18,8 +18,8 @@ void convertTokensToString(s_tokens *tokens, char *string) {
 int isNotNumberInString(char *string) {
   int result = 0;
   int point_count = 0;
-  if (string[0] < '0' || string[0] > '9' || string[strlen(string) - 1] < '0' ||
-      string[strlen(string) - 1] > '9') {
+  if ((!isNumber(string[0]) && (string[0] != '-' && string[0] != '+')) ||
+      !isNumber(string[strlen(string) - 1])) {
     result = 1;
   } else {
     for (int i = 1; string[i]; i++) {

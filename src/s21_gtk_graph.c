@@ -6,30 +6,14 @@
 
 #define DA_HEIGHT 600
 #define DA_WIDTH 600
-
-static double get_steps_col(gdouble x_range) {
-  double max = 10000;
-  double first_n = x_range;
-  if (x_range == 10) {
-    first_n = 1;
-  } else {
-    while (first_n > 10) first_n /= 10;
-  }
-  double steps_col = x_range < 100.0 ? 100.0 * first_n : max * first_n;
-  return steps_col;
-}
+#define ROTATE 1
+#define DONT_ROTATE 0
 
 char *expression;
 GtkWidget *drawing_area;
-gdouble scale = 100.0;
 GtkWidget *graph_error_label;
-
-int write_dom_codom = 0;
-GtkWidget *min_domain_spin;
-GtkWidget *min_codomain_spin;
-GtkWidget *max_domain_spin;
-GtkWidget *max_codomain_spin;
-GtkWidget *scale_label;
+GtkWidget *domain_spin;
+GtkWidget *codomain_spin;
 
 int graph_output(char *input) {
   GtkBuilder *builder;
@@ -49,19 +33,13 @@ int graph_output(char *input) {
   close_button = GTK_WIDGET(gtk_builder_get_object(builder, "graph_close"));
   draw_button =
       GTK_WIDGET(gtk_builder_get_object(builder, "graph_draw_button"));
-
-  min_domain_spin =
-      GTK_WIDGET(gtk_builder_get_object(builder, "graph_spin_min_domain"));
-  min_codomain_spin =
-      GTK_WIDGET(gtk_builder_get_object(builder, "graph_spin_min_codomain"));
-  max_domain_spin =
-      GTK_WIDGET(gtk_builder_get_object(builder, "graph_spin_max_domain"));
-  max_codomain_spin =
-      GTK_WIDGET(gtk_builder_get_object(builder, "graph_spin_max_codomain"));
-
   graph_error_label =
       GTK_WIDGET(gtk_builder_get_object(builder, "graph_error_label"));
-  scale_label = GTK_WIDGET(gtk_builder_get_object(builder, "label_scale"));
+
+  domain_spin =
+      GTK_WIDGET(gtk_builder_get_object(builder, "graph_spin_domain"));
+  codomain_spin =
+      GTK_WIDGET(gtk_builder_get_object(builder, "graph_spin_codomain"));
 
   gtk_entry_set_text(graph_entry, (const gchar *)input);
   gtk_widget_set_size_request(drawing_area, DA_HEIGHT,
@@ -82,36 +60,20 @@ int graph_output(char *input) {
 }
 
 static gboolean on_draw(GtkWidget *widget, cairo_t *cairo) {
-  int scale_x = scale;
-  int scale_y = -scale;
-  // GdkRectangle da; /* GtkDrawingArea size */
   s_graph_properties gp = {};
   gp.cr = cairo;
-
-  // GdkWindow *window = gtk_widget_get_window(widget);
-  // /* Determine GtkDrawingArea dimensions */
-  // gdk_window_get_geometry(window, &da.x, &da.y, &da.width, &da.height);
 
   /* Draw on a background */
   cairo_set_source_rgb(gp.cr, 0.41, 0.78, 0.78);
   cairo_paint(gp.cr);
 
-  /* Change the transformation matrix */
-  // cairo_translate(gp.cr, da.width / 2, da.height / 2);
-  // cairo_scale(gp.cr, scale_x, scale_y);
-
-  /* Determine the data points to calculate (ie. those in the clipping zone */
   cairo_device_to_user_distance(gp.cr, &gp.dx, &gp.dy);
-  // printf("%lf %lf \n", gp.dx, gp.dy);
 
-  gp.min_x =
-      gtk_spin_button_get_value(GTK_SPIN_BUTTON(min_domain_spin));
-  gp.min_y =
-      gtk_spin_button_get_value(GTK_SPIN_BUTTON(min_codomain_spin));
-  gp.max_x =
-      gtk_spin_button_get_value(GTK_SPIN_BUTTON(max_domain_spin));
-  gp.max_y =
-      gtk_spin_button_get_value(GTK_SPIN_BUTTON(max_codomain_spin));
+  gp.max_x = gtk_spin_button_get_value(GTK_SPIN_BUTTON(domain_spin));
+  gp.max_y = gtk_spin_button_get_value(GTK_SPIN_BUTTON(codomain_spin));
+  if (gp.max_y > gp.max_x) gp.max_y = gp.max_x;
+  gp.min_x = -gp.max_x;
+  gp.min_y = -gp.max_y;
 
   gp.dx = (gp.max_x - gp.min_x) / DA_HEIGHT;
   gp.dy = (gp.max_x - gp.min_x) / DA_WIDTH; /* Pixels between each point */
@@ -123,9 +85,10 @@ static gboolean on_draw(GtkWidget *widget, cairo_t *cairo) {
   draw_axis(&gp);
 
   if (input_validation(expression) == S21_CORRECT_INPUT) {
-    if (!write_dom_codom) set_values_from_spin_buttons(&gp);
+    char buffer[64];
+    sprintf(buffer, "scale px/un: ");
+    gtk_label_set_text(GTK_LABEL(graph_error_label), buffer);
     draw_graph_line(&gp);
-    gtk_label_set_text(GTK_LABEL(graph_error_label), (const gchar *)"");
   } else {
     gtk_label_set_text(GTK_LABEL(graph_error_label),
                        (const gchar *)"INCORRECT INPUT");
@@ -133,26 +96,11 @@ static gboolean on_draw(GtkWidget *widget, cairo_t *cairo) {
   return FALSE;
 }
 
-void set_values_from_spin_buttons(s_graph_properties *gp) {
-  gdouble min_domain =
-      gtk_spin_button_get_value(GTK_SPIN_BUTTON(min_domain_spin));
-  gdouble min_codomain =
-      gtk_spin_button_get_value(GTK_SPIN_BUTTON(min_codomain_spin));
-  gdouble max_domain =
-      gtk_spin_button_get_value(GTK_SPIN_BUTTON(max_domain_spin));
-  gdouble max_codomain =
-      gtk_spin_button_get_value(GTK_SPIN_BUTTON(max_codomain_spin));
-  if (gp->min_x < min_domain) gp->min_x = min_domain;
-  if (gp->min_y < min_domain) gp->min_y = min_codomain;
-  if (gp->max_x > min_domain) gp->max_x = max_domain;
-  if (gp->max_y > min_domain) gp->max_y = max_codomain;
-}
-
 void draw_graph_line(s_graph_properties *gp) {
   setlocale(LC_NUMERIC, "C");
   int vector = -1;  // 1 or -1
   cairo_set_line_width(gp->cr, gp->dx);
-  gdouble step = gp->dx;
+  gdouble step = gp->dx / 10;
   for (gdouble x = gp->min_x; x < gp->max_x; x += step) {
     gdouble y_value = calculation(expression, &x, NULL);
     if (y_value > gp->max_y || y_value < gp->min_y) {
@@ -170,45 +118,84 @@ void draw_graph_line(s_graph_properties *gp) {
   cairo_stroke(gp->cr);
 }
 
+void roundTo2digits(gdouble *step) {
+  char buffer[64];
+  sprintf(buffer, "%lf", *step);
+  for (int i = 1; i < strlen(buffer); i++) {
+    if (buffer[i] != '.') buffer[i] = '0';
+  }
+  sscanf(buffer, "%lf", step);
+}
+
+gdouble set_axis_step(s_graph_properties *gp) {
+  gdouble step = 20 * gp->dx;
+  for (gdouble i = 0.1; i <= 1; i += 0.1) {
+    if (step < i) {
+      step = i;
+      break;
+    }
+  }
+  if (step > 10)
+    roundTo2digits(&step);
+  else if (step > 5)
+    step = 10;
+  else if (step > 2)
+    step = 5;
+  else if (step > 1)
+    step = 2;
+  return step;
+}
+
+void draw_axys_text(s_graph_properties *gp, gdouble value, char rotate) {
+  char buffer[64];
+  sprintf(buffer, "%g", value);
+  if (rotate) {
+    cairo_save(gp->cr);
+    cairo_rotate(gp->cr, -1);
+    cairo_show_text(gp->cr, buffer);
+    cairo_restore(gp->cr);
+  } else {
+    cairo_show_text(gp->cr, buffer);
+  }
+}
+
 void draw_axis(s_graph_properties *gp) {
   char buffer[64];
-  gdouble step = gp->dx * 20;
+  gdouble step = set_axis_step(gp);
   gdouble middleX = 0;
   gdouble middleY = 0;
+  int flag = 1;
+  gdouble text_offset = 2 * gp->dx;
 
   cairo_set_source_rgb(gp->cr, 0.0, 0.0, 0.0);
   cairo_set_line_width(gp->cr, gp->dx / 10);
 
   cairo_select_font_face(gp->cr, "Arial", CAIRO_FONT_SLANT_NORMAL,
                          CAIRO_FONT_WEIGHT_NORMAL);
-  cairo_set_font_size(gp->cr, 5 * gp->dx);
+  cairo_set_font_size(gp->cr, 10 * gp->dx);
 
-  for (gdouble i = middleX; i <= gp->max_x; i += step) {
-    cairo_move_to(gp->cr, i, gp->min_y);
-    cairo_line_to(gp->cr, i, gp->max_y);
-    sprintf(buffer, "%g", i);
-    cairo_show_text(gp->cr, buffer);
+  for (gdouble i = middleX; i < gp->max_x; i += step) {
+    cairo_move_to(gp->cr, i, gp->min_x);
+    cairo_line_to(gp->cr, i, gp->max_x - text_offset);
+    draw_axys_text(gp, i, ROTATE);
   }
-
-  for (gdouble i = middleX; i >= gp->min_x; i -= step) {
-    cairo_move_to(gp->cr, i, gp->min_y);
-    cairo_line_to(gp->cr, i, gp->max_y);
-    sprintf(buffer, "%g", i);
-    cairo_show_text(gp->cr, buffer);
+  for (gdouble i = middleX; i > gp->min_x; i -= step) {
+    cairo_move_to(gp->cr, i, gp->min_x);
+    cairo_line_to(gp->cr, i, gp->max_x);
+    cairo_move_to(gp->cr, i, gp->max_x - text_offset);
+    draw_axys_text(gp, i, ROTATE);
   }
-  for (gdouble i = middleY; i <= gp->max_y; i += step) {
+  for (gdouble i = middleY; i < gp->max_x; i += step) {
     cairo_move_to(gp->cr, gp->min_x, i);
     cairo_line_to(gp->cr, gp->max_x, i);
     cairo_move_to(gp->cr, gp->min_x, i);
-    sprintf(buffer, "%g", -i);
-    cairo_show_text(gp->cr, buffer);
+    draw_axys_text(gp, -i, DONT_ROTATE);
   }
-  for (gdouble i = middleY; i >= gp->min_y; i -= step) {
+  for (gdouble i = middleY; i > gp->min_x; i -= step) {
     cairo_move_to(gp->cr, gp->min_x, i);
     cairo_line_to(gp->cr, gp->max_x, i);
     cairo_move_to(gp->cr, gp->min_x, i);
-    sprintf(buffer, "%g", -i);
-    cairo_show_text(gp->cr, buffer);
+    draw_axys_text(gp, -i, DONT_ROTATE);
   }
 
   cairo_stroke(gp->cr);
@@ -216,23 +203,19 @@ void draw_axis(s_graph_properties *gp) {
   cairo_set_line_width(gp->cr, gp->dx / 2);
   cairo_move_to(gp->cr, gp->min_x, middleY);
   cairo_line_to(gp->cr, gp->max_x, middleY);
-  cairo_move_to(gp->cr, middleX, gp->min_y);
-  cairo_line_to(gp->cr, middleX, gp->max_y);
+  cairo_move_to(gp->cr, middleX, gp->min_x);
+  cairo_line_to(gp->cr, middleX, gp->max_x);
 
-  cairo_move_to(gp->cr, gp->min_x, middleY);
-  sprintf(buffer, "x");
+  cairo_set_font_size(gp->cr, 15 * gp->dx);
+  cairo_move_to(gp->cr, gp->max_x - 15 * gp->dx, middleY + 15 * gp->dx);
+  sprintf(buffer, "X");
+  cairo_show_text(gp->cr, buffer);
+  cairo_move_to(gp->cr, middleX + 5 * gp->dx, gp->min_x + 15 * gp->dx);
+  sprintf(buffer, "Y");
   cairo_show_text(gp->cr, buffer);
 
   cairo_stroke(gp->cr);
 }
-
-// void draw_axys_text(s_graph_properties *gp, gdouble value, gdouble x, gdouble
-// y) {
-//   char buffer[64];
-//   sprintf(buffer, "%g", value);
-//   cairo_move_to(gp->cr, x, y);
-//   cairo_show_text(gp->cr, buffer);
-// }
 
 void button_draw_clicked(GtkWidget *button, gpointer entry) {
   sprintf(expression, "%s", gtk_entry_get_text(entry));
@@ -241,30 +224,6 @@ void button_draw_clicked(GtkWidget *button, gpointer entry) {
 
 void close_window(GtkWidget *widget, gpointer window) {
   gtk_widget_destroy(GTK_WIDGET(window));
-}
-
-void scale_plus_clicked_cb() {
-  scale += 10;
-  if (scale > 200) scale = 200;
-  char scale_label_buffer[10] = {};
-  sprintf(scale_label_buffer, "1/%d", (int)scale);
-  gtk_label_set_text(GTK_LABEL(scale_label), scale_label_buffer);
-}
-
-void scale_minus_clicked_cb() {
-  scale -= 10;
-  if (scale < 10) scale = 10;
-  char scale_label_buffer[10] = {};
-  sprintf(scale_label_buffer, "1/%d", (int)scale);
-  gtk_label_set_text(GTK_LABEL(scale_label), scale_label_buffer);
-}
-
-void graph_toggle_button_toggled_cb(GtkToggleButton *button) {
-  gboolean status = gtk_toggle_button_get_active(button);
-  if (status)
-    write_dom_codom = 1;
-  else
-    write_dom_codom = 0;
 }
 
 // void draw_graph_line(s_graph_properties gp) {

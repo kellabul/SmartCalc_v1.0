@@ -1,3 +1,4 @@
+CC = gcc
 FLAGS = -std=c11 -Wall -Werror -Wextra 
 NAME = s21_smartcalc
 TEST_NAME = test_$(NAME)
@@ -7,8 +8,8 @@ GCOV_FILES = ./*.gcov
 LCOV_FILES = ./*.info
 
 GTK_SOURCE_FILES = s21_gtk_*.c
-BACKEND_SOURCE_FILES = backend/s21_sc*.c
-BACKEND_OBJECT_FILES = s21_sc*.o
+LOGIC_SOURCE_FILES = LOGIC/s21_sc*.c
+LOGIC_OBJECT_FILES = s21_sc*.o
 
 LIBS = `pkg-config --libs --cflags gtk+-3.0` -rdynamic -lm #-fsanitize=address -g
 
@@ -27,15 +28,15 @@ clean:
 
 $(NAME).a:
 	@rm -rf *.o *.a
-	gcc $(FLAGS) -c $(BACKEND_SOURCE_FILES)
-	ar rc $(NAME).a $(BACKEND_OBJECT_FILES)
+	$(CC) $(FLAGS) -c $(LOGIC_SOURCE_FILES)
+	ar rc $(NAME).a $(LOGIC_OBJECT_FILES)
 
 tests: compile_test
 	@rm -f $(COVERAGE_RESULTS)
 	./$(TEST_NAME)
 
 install: $(NAME).a
-	gcc $(GTK_SOURCE_FILES) $(NAME).a -o ../build/$(NAME) $(LIBS) #$(FLAGS)
+	$(CC) $(GTK_SOURCE_FILES) $(NAME).a -o ../build/$(NAME) $(LIBS) #$(FLAGS)
 
 run:
 	../build/s21_smartcalc
@@ -47,7 +48,7 @@ dvi:
 	open readme.html
 
 dist:
-	tar -cf SmartCalc_v1.0.tar *.c *.h Makefile gui backend
+	tar -cf SmartCalc_v1.0.tar *.c *.h Makefile GUI LOGIC
 
 gcov_report: gcov
 	@rm -f $(LCOV_FILES)
@@ -58,7 +59,7 @@ gcov_report: gcov
 	open gcov_report/index.html
 
 compile_test:
-	checkmk $(TEST_NAME).check | gcc $(FLAGS) $(BACKEND_SOURCE_FILES) -xc - $(CHECK_LIBS) -o $(TEST_NAME) --coverage
+	checkmk $(TEST_NAME).check | $(CC) $(FLAGS) $(LOGIC_SOURCE_FILES) -xc - $(CHECK_LIBS) -o $(TEST_NAME) --coverage
 	
 gcov: compile_test
 	@rm -f $(COVERAGE_RESULTS)
@@ -71,7 +72,7 @@ asan: compile_test_with_asan
 	./$(TEST_NAME)
 
 compile_test_with_asan:
-	checkmk $(TEST_NAME).check | gcc $(FLAGS) $(BACKEND_SOURCE_FILES) -xc - $(CHECK_LIBS) -o $(TEST_NAME) --coverage -g -fsanitize=address
+	checkmk $(TEST_NAME).check | $(CC) $(FLAGS) $(LOGIC_SOURCE_FILES) -xc - $(CHECK_LIBS) -o $(TEST_NAME) --coverage -g -fsanitize=address
 
 lint:
 	@cp ../materials/linters/.clang-format .clang-format
@@ -96,7 +97,7 @@ gtk_linux:
 	sudo apt-get install libgtk-3-dev
 
 deps:
-	@command -v gcc >/dev/null 2>&1 || { echo >&2 "gcc is not installed"; exit 1; }
+	@command -v $(CC) >/dev/null 2>&1 || { echo >&2 "gcc is not installed"; exit 1; }
 	@command -v gcov >/dev/null 2>&1 || { echo >&2 "gcov is not installed"; exit 1; }
 	@command -v $(lcov) >/dev/null 2>&1 || { echo >&2 "$(lcov) is not installed"; exit 1; }
 	@command -v $(genthml) >/dev/null 2>&1 || { echo >&2 "$(genhtml) is not installed"; exit 1;  }

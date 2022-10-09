@@ -516,6 +516,9 @@
 char *input = "1234.4321";
 ck_assert_int_eq(isNotNumberInString(input),0);
 
+input = "-1234.4321";
+ck_assert_int_eq(isNotNumberInString(input),0);
+
 input = "1234.432.1";
 ck_assert_int_eq(isNotNumberInString(input),1);
 
