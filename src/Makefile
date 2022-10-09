@@ -23,7 +23,7 @@ endif
 all: clean uninstall install run
 
 clean:
-	rm -rf *.o *.a $(COVERAGE_RESULTS) $(COVERAGE_FILES) $(GCOV_FILES) $(LCOV_FILES) $(TEST_NAME) $(TEST_NAME).c gcov_report $(TEST_NAME).dSYM
+	rm -rf *.o *.a $(COVERAGE_RESULTS) $(COVERAGE_FILES) $(GCOV_FILES) $(LCOV_FILES) $(TEST_NAME) gcov_report $(TEST_NAME).dSYM
 
 $(NAME).a:
 	@rm -rf *.o *.a
@@ -52,8 +52,7 @@ dist:
 gcov_report: gcov
 	@rm -f $(LCOV_FILES)
 	lcov -t $(NAME) -o $(NAME).info -c -d .
-	lcov -r $(NAME).info "$(shell pwd)/$(TEST_NAME).c" -o $(NAME).info
-	lcov -r $(NAME).info "$(shell pwd)/$(TEST_NAME).check" -o $(NAME).info
+	lcov -r $(NAME).info "$(PWD)/$(TEST_NAME).check" -o $(NAME).info
 	@rm -rf gcov_report
 	genhtml $(NAME).info --function-coverage -o gcov_report
 	open gcov_report/index.html

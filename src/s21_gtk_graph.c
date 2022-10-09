@@ -1,12 +1,23 @@
 #include <cairo.h>
+#include <pango/pangocairo.h>
 
 #include "s21_smartcalc.h"
 #include "s21_smartcalc_gtk.h"
 
-
-
 #define DA_HEIGHT 600
 #define DA_WIDTH 600
+
+static double get_steps_col(gdouble x_range) {
+  double max = 10000;
+  double first_n = x_range;
+  if (x_range == 10) {
+    first_n = 1;
+  } else {
+    while (first_n > 10) first_n /= 10;
+  }
+  double steps_col = x_range < 100.0 ? 100.0 * first_n : max * first_n;
+  return steps_col;
+}
 
 char *expression;
 GtkWidget *drawing_area;
@@ -53,7 +64,8 @@ int graph_output(char *input) {
   scale_label = GTK_WIDGET(gtk_builder_get_object(builder, "label_scale"));
 
   gtk_entry_set_text(graph_entry, (const gchar *)input);
-  gtk_widget_set_size_request(drawing_area, DA_HEIGHT, DA_WIDTH);  // size in pixels
+  gtk_widget_set_size_request(drawing_area, DA_HEIGHT,
+                              DA_WIDTH);  // size in pixels
 
   g_signal_connect(G_OBJECT(drawing_area), "draw", G_CALLBACK(on_draw), NULL);
 
@@ -74,8 +86,6 @@ static gboolean on_draw(GtkWidget *widget, cairo_t *cairo) {
   int scale_y = -scale;
   // GdkRectangle da; /* GtkDrawingArea size */
   s_graph_properties gp = {};
-  gp.dx = 1.0;
-  gp.dy = 1.0; /* Pixels between each point */
   gp.cr = cairo;
 
   // GdkWindow *window = gtk_widget_get_window(widget);
@@ -94,21 +104,26 @@ static gboolean on_draw(GtkWidget *widget, cairo_t *cairo) {
   cairo_device_to_user_distance(gp.cr, &gp.dx, &gp.dy);
   // printf("%lf %lf \n", gp.dx, gp.dy);
 
-  
+  gp.min_x =
+      gtk_spin_button_get_value(GTK_SPIN_BUTTON(min_domain_spin));
+  gp.min_y =
+      gtk_spin_button_get_value(GTK_SPIN_BUTTON(min_codomain_spin));
+  gp.max_x =
+      gtk_spin_button_get_value(GTK_SPIN_BUTTON(max_domain_spin));
+  gp.max_y =
+      gtk_spin_button_get_value(GTK_SPIN_BUTTON(max_codomain_spin));
 
-  gp.min_x = -100;
-  gp.min_y = -100;
-  gp.max_x = 100;
-  gp.max_y = 100;
- cairo_translate(gp.cr, DA_HEIGHT  / 2, DA_WIDTH  / 2);
-  
-  cairo_scale(gp.cr,  DA_HEIGHT / (gp.max_x - gp.min_x), DA_WIDTH  / (gp.max_y - gp.min_y) );
- 
+  gp.dx = (gp.max_x - gp.min_x) / DA_HEIGHT;
+  gp.dy = (gp.max_x - gp.min_x) / DA_WIDTH; /* Pixels between each point */
+
+  cairo_translate(gp.cr, DA_HEIGHT / 2, DA_WIDTH / 2);
+
+  cairo_scale(gp.cr, 1 / gp.dx, 1 / gp.dy);
+
   draw_axis(&gp);
 
   if (input_validation(expression) == S21_CORRECT_INPUT) {
     if (!write_dom_codom) set_values_from_spin_buttons(&gp);
-    cairo_set_line_width(gp.cr, gp.dx * 3);
     draw_graph_line(&gp);
     gtk_label_set_text(GTK_LABEL(graph_error_label), (const gchar *)"");
   } else {
@@ -135,8 +150,10 @@ void set_values_from_spin_buttons(s_graph_properties *gp) {
 
 void draw_graph_line(s_graph_properties *gp) {
   setlocale(LC_NUMERIC, "C");
-  int vector = -1; // 1 or -1
-  for (gdouble x = gp->min_x; x < gp->max_x; x += gp->dx) {
+  int vector = -1;  // 1 or -1
+  cairo_set_line_width(gp->cr, gp->dx);
+  gdouble step = gp->dx;
+  for (gdouble x = gp->min_x; x < gp->max_x; x += step) {
     gdouble y_value = calculation(expression, &x, NULL);
     if (y_value > gp->max_y || y_value < gp->min_y) {
       if ((y_value > gp->max_y)) {
@@ -154,44 +171,68 @@ void draw_graph_line(s_graph_properties *gp) {
 }
 
 void draw_axis(s_graph_properties *gp) {
-  cairo_set_source_rgb(gp->cr, 0.0, 0.0, 0.0);
-  cairo_set_line_width(gp->cr, gp->dx / 10);
-  int step = (gp->max_x - gp->min_x)/10;  // 0.5
   char buffer[64];
+  gdouble step = gp->dx * 20;
   gdouble middleX = 0;
   gdouble middleY = 0;
+
+  cairo_set_source_rgb(gp->cr, 0.0, 0.0, 0.0);
+  cairo_set_line_width(gp->cr, gp->dx / 10);
+
+  cairo_select_font_face(gp->cr, "Arial", CAIRO_FONT_SLANT_NORMAL,
+                         CAIRO_FONT_WEIGHT_NORMAL);
+  cairo_set_font_size(gp->cr, 5 * gp->dx);
+
   for (gdouble i = middleX; i <= gp->max_x; i += step) {
     cairo_move_to(gp->cr, i, gp->min_y);
     cairo_line_to(gp->cr, i, gp->max_y);
-  }
-  cairo_move_to(gp->cr, middleX, middleY);
-  cairo_show_text(gp->cr, "0");
-  for (gdouble i = middleX; i >= gp->min_x; i -= step) {
-    cairo_move_to(gp->cr, i, middleY);
-    sprintf(buffer, "%.lf", i);
+    sprintf(buffer, "%g", i);
     cairo_show_text(gp->cr, buffer);
+  }
+
+  for (gdouble i = middleX; i >= gp->min_x; i -= step) {
     cairo_move_to(gp->cr, i, gp->min_y);
     cairo_line_to(gp->cr, i, gp->max_y);
+    sprintf(buffer, "%g", i);
+    cairo_show_text(gp->cr, buffer);
   }
   for (gdouble i = middleY; i <= gp->max_y; i += step) {
     cairo_move_to(gp->cr, gp->min_x, i);
     cairo_line_to(gp->cr, gp->max_x, i);
+    cairo_move_to(gp->cr, gp->min_x, i);
+    sprintf(buffer, "%g", -i);
+    cairo_show_text(gp->cr, buffer);
   }
   for (gdouble i = middleY; i >= gp->min_y; i -= step) {
     cairo_move_to(gp->cr, gp->min_x, i);
     cairo_line_to(gp->cr, gp->max_x, i);
+    cairo_move_to(gp->cr, gp->min_x, i);
+    sprintf(buffer, "%g", -i);
+    cairo_show_text(gp->cr, buffer);
   }
 
   cairo_stroke(gp->cr);
 
-  cairo_set_line_width(gp->cr, gp->dx);
+  cairo_set_line_width(gp->cr, gp->dx / 2);
   cairo_move_to(gp->cr, gp->min_x, middleY);
   cairo_line_to(gp->cr, gp->max_x, middleY);
   cairo_move_to(gp->cr, middleX, gp->min_y);
   cairo_line_to(gp->cr, middleX, gp->max_y);
 
+  cairo_move_to(gp->cr, gp->min_x, middleY);
+  sprintf(buffer, "x");
+  cairo_show_text(gp->cr, buffer);
+
   cairo_stroke(gp->cr);
 }
+
+// void draw_axys_text(s_graph_properties *gp, gdouble value, gdouble x, gdouble
+// y) {
+//   char buffer[64];
+//   sprintf(buffer, "%g", value);
+//   cairo_move_to(gp->cr, x, y);
+//   cairo_show_text(gp->cr, buffer);
+// }
 
 void button_draw_clicked(GtkWidget *button, gpointer entry) {
   sprintf(expression, "%s", gtk_entry_get_text(entry));
