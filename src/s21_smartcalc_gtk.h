@@ -5,7 +5,7 @@
 #include <locale.h>
 #include <math.h>
 
-typedef struct cairo_graph_properties {
+typedef struct {
   cairo_t *cr;
   gdouble min_x;
   gdouble max_x;
@@ -13,6 +13,10 @@ typedef struct cairo_graph_properties {
   gdouble max_y;
   gdouble dx;
   gdouble dy;
+  gdouble right_limit;
+  gdouble left_limit;
+  gdouble lower_limit;
+  gdouble upper_limit;
 } s_graph_properties;
 
 void printDepositOutput(long double value, char *output);
