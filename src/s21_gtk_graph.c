@@ -16,6 +16,8 @@ GtkWidget *domain_max_spin;
 GtkWidget *codomain_max_spin;
 GtkWidget *domain_min_spin;
 GtkWidget *codomain_min_spin;
+int max_is_eq_to_min = 0;
+int dom_is_eq_to_codom = 0;
 
 int graph_output(char *input) {
   GtkBuilder *builder;
@@ -83,15 +85,26 @@ static gboolean on_draw(GtkWidget *widget, cairo_t *cairo) {
   gp.min_x = gtk_spin_button_get_value(GTK_SPIN_BUTTON(domain_min_spin));
   gp.min_y = gtk_spin_button_get_value(GTK_SPIN_BUTTON(codomain_min_spin));
 
+  if (dom_is_eq_to_codom) {
+    gp.max_y = gp.max_x;
+    gp.min_y = gp.min_x;
+  }
+
+  if (max_is_eq_to_min) {
+    gp.min_x = -gp.max_x;
+    gp.min_y = -gp.max_y;
+  }
+
   gp.right_limit = gp.min_x > gp.min_y ? gp.min_y : gp.min_x;
   gp.left_limit = gp.max_x < gp.max_y ? gp.max_y : gp.max_x;
 
   gp.dx = (gp.left_limit - gp.right_limit) / DA_HEIGHT;
-  gp.dy = (gp.left_limit - gp.right_limit) / DA_WIDTH; /* Pixels between each point */
+  gp.dy = (gp.left_limit - gp.right_limit) /
+          DA_WIDTH; /* Pixels between each point */
 
-  x_middle = (fabs(gp.right_limit) / (gp.left_limit + fabs(gp.right_limit))) * 600;
+  x_middle =
+      (fabs(gp.right_limit) / (gp.left_limit + fabs(gp.right_limit))) * 600;
   y_middle = (1 - (fabs(gp.min_y) / (gp.max_y + fabs(gp.min_y)))) * 600;
-
 
   cairo_translate(gp.cr, x_middle, y_middle);
 
@@ -209,12 +222,17 @@ void draw_axis(s_graph_properties *gp) {
     cairo_move_to(gp->cr, gp->right_limit, i);
     draw_axys_text(gp, vector * i, DONT_ROTATE);
   }
+  cairo_move_to(gp->cr, gp->right_limit, gp->upper_limit);
+  cairo_line_to(gp->cr, gp->left_limit, gp->upper_limit);
+
   for (gdouble i = 0; i > gp->lower_limit; i -= step) {
     cairo_move_to(gp->cr, gp->right_limit, i);
     cairo_line_to(gp->cr, gp->left_limit, i);
     cairo_move_to(gp->cr, gp->right_limit, i);
     draw_axys_text(gp, vector * i, DONT_ROTATE);
   }
+  cairo_move_to(gp->cr, gp->right_limit, gp->lower_limit);
+  cairo_line_to(gp->cr, gp->left_limit, gp->lower_limit);
 
   cairo_stroke(gp->cr);
 
@@ -242,6 +260,32 @@ void button_draw_clicked(GtkWidget *button, gpointer entry) {
 
 void close_window(GtkWidget *widget, gpointer window) {
   gtk_widget_destroy(GTK_WIDGET(window));
+}
+
+void check_same_dom_codom_toggled_cb(GtkCheckButton *button) {
+  gboolean status = gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(button));
+  if (status) {
+    dom_is_eq_to_codom = 1;
+    gtk_widget_set_sensitive(codomain_max_spin, FALSE);
+    gtk_widget_set_sensitive(codomain_min_spin, FALSE);
+  } else {
+    dom_is_eq_to_codom = 0;
+    gtk_widget_set_sensitive(codomain_max_spin, TRUE);
+    if (!max_is_eq_to_min) gtk_widget_set_sensitive(codomain_min_spin, TRUE);
+  }
+}
+
+void check_same_max_min_toggled_cb(GtkCheckButton *button) {
+  gboolean status = gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(button));
+  if (status) {
+    max_is_eq_to_min = 1;
+    gtk_widget_set_sensitive(domain_min_spin, FALSE);
+    gtk_widget_set_sensitive(codomain_min_spin, FALSE);
+  } else {
+    max_is_eq_to_min = 0;
+    gtk_widget_set_sensitive(domain_min_spin, TRUE);
+    if (!dom_is_eq_to_codom) gtk_widget_set_sensitive(codomain_min_spin, TRUE);
+  }
 }
 
 // void draw_graph_line(s_graph_properties gp) {

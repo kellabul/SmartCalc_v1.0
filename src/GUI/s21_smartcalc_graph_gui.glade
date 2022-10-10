@@ -230,13 +230,14 @@
           </packing>
         </child>
         <child>
-          <object class="GtkCheckButton" id="check_same_dom">
-            <property name="label" translatable="yes">max domain = - min domain</property>
+          <object class="GtkCheckButton" id="check_same_max_min">
+            <property name="label" translatable="yes">set |min| = |max| </property>
             <property name="visible">True</property>
             <property name="can-focus">True</property>
             <property name="receives-default">False</property>
+            <property name="active">True</property>
             <property name="draw-indicator">True</property>
-            <signal name="toggled" handler="check_same_dom_toggled_cb" swapped="no"/>
+            <signal name="toggled" handler="check_same_max_min_toggled_cb" swapped="no"/>
           </object>
           <packing>
             <property name="left-attach">0</property>
@@ -245,13 +246,14 @@
           </packing>
         </child>
         <child>
-          <object class="GtkCheckButton" id="check_same_codom">
-            <property name="label" translatable="yes">max codomain = - min codomain</property>
+          <object class="GtkCheckButton" id="check_same_dom_codom">
+            <property name="label" translatable="yes">set codomain = domain</property>
             <property name="visible">True</property>
             <property name="can-focus">True</property>
             <property name="receives-default">False</property>
+            <property name="active">True</property>
             <property name="draw-indicator">True</property>
-            <signal name="toggled" handler="check_same_codom_toggled_cb" swapped="no"/>
+            <signal name="toggled" handler="check_same_dom_codom_toggled_cb" swapped="no"/>
           </object>
           <packing>
             <property name="left-attach">3</property>
@@ -260,27 +262,13 @@
           </packing>
         </child>
         <child>
-          <object class="GtkSwitch" id="dom_eq_codom">
-            <property name="visible">True</property>
-            <property name="can-focus">True</property>
-            <signal name="activate" handler="dom_eq_codom_activate_cb" swapped="no"/>
-          </object>
-          <packing>
-            <property name="left-attach">0</property>
-            <property name="top-attach">11</property>
-          </packing>
+          <placeholder/>
         </child>
         <child>
-          <object class="GtkLabel" id="label_dom_codom">
-            <property name="visible">True</property>
-            <property name="can-focus">False</property>
-            <property name="label" translatable="yes">domain = codomain</property>
-          </object>
-          <packing>
-            <property name="left-attach">1</property>
-            <property name="top-attach">11</property>
-            <property name="width">2</property>
-          </packing>
+          <placeholder/>
+        </child>
+        <child>
+          <placeholder/>
         </child>
         <child>
           <placeholder/>
