@@ -12,8 +12,10 @@
 char *expression;
 GtkWidget *drawing_area;
 GtkWidget *graph_error_label;
-GtkWidget *domain_spin;
-GtkWidget *codomain_spin;
+GtkWidget *domain_max_spin;
+GtkWidget *codomain_max_spin;
+GtkWidget *domain_min_spin;
+GtkWidget *codomain_min_spin;
 
 int graph_output(char *input) {
   GtkBuilder *builder;
@@ -36,9 +38,13 @@ int graph_output(char *input) {
   graph_error_label =
       GTK_WIDGET(gtk_builder_get_object(builder, "graph_error_label"));
 
-  domain_spin =
+  domain_max_spin =
       GTK_WIDGET(gtk_builder_get_object(builder, "graph_spin_domain"));
-  codomain_spin =
+  codomain_max_spin =
+      GTK_WIDGET(gtk_builder_get_object(builder, "graph_spin_codomain"));
+  domain_min_spin =
+      GTK_WIDGET(gtk_builder_get_object(builder, "graph_spin_domain"));
+  codomain_min_spin =
       GTK_WIDGET(gtk_builder_get_object(builder, "graph_spin_codomain"));
 
   gtk_entry_set_text(graph_entry, (const gchar *)input);
@@ -70,19 +76,22 @@ static gboolean on_draw(GtkWidget *widget, cairo_t *cairo) {
   cairo_device_to_user_distance(gp.cr, &gp.dx, &gp.dy);
 
   gp.max_x = 400;
-  gp.max_y = 400;
-  if (gp.max_y > gp.max_x) gp.max_y = gp.max_x;
-  gp.min_x = -200;
+  gp.max_y = 300;
+  //if (gp.max_y > gp.max_x) gp.max_y = gp.max_x;
+  gp.min_x = -100;
   gp.min_y = -200;
 
   gp.dx = (gp.max_x - gp.min_x) / DA_HEIGHT;
   gp.dy = (gp.max_x - gp.min_x) / DA_WIDTH; /* Pixels between each point */
 
-  printf("dx = %lf, dy = %lf\n", gp.dx, gp.dy);
-  
-  cairo_translate(gp.cr, 200, 400);
+  //printf("dx = %lf, dy = %lf\n", gp.dx, gp.dy);
 
-  cairo_scale(gp.cr, 1 / gp.dx, -1 / gp.dy);
+  double x_middle = (fabs(gp.min_x)/(gp.max_x + fabs(gp.min_x))) * 600;
+  double y_middle = (fabs(gp.min_y)/(gp.max_y + fabs(gp.min_y))) * 600;
+
+  cairo_translate(gp.cr, x_middle, y_middle);
+
+  cairo_scale(gp.cr, 1 / gp.dx, 1 / gp.dy);
 
   draw_axis(&gp);
 
