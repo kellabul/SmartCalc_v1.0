@@ -11,7 +11,7 @@ GTK_SOURCE_FILES = s21_gtk_*.c
 LOGIC_SOURCE_FILES = LOGIC/s21_sc*.c
 LOGIC_OBJECT_FILES = s21_sc*.o
 
-LIBS = `pkg-config --libs --cflags gtk+-3.0` -rdynamic -lm #-fsanitize=address -g
+LIBS = `pkg-config --libs --cflags gtk+-3.0` -rdynamic -lm
 
 # different libs for MAC and LINUX
 UNAME_S := $(shell uname -s)

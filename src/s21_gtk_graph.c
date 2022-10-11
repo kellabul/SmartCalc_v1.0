@@ -61,6 +61,7 @@ int graph_output(char *input) {
   g_signal_connect(G_OBJECT(close_button), "clicked", G_CALLBACK(close_window),
                    G_OBJECT(graph_window));
 
+  g_object_unref(builder);
   gtk_window_set_position(GTK_WINDOW(graph_window), GTK_WIN_POS_CENTER);
   gtk_widget_show_all(graph_window);
 
@@ -71,6 +72,8 @@ static gboolean on_draw(GtkWidget *widget, cairo_t *cairo) {
   s_graph_properties gp = {};
   double x_middle;
   double y_middle;
+  double x_range;
+  double y_range;
 
   gp.cr = cairo;
 
@@ -80,6 +83,7 @@ static gboolean on_draw(GtkWidget *widget, cairo_t *cairo) {
 
   cairo_device_to_user_distance(gp.cr, &gp.dx, &gp.dy);
 
+  /* max value is always positive, min value is always negative */
   gp.max_x = gtk_spin_button_get_value(GTK_SPIN_BUTTON(domain_max_spin));
   gp.max_y = gtk_spin_button_get_value(GTK_SPIN_BUTTON(codomain_max_spin));
   gp.min_x = gtk_spin_button_get_value(GTK_SPIN_BUTTON(domain_min_spin));
@@ -95,16 +99,23 @@ static gboolean on_draw(GtkWidget *widget, cairo_t *cairo) {
     gp.min_y = -gp.max_y;
   }
 
+  /* right_limit is Xmin on a graph axes, left_limit is Xmax
+    if Xmax < Ymax, axes doesn't print fully */
   gp.right_limit = gp.min_x > gp.min_y ? gp.min_y : gp.min_x;
   gp.left_limit = gp.max_x < gp.max_y ? gp.max_y : gp.max_x;
+  /* inverting Y axes*/
+  gp.lower_limit = -gp.max_y > -gp.max_x ? -gp.max_x : -gp.max_y;
+  gp.upper_limit = -gp.min_y < -gp.min_x ? -gp.min_x : -gp.min_y;
 
-  gp.dx = (gp.left_limit - gp.right_limit) / DA_HEIGHT;
-  gp.dy = (gp.left_limit - gp.right_limit) /
-          DA_WIDTH; /* Pixels between each point */
+  x_range = gp.left_limit - gp.right_limit;
+  y_range = gp.upper_limit - gp.lower_limit;
 
-  x_middle =
-      (fabs(gp.right_limit) / (gp.left_limit + fabs(gp.right_limit))) * 600;
-  y_middle = (1 - (fabs(gp.min_y) / (gp.max_y + fabs(gp.min_y)))) * 600;
+  /* Pixels between each point, has to be same */
+  gp.dx = (x_range) / DA_HEIGHT;
+  gp.dy = (x_range) / DA_WIDTH;
+
+  x_middle = (fabs(gp.right_limit) / (x_range)) * 600;
+  y_middle = ((fabs(gp.lower_limit)) / (y_range)) * 600;
 
   cairo_translate(gp.cr, x_middle, y_middle);
 
@@ -114,7 +125,10 @@ static gboolean on_draw(GtkWidget *widget, cairo_t *cairo) {
 
   if (input_validation(expression) == S21_CORRECT_INPUT) {
     char buffer[64];
-    sprintf(buffer, "scale px/un: ");
+    if (gp.dx < 1)
+      sprintf(buffer, "scale px/unit: %.4g/%g", 1 / gp.dx, 1.0);
+    else
+      sprintf(buffer, "scale px/unit: %g/%.4g", 1.0, gp.dx);
     gtk_label_set_text(GTK_LABEL(graph_error_label), buffer);
     draw_graph_line(&gp);
   } else {
@@ -126,19 +140,25 @@ static gboolean on_draw(GtkWidget *widget, cairo_t *cairo) {
 
 void draw_graph_line(s_graph_properties *gp) {
   setlocale(LC_NUMERIC, "C");
-  int vector = -1;  // 1 or -1
+  int vector = -1; /* 1 or -1, depending on y axis*/
+  int flag = 0;
   cairo_set_line_width(gp->cr, gp->dx);
   gdouble step = gp->dx / 10;
   for (gdouble x = gp->min_x; x < gp->max_x; x += step) {
     gdouble y_value = calculation(expression, &x, NULL);
     if (y_value > gp->max_y || y_value < gp->min_y) {
       if ((y_value > gp->max_y)) {
+        if (flag == 1) cairo_line_to(gp->cr, x, vector * gp->max_y);
         cairo_move_to(gp->cr, x, vector * gp->max_y);
+        flag = 0;
       } else if ((y_value < gp->min_y)) {
+        if (flag == 1) cairo_line_to(gp->cr, x, vector * gp->min_y);
         cairo_move_to(gp->cr, x, vector * gp->min_y);
+        flag = 0;
       }
     } else if (!isnan(y_value) && !isinf(y_value)) {
       cairo_line_to(gp->cr, x, vector * y_value);
+      flag = 1;
     }
   }
   /* Draw the curve */
@@ -157,24 +177,26 @@ void roundTo2digits(gdouble *step) {
 
 gdouble set_axis_step(s_graph_properties *gp) {
   gdouble step = 20 * gp->dx;
-  for (gdouble i = 0.1; i <= 1; i += 0.1) {
-    if (step < i) {
-      step = i;
-      break;
+  if (step > 10) {
+    roundTo2digits(&step);
+  } else if (step > 5) {
+    step = 10;
+  } else if (step > 2) {
+    step = 5;
+  } else if (step > 1) {
+    step = 2;
+  } else {
+    for (gdouble i = 0.1; i <= 1; i += 0.1) {
+      if (step < i) {
+        step = i;
+        break;
+      }
     }
   }
-  if (step > 10)
-    roundTo2digits(&step);
-  else if (step > 5)
-    step = 10;
-  else if (step > 2)
-    step = 5;
-  else if (step > 1)
-    step = 2;
   return step;
 }
 
-void draw_axys_text(s_graph_properties *gp, gdouble value, int rotate) {
+void draw_axis_text(s_graph_properties *gp, gdouble value, int rotate) {
   char buffer[64];
   sprintf(buffer, "%g", value);
   if (rotate) {
@@ -191,11 +213,7 @@ void draw_axis(s_graph_properties *gp) {
   gdouble step = set_axis_step(gp);
   int flag = 1;
   gdouble text_offset = 2 * gp->dx;
-  // next 3 lines are dealing with inverted cairo axes
   int vector = -1;
-  gp->lower_limit = -gp->max_y;
-  gp->upper_limit = -gp->min_y;
-  // if x max < y max, axys doen't print fully
 
   cairo_set_source_rgb(gp->cr, 0.0, 0.0, 0.0);
   cairo_set_line_width(gp->cr, gp->dx / 10);
@@ -208,20 +226,21 @@ void draw_axis(s_graph_properties *gp) {
     cairo_move_to(gp->cr, i, gp->lower_limit);
     cairo_line_to(gp->cr, i, gp->upper_limit);
     cairo_move_to(gp->cr, i, gp->upper_limit - text_offset);
-    draw_axys_text(gp, i, ROTATE);
+    draw_axis_text(gp, i, ROTATE);
   }
   for (gdouble i = 0; i > gp->right_limit; i -= step) {
     cairo_move_to(gp->cr, i, gp->lower_limit);
     cairo_line_to(gp->cr, i, gp->upper_limit);
     cairo_move_to(gp->cr, i, gp->upper_limit - text_offset);
-    draw_axys_text(gp, i, ROTATE);
+    draw_axis_text(gp, i, ROTATE);
   }
   for (gdouble i = 0; i < gp->upper_limit; i += step) {
     cairo_move_to(gp->cr, gp->right_limit, i);
     cairo_line_to(gp->cr, gp->left_limit, i);
     cairo_move_to(gp->cr, gp->right_limit, i);
-    draw_axys_text(gp, vector * i, DONT_ROTATE);
+    draw_axis_text(gp, vector * i, DONT_ROTATE);
   }
+  // last line has to be without text
   cairo_move_to(gp->cr, gp->right_limit, gp->upper_limit);
   cairo_line_to(gp->cr, gp->left_limit, gp->upper_limit);
 
@@ -229,8 +248,9 @@ void draw_axis(s_graph_properties *gp) {
     cairo_move_to(gp->cr, gp->right_limit, i);
     cairo_line_to(gp->cr, gp->left_limit, i);
     cairo_move_to(gp->cr, gp->right_limit, i);
-    draw_axys_text(gp, vector * i, DONT_ROTATE);
+    draw_axis_text(gp, vector * i, DONT_ROTATE);
   }
+  // last line has to be without text
   cairo_move_to(gp->cr, gp->right_limit, gp->lower_limit);
   cairo_line_to(gp->cr, gp->left_limit, gp->lower_limit);
 

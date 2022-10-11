@@ -235,7 +235,7 @@
             <property name="visible">True</property>
             <property name="can-focus">True</property>
             <property name="receives-default">False</property>
-            <property name="active">True</property>
+            <property name="active">False</property>
             <property name="draw-indicator">True</property>
             <signal name="toggled" handler="check_same_max_min_toggled_cb" swapped="no"/>
           </object>
@@ -251,7 +251,7 @@
             <property name="visible">True</property>
             <property name="can-focus">True</property>
             <property name="receives-default">False</property>
-            <property name="active">True</property>
+            <property name="active">False</property>
             <property name="draw-indicator">True</property>
             <signal name="toggled" handler="check_same_dom_codom_toggled_cb" swapped="no"/>
           </object>
