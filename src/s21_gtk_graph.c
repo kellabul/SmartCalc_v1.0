@@ -147,22 +147,24 @@ void draw_graph_line(s_graph_properties *gp) {
   gdouble step = gp->dx / 10;
   for (gdouble x = gp->min_x; x < gp->max_x; x += step) {
     gdouble y_value = calculation(expression, &x, NULL);
-    if (y_value > gp->max_y || y_value < gp->min_y) {
-      if ((y_value > gp->max_y)) {
-        if (flag == 1) cairo_line_to(gp->cr, x, vector * gp->max_y);
-        cairo_move_to(gp->cr, x, vector * gp->max_y);
-        flag = 0;
-      } else if ((y_value < gp->min_y)) {
-        if (flag == 1) cairo_line_to(gp->cr, x, vector * gp->min_y);
-        cairo_move_to(gp->cr, x, vector * gp->min_y);
-        flag = 0;
-      }
-    } else if (!isnan(y_value) && !isinf(y_value)) {
+    if (y_value > gp->max_y) {
+      if (flag == 1) cairo_line_to(gp->cr, x, vector * gp->max_y);
+      cairo_move_to(gp->cr, x, vector * gp->max_y);
+      flag = 0;
+    } else if ((y_value < gp->min_y)) {
+      if (flag == 1) cairo_line_to(gp->cr, x, vector * gp->min_y);
+      cairo_move_to(gp->cr, x, vector * gp->min_y);
+      flag = 0;
+    } else if (isnan(y_value)) {
+      flag = 2;
+    } else if (flag < 2) {
       cairo_line_to(gp->cr, x, vector * y_value);
+      flag = 1;
+    } else {
+      cairo_move_to(gp->cr, x, vector * y_value);
       flag = 1;
     }
   }
-  /* Draw the curve */
   cairo_stroke(gp->cr);
 }
 

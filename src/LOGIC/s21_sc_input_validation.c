@@ -4,6 +4,7 @@
 #include "../s21_smartcalc.h"
 
 int input_validation(char *str) {
+  if (str == NULL) return S21_INCORRECT_INPUT;
   int result = S21_CORRECT_INPUT;
   if (isWrongFirstElement(str) || isWrongLastElement(str[strlen(str) - 1])) {
     result = S21_INCORRECT_INPUT;

@@ -78,6 +78,9 @@ lint:
 	@cp ../materials/linters/.clang-format .clang-format
 	clang-format -n *.c *.h
 
+clang:
+	clang-format -i *.c *.h */*.c
+
 cppcheck:
 	cppcheck --enable=all --suppress=missingIncludeSystem *.c
 
