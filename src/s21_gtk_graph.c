@@ -4,8 +4,8 @@
 #include "s21_smartcalc.h"
 #include "s21_smartcalc_gtk.h"
 
-#define DA_HEIGHT 600
 #define DA_WIDTH 600
+#define DA_HEIGHT 600
 #define ROTATE 1
 #define DONT_ROTATE 0
 
@@ -50,8 +50,8 @@ int graph_output(char *input) {
       GTK_WIDGET(gtk_builder_get_object(builder, "graph_spin_codomain_min"));
 
   gtk_entry_set_text(graph_entry, (const gchar *)input);
-  gtk_widget_set_size_request(drawing_area, DA_HEIGHT,
-                              DA_WIDTH);  // size in pixels
+  gtk_widget_set_size_request(drawing_area, DA_WIDTH,
+                              DA_HEIGHT);  // size in pixels
 
   g_signal_connect(G_OBJECT(drawing_area), "draw", G_CALLBACK(on_draw), NULL);
 
@@ -111,11 +111,11 @@ static gboolean on_draw(GtkWidget *widget, cairo_t *cairo) {
   y_range = gp.upper_limit - gp.lower_limit;
 
   /* Pixels between each point, has to be same */
-  gp.dx = (x_range) / DA_HEIGHT;
-  gp.dy = (x_range) / DA_WIDTH;
+  gp.dx = (x_range) / DA_WIDTH;
+  gp.dy = (x_range) / DA_HEIGHT;
 
-  x_middle = (fabs(gp.right_limit) / (x_range)) * 600;
-  y_middle = ((fabs(gp.lower_limit)) / (y_range)) * 600;
+  x_middle = (fabs(gp.right_limit) / (x_range)) * DA_WIDTH;
+  y_middle = (fabs(gp.lower_limit)) / (y_range)*DA_HEIGHT;
 
   cairo_translate(gp.cr, x_middle, y_middle);
 
@@ -307,29 +307,3 @@ void check_same_max_min_toggled_cb(GtkCheckButton *button) {
     if (!dom_is_eq_to_codom) gtk_widget_set_sensitive(codomain_min_spin, TRUE);
   }
 }
-
-// void draw_graph_line(s_graph_properties gp) {
-//   int flag = 0;
-//   setlocale(LC_NUMERIC, "C");
-//   for (gdouble x = gp.min_x; x < gp.max_x; x += gp.dx / 10) {
-//     gdouble y_value = calculation(expression, &x, NULL);
-//     if (isnan(y_value) || isinf(y_value) || y_value > gp.max_y ||
-//         y_value < gp.min_y) {
-//       if ((y_value > gp.max_y) && flag) {
-//         cairo_line_to(gp.cr, x, gp.max_y);
-//       } else if ((y_value < gp.min_y) && flag) {
-//         cairo_line_to(gp.cr, x, gp.max_y);
-//       } else if ((y_value > gp.max_y)) {
-//         cairo_move_to(gp.cr, x, gp.max_y);
-//       } else if ((y_value < gp.min_y)) {
-//         cairo_move_to(gp.cr, x, gp.min_y);
-//       }
-//       flag = 0;
-//     } else {
-//       flag = 1;
-//       cairo_line_to(gp.cr, x, y_value);
-//     }
-//   }
-// cairo_set_source_rgba(gp.cr, 0.72, 0.0, 1, 1);
-// cairo_stroke(gp.cr);
-// }
