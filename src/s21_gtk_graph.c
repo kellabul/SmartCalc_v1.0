@@ -78,7 +78,7 @@ static gboolean on_draw(GtkWidget *widget, cairo_t *cairo) {
   gp.cr = cairo;
 
   /* Draw on a background */
-  cairo_set_source_rgb(gp.cr, 0.41, 0.78, 0.78);
+  cairo_set_source_rgb(gp.cr, 0.69, 0.91, 0.91);
   cairo_paint(gp.cr);
 
   cairo_device_to_user_distance(gp.cr, &gp.dx, &gp.dy);
@@ -142,7 +142,8 @@ void draw_graph_line(s_graph_properties *gp) {
   setlocale(LC_NUMERIC, "C");
   int vector = -1; /* 1 or -1, depending on y axis*/
   int flag = 0;
-  cairo_set_line_width(gp->cr, gp->dx);
+  cairo_set_source_rgb(gp->cr, 0.60, 0.15, 1.0);
+  cairo_set_line_width(gp->cr, 2 * gp->dx);
   gdouble step = gp->dx / 10;
   for (gdouble x = gp->min_x; x < gp->max_x; x += step) {
     gdouble y_value = calculation(expression, &x, NULL);
@@ -162,7 +163,6 @@ void draw_graph_line(s_graph_properties *gp) {
     }
   }
   /* Draw the curve */
-  cairo_set_source_rgba(gp->cr, 0.72, 0.0, 1, 1);
   cairo_stroke(gp->cr);
 }
 
@@ -241,8 +241,8 @@ void draw_axis(s_graph_properties *gp) {
     draw_axis_text(gp, vector * i, DONT_ROTATE);
   }
   // last line has to be without text
-  cairo_move_to(gp->cr, gp->right_limit, gp->upper_limit);
-  cairo_line_to(gp->cr, gp->left_limit, gp->upper_limit);
+  // cairo_move_to(gp->cr, gp->right_limit, gp->upper_limit);
+  // cairo_line_to(gp->cr, gp->left_limit, gp->upper_limit);
 
   for (gdouble i = 0; i > gp->lower_limit; i -= step) {
     cairo_move_to(gp->cr, gp->right_limit, i);
@@ -251,8 +251,8 @@ void draw_axis(s_graph_properties *gp) {
     draw_axis_text(gp, vector * i, DONT_ROTATE);
   }
   // last line has to be without text
-  cairo_move_to(gp->cr, gp->right_limit, gp->lower_limit);
-  cairo_line_to(gp->cr, gp->left_limit, gp->lower_limit);
+  // cairo_move_to(gp->cr, gp->right_limit, gp->lower_limit);
+  // cairo_line_to(gp->cr, gp->left_limit, gp->lower_limit);
 
   cairo_stroke(gp->cr);
 
